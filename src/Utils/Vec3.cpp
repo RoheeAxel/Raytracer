@@ -2,23 +2,23 @@
 ** EPITECH PROJECT, 2023
 ** B-OOP-400-REN-4-1-raytracer-axel.rohee
 ** File description:
-** Vector3
+** Vec3
 */
 
-#include "Vector3.hpp"
+#include "Vec3.hpp"
 #include <cmath>
 
 namespace Raytracer
 {
-    Vector3::Vector3() : x(0), y(0), z(0)
+    Vec3::Vec3() : x(0), y(0), z(0)
     {
     }
 
-    Vector3::Vector3(double x, double y, double z) : x(x), y(y), z(z)
+    Vec3::Vec3(double x, double y, double z) : x(x), y(y), z(z)
     {
     }
 
-    Vector3& Vector3::operator=(const Raytracer::Vector3 &other)
+    Vec3& Vec3::operator=(const Raytracer::Vec3 &other)
     {
         x = other.x;
         y = other.y;
@@ -26,7 +26,7 @@ namespace Raytracer
         return *this;
     }
 
-    Vector3 Vector3::operator+(const Vector3 &other)
+    Vec3& Vec3::operator+(const Vec3 &other)
     {
         x += other.x;
         y += other.y;
@@ -34,7 +34,7 @@ namespace Raytracer
         return *this;
     }
 
-    Vector3 Vector3::operator-(const Vector3 &other)
+    Vec3& Vec3::operator-(const Vec3 &other)
     {
         x -= other.x;
         y -= other.y;
@@ -42,7 +42,7 @@ namespace Raytracer
         return *this;
     }
 
-    Vector3 Vector3::operator*(const Vector3 &other)
+    Vec3& Vec3::operator*(const Vec3 &other)
     {
         x *= other.x;
         y *= other.y;
@@ -50,7 +50,7 @@ namespace Raytracer
         return *this;
     }
 
-    Vector3 Vector3::operator/(const Vector3 &other)
+    Vec3& Vec3::operator/(const Vec3 &other)
     {
         x /= other.x;
         y /= other.y;
@@ -58,17 +58,17 @@ namespace Raytracer
         return *this;
     }
 
-    Vector3 Vector3::operator*(double scalar) const
+    Vec3 Vec3::operator*(double scalar) const
     {
-        return Vector3(x * scalar, y * scalar, z * scalar);
+        return Vec3(x * scalar, y * scalar, z * scalar);
     }
 
-    Vector3 Vector3::operator/(double scalar) const
+    Vec3 Vec3::operator/(double scalar) const
     {
-        return Vector3(x / scalar, y / scalar, z / scalar);
+        return Vec3(x / scalar, y / scalar, z / scalar);
     }
 
-    Vector3& Vector3::operator+=(const Vector3 &other)
+    Vec3& Vec3::operator+=(const Vec3 &other)
     {
         x += other.x;
         y += other.y;
@@ -76,7 +76,7 @@ namespace Raytracer
         return *this;
     }
 
-    Vector3& Vector3::operator-=(const Vector3 &other)
+    Vec3& Vec3::operator-=(const Vec3 &other)
     {
         x -= other.x;
         y -= other.y;
@@ -84,7 +84,7 @@ namespace Raytracer
         return *this;
     }   
 
-    Vector3& Vector3::operator*=(const Vector3 &other)
+    Vec3& Vec3::operator*=(const Vec3 &other)
     {
         x *= other.x;
         y *= other.y;
@@ -92,7 +92,7 @@ namespace Raytracer
         return *this;
     }
 
-    Vector3& Vector3::operator/=(const Vector3 &other)
+    Vec3& Vec3::operator/=(const Vec3 &other)
     {
         x /= other.x;
         y /= other.y;
@@ -100,7 +100,7 @@ namespace Raytracer
         return *this;
     }
 
-    Vector3& Vector3::operator*=(double scalar)
+    Vec3& Vec3::operator*=(double scalar)
     {
         x *= scalar;
         y *= scalar;
@@ -108,7 +108,7 @@ namespace Raytracer
         return *this;
     }
 
-    Vector3& Vector3::operator/=(double scalar)
+    Vec3& Vec3::operator/=(double scalar)
     {
         x /= scalar;
         y /= scalar;
@@ -116,22 +116,22 @@ namespace Raytracer
         return *this;
     }
 
-    bool Vector3::operator==(const Vector3 &other) const
+    bool Vec3::operator==(const Vec3 &other) const
     {
         return x == other.x && y == other.y && z == other.z;
     }
 
-    bool Vector3::operator!=(const Vector3 &other) const
+    bool Vec3::operator!=(const Vec3 &other) const
     {
         return x != other.x || y != other.y || z != other.z;
     }
 
-    double Vector3::Length() const
+    double Vec3::Length() const
     {
         return sqrt(x * x + y * y + z * z);
     }
 
-    Vector3& Vector3::Normalize()
+    Vec3& Vec3::Normalize()
     {
         double length = Length();
         x /= length;
@@ -140,19 +140,19 @@ namespace Raytracer
         return *this;
     }
 
-    Vector3 Vector3::Normalized() const
+    Vec3 Vec3::Normalized() const
     {
         double length = Length();
-        return Vector3(x / length, y / length, z / length);
+        return Vec3(x / length, y / length, z / length);
     }
 
-    double Vector3::Dot(const Vector3 &other) const
+    double Vec3::Dot(const Vec3 &other) const
     {
         return x * other.x + y * other.y + z * other.z;
     }
 
-    Vector3 Vector3::Cross(const Vector3 &other) const
+    Vec3 Vec3::Cross(const Vec3 &other) const
     {
-        return Vector3(y * other.z - z * other.y, z * other.x - x * other.z, x * other.y - y * other.x);
+        return Vec3(y * other.z - z * other.y, z * other.x - x * other.z, x * other.y - y * other.x);
     }
 }

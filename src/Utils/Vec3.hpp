@@ -1,3 +1,13 @@
+/*
+** EPITECH PROJECT, 2023
+** B-OOP-400-REN-4-1-raytracer-axel.rohee
+** File description:
+** Vec3
+*/
+
+#ifndef VEC3_HPP_
+#define VEC3_HPP_
+
 namespace Raytracer
 {
     class Vec3
@@ -25,6 +35,7 @@ namespace Raytracer
         bool operator!=(const Vec3& other) const;
 
         double Length() const;
+        Vec3 &abs();
         Vec3& Normalize();
         Vec3 Normalized() const;
         double Dot(const Vec3& other) const;
@@ -35,3 +46,5 @@ namespace Raytracer
         double z;
     };
 }
+
+#endif /* !VEC3_HPP_ */

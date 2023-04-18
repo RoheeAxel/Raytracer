@@ -5,9 +5,14 @@
 ** main
 */
 
+#include "Raytracer.hpp"
+
 int main(int ac, char **av)
 {
     if (ac != 2)
         return 84;
+    Raytracer::Raytracer raytracer;
+    raytracer.buildScene();
+    raytracer.render();
     return 0;
 }

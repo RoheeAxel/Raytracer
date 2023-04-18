@@ -18,6 +18,13 @@ namespace Raytracer
     {
     }
 
+    Vec3::Vec3(const Vec3 &other)
+    {
+        x = other.x;
+        y = other.y;
+        z = other.z;
+    }
+
     Vec3& Vec3::operator=(const Raytracer::Vec3 &other)
     {
         x = other.x;
@@ -129,6 +136,14 @@ namespace Raytracer
     double Vec3::Length() const
     {
         return sqrt(x * x + y * y + z * z);
+    }
+
+    Vec3 &Vec3::abs()
+    {
+        x = std::abs(x);
+        y = std::abs(y);
+        z = std::abs(z);
+        return *this;
     }
 
     Vec3& Vec3::Normalize()

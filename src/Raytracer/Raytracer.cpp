@@ -15,6 +15,8 @@ Raytracer::Raytracer::Raytracer()
 
 void Raytracer::Raytracer::buildScene()
 {
+    Sphere *sphere = new Sphere(Vec3(-2, 0, 3), 1);
+    _scene.addShape(sphere2);
 }
 
 void Raytracer::Raytracer::render()

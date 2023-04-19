@@ -13,10 +13,11 @@
 namespace Raytracer {
 struct HitRecord
 {
+    bool hit;
+    Raytracer::Vec3 point;
     Raytracer::Vec3 color;
     Raytracer::Vec3 newRay;
 };
-
 class Ray {
     public:
         Ray(Vec3 origin, Vec3 direction) : _origin(origin), _direction(direction) {};

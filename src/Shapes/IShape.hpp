@@ -9,12 +9,13 @@
 #define IShape_HPP_
 
 #include "Vec3.hpp"
+#include "Ray.hpp"
 
 namespace Raytracer {
 class IShape {
     public:
         virtual ~IShape() = default;
-        virtual Vec3 intersection() = 0;
+        virtual HitRecord intersection(Ray ray) = 0;
     protected:
     private:
 };

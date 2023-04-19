@@ -23,7 +23,7 @@ namespace Raytracer {
         private:
             Vec3 _position;
             Vec3 _rotation;
-            Screen _screen = Screen(Vec3(-1, -1, 0), Vec3(1, 1, 0), std::pair<int, int>(200, 200));
+            Screen _screen = Screen(Vec3(-1, -1, 1), Vec3(1, 1, 1), std::pair<int, int>(200, 200));
     };
 }
 

@@ -6,6 +6,7 @@
 */
 
 #include "Ray.hpp"
+#include <iostream>
 
 namespace Raytracer {
 
@@ -15,11 +16,11 @@ Ray::~Ray()
 
 Raytracer::Vec3 Ray::getOrigin()
 {
-    //return _origin;
+    return _origin;
 }
 
 Raytracer::Vec3 Ray::getDirection()
 {
-    //return _direction;
+    return _direction;
 }
 }

@@ -17,8 +17,13 @@ namespace Raytracer {
         public:
             Scene();
             ~Scene();
+
+            void addLight(ILight *light);
+            void addShape(IShape *shape);
             std::vector<ILight *> &getLights();
             std::vector<IShape *> &getShapes();
+
+            void throwRay(Ray ray, int depth);
         private:
             std::vector<ILight *> _lights;
             std::vector<IShape *> _shapes;

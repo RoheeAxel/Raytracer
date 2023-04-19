@@ -9,6 +9,7 @@
     #define RAYTRACER_H_
     #include "Scene.hpp"
     #include "Camera.hpp"
+    #include "Sphere.hpp"
 
 namespace Raytracer {
     class Raytracer {

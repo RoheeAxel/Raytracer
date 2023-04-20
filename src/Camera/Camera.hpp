@@ -22,6 +22,7 @@ namespace Raytracer {
             void render(Scene &scene);
         protected:
         private:
+            int _sample_per_pixel = 8;
             Vec3 _position;
             Vec3 _rotation;
             Screen _screen = Screen(Vec3(-1, -1, 1), Vec3(1, 1, 1), std::pair<int, int>(200, 200));

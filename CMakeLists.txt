@@ -14,6 +14,7 @@ include_directories("src/Raytracer")
 
 include_directories("src/Lights")
 include_directories("src/Lights/PointLight")
+include_directories("src/Lights/DirLight")
 
 include_directories("src/Shapes")
 include_directories("src/Shapes/Sphere")

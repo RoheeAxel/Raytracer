@@ -14,6 +14,7 @@ namespace Raytracer
     {
     public:
         Vec3();
+        Vec3(double scalar);
         Vec3(double x, double y, double z);
         Vec3(const Vec3& other);
         ~Vec3() = default;

@@ -16,9 +16,11 @@ class Sphere : public IShape{
         Sphere(Vec3 position, double radius);
         ~Sphere();
         HitRecord intersection(Ray ray);
-
+        void setMaterial(IMaterial *material);
+        IMaterial *getMaterial();
     protected:
     private:
+        IMaterial *_material;
         Vec3 _position;
         double _radius;
 };

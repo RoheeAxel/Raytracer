@@ -23,7 +23,7 @@ namespace Raytracer {
             std::vector<ILight *> &getLights();
             std::vector<IShape *> &getShapes();
 
-            void throwRay(Ray ray, int depth);
+            Vec3 throwRay(Ray ray, int depth);
         private:
             std::vector<ILight *> _lights;
             std::vector<IShape *> _shapes;

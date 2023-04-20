@@ -16,6 +16,8 @@ class IShape {
     public:
         virtual ~IShape() = default;
         virtual HitRecord intersection(Ray ray) = 0;
+        virtual void setMaterial(IMaterial *material) = 0;
+        virtual IMaterial *getMaterial() = 0;
     protected:
     private:
 };

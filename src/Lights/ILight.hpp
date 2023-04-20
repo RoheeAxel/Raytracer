@@ -11,10 +11,13 @@
 #include "Vec3.hpp"
 
 namespace Raytracer {
+class Scene;
+class Ray;
 class ILight {
     public:
         virtual ~ILight() = default;
-        virtual Raytracer::Vec3 illuminate(Raytracer::Vec3 point) = 0;
+        virtual Raytracer::Vec3 illuminate(Raytracer::Vec3 point, Scene &scene) = 0;
+        virtual Raytracer::Ray getRayToLight(Raytracer::Vec3 point) = 0;
     protected:
     private:
 };

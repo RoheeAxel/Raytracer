@@ -10,6 +10,7 @@
     #include "Scene.hpp"
     #include "Camera.hpp"
     #include "Sphere.hpp"
+    #include "PointLight.hpp"
 
 namespace Raytracer {
     class Raytracer {

@@ -14,6 +14,10 @@ namespace Raytracer
     {
     }
 
+    Vec3::Vec3(double scalar) : x(scalar), y(scalar), z(scalar)
+    {
+    }
+
     Vec3::Vec3(double x, double y, double z) : x(x), y(y), z(z)
     {
     }

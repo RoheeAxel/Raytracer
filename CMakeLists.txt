@@ -13,6 +13,7 @@ include_directories("src/Scene")
 include_directories("src/Raytracer")
 
 include_directories("src/Lights")
+include_directories("src/Lights/PointLight")
 
 include_directories("src/Shapes")
 include_directories("src/Shapes/Sphere")
@@ -20,6 +21,9 @@ include_directories("src/Shapes/Sphere")
 include_directories("src/Camera")
 
 include_directories("src/Camera/Screen")
+
+include_directories("src/Materials")
+include_directories("src/Materials/Plastic")
 
 file(GLOB_RECURSE SOURCES "src/*.cpp")
 add_executable(raytracer ${SOURCES})

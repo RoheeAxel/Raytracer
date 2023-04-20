@@ -8,6 +8,7 @@
 #include "Sphere.hpp"
 #include <iostream>
 #include <cmath>
+#include <algorithm>
 
 namespace Raytracer {
 Sphere::Sphere(Vec3 position, double radius) : _position(position), _radius(radius)
@@ -26,16 +27,31 @@ HitRecord Raytracer::Sphere::intersection(Ray r)
     float b = 2.0 * oc.Dot(r.getDirection());
     float c = oc.Dot(oc) - _radius * _radius;
     float discriminant = b * b - 4 * a * c;
+    double t1;
+    double t2;
     if(discriminant < 0){
         hitRecord.hit = false;
         return hitRecord;
     }
     else{
         hitRecord.hit = true;
-        hitRecord.point = r.getOrigin() + r.getDirection() * (-b - sqrt(discriminant)) / (2.0*a);
-        hitRecord.color = Vec3(255, 0, 0);
-        hitRecord.newRay = Vec3(0, 0, 0);
+
+        t1 = (-b - sqrt(discriminant)) / (2.0*a);
+        t2 = (-b + sqrt(discriminant)) / (2.0*a);
+        hitRecord.point = r.getDirection() + r.getOrigin() * std::max(t1, t2);
+        hitRecord.normal = (hitRecord.point - _position).Normalize();
+        hitRecord.material = this->getMaterial();
         return hitRecord;
     }
+}
+
+void Sphere::setMaterial(IMaterial *material)
+{
+    _material = material;
+}
+
+IMaterial *Sphere::getMaterial()
+{
+    return _material;
 }
 }

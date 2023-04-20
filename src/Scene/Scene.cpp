@@ -37,26 +37,21 @@ std::vector<IShape *> &Scene::getShapes()
     return _shapes;
 }
 
-void Scene::throwRay(Ray ray, int depth)
+Vec3 Scene::throwRay(Ray ray, int depth)
 {
-    HitRecord to_return;
-    to_return.hit = false;
+    Vec3 final_color;
 
     HitRecord hit;
     for (auto &shape : _shapes) {
         hit = shape->intersection(ray);
         if (hit.hit) {
             for (auto &light : _lights) {
-                hit.color = light->illuminate(hit.point);
+                hit.light = light->illuminate(hit.point, *this);
+                Ray light_dir = light->getRayToLight(hit.point);
+                final_color= hit.material->getColorAt(hit.point, hit.normal, light_dir, hit.light);
             }
-            to_return = hit;
         }
     }
-    if (to_return.hit) {
-        std::cout << to_return.color.x << " " << to_return.color.y << " " << to_return.color.z << std::endl;
-        return;
-    } else {
-        std::cout << "0 0 0" << std::endl;
-    }
+    return final_color;
 }
 }

@@ -9,14 +9,16 @@
 #define RAY_HPP_
 
 #include "Vec3.hpp"
+#include "IMaterial.hpp"
 
 namespace Raytracer {
 struct HitRecord
 {
     bool hit;
     Raytracer::Vec3 point;
-    Raytracer::Vec3 color;
-    Raytracer::Vec3 newRay;
+    Raytracer::Vec3 light;
+    Raytracer::Vec3 normal;
+    Raytracer::IMaterial *material;
 };
 class Ray {
     public:

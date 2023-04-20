@@ -37,36 +37,24 @@ namespace Raytracer
         return *this;
     }
 
-    Vec3& Vec3::operator+(const Vec3 &other)
+    Vec3 Vec3::operator+(const Vec3 &other)
     {
-        x += other.x;
-        y += other.y;
-        z += other.z;
-        return *this;
+        return Vec3(x + other.x, y + other.y, z + other.z);
     }
 
-    Vec3& Vec3::operator-(const Vec3 &other)
+    Vec3 Vec3::operator-(const Vec3 &other)
     {
-        x -= other.x;
-        y -= other.y;
-        z -= other.z;
-        return *this;
+        return Vec3(x - other.x, y - other.y, z - other.z);
     }
 
-    Vec3& Vec3::operator*(const Vec3 &other)
+    Vec3 Vec3::operator*(const Vec3 &other)
     {
-        x *= other.x;
-        y *= other.y;
-        z *= other.z;
-        return *this;
+        return Vec3(x * other.x, y * other.y, z * other.z);
     }
 
-    Vec3& Vec3::operator/(const Vec3 &other)
+    Vec3 Vec3::operator/(const Vec3 &other)
     {
-        x /= other.x;
-        y /= other.y;
-        z /= other.z;
-        return *this;
+        return Vec3(x / other.x, y / other.y, z / other.z);
     }
 
     Vec3 Vec3::operator*(double scalar) const

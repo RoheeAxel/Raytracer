@@ -6,12 +6,13 @@
 */
 
 #include "Raytracer.hpp"
+#include "Vec3.hpp"
 
 int main(int ac, char **av)
 {
     if (ac != 2)
         return 84;
-    Raytracer::Raytracer raytracer;
+    Raytracer::Raytracer raytracer(Raytracer::Vec3(-1, -1, 1), Raytracer::Vec3(1, 1, 1), std::pair<int, int>(500, 500));
     raytracer.buildScene();
     raytracer.render();
     return 0;

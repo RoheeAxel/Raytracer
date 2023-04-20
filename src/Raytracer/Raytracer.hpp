@@ -11,11 +11,13 @@
     #include "Camera.hpp"
     #include "Sphere.hpp"
     #include "PointLight.hpp"
+    #include "Vec3.hpp"
 
 namespace Raytracer {
     class Raytracer {
         public:
             Raytracer();
+            Raytracer(Vec3 top_left, Vec3 bot_right, std::pair<int, int> resolution);
             ~Raytracer() = default;
             void buildScene();
             void render();

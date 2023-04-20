@@ -13,7 +13,6 @@ namespace Raytracer
 PointLight::PointLight(Vec3 position, Vec3 color, double intensity)
     : _position(position), _color(color), _intensity(intensity)
 {
-    std::cout << position.z << std::endl;
 }
 
 PointLight::~PointLight()
@@ -28,8 +27,6 @@ Vec3 Raytracer::PointLight::illuminate(Raytracer::Vec3 point, Raytracer::Scene &
         hit = shape->intersection(ray);
         if (hit.hit == false)
             continue;
-        std::cout << "Hit " << hit.point.x << " " << hit.point.y << " " << hit.point.z << std::endl;
-        std::cout << "point " << point.x << " " << point.y << " " << point.z << std::endl;
         if (hit.point != point) {
             return Raytracer::Vec3(0,0,0);
         }
@@ -39,9 +36,10 @@ Vec3 Raytracer::PointLight::illuminate(Raytracer::Vec3 point, Raytracer::Scene &
 
 Raytracer::Ray Raytracer::PointLight::getRayToLight(Raytracer::Vec3 point)
 {
-    Vec3 direction = _position;
-    direction = point - direction;
-    direction = direction * 1;
+    Vec3 direction = point;
+    direction -= _position;
+    direction.x *= -1;
+    direction.y *= -1;
     Raytracer::Ray ray(_position, direction.Normalize());
     return ray;
 }

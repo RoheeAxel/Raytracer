@@ -16,7 +16,8 @@
 namespace Raytracer {
     class Camera {
         public:
-            Camera();
+            Camera(Vec3 top_left, Vec3 bot_right, std::pair<int, int> resolution);
+            Camera() = default;
             ~Camera();
             void render(Scene &scene);
         protected:

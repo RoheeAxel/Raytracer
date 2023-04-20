@@ -10,8 +10,9 @@
 #include <fstream>
 
 namespace Raytracer {
-Camera::Camera()
+Camera::Camera(Vec3 top_left, Vec3 bot_right, std::pair<int, int> resolution)
 {
+    _screen = Screen(top_left, bot_right, resolution);
 }
 
 Camera::~Camera()

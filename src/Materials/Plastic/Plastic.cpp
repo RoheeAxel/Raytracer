@@ -20,8 +20,8 @@ Plastic::~Plastic()
 
 Vec3 Plastic::getColorAt(Vec3 point, Vec3 normal, Ray light, Vec3 lightColor)
 {
-    // double intensity = normal.Dot(light.getDirection());
-    return Vec3(255, 255, 255);
+    double intensity = normal.Dot(light.getDirection());
+    return Vec3(255, 255, 255) * intensity;
 }
 
 Vec3 Plastic::getNewRay(Vec3 point, Vec3 normal, Vec3 light)

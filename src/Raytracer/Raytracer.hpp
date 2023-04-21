@@ -17,8 +17,8 @@
     #include <vector>
 
     #define THREADS 1
-    #define HEIGHT 200
-    #define WIDTH 200
+    #define HEIGHT 300
+    #define WIDTH 300
 
 namespace Raytracer {
     class Raytracer {

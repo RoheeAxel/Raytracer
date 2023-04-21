@@ -57,6 +57,8 @@ Vec3 Scene::throwRay(Ray ray, int depth)
                         current_color += throwRay(new_ray, depth + 1);
                         current_color /= 2;
                     }
+                else
+                    current_color = Vec3(0, 0, 0);
                 }
                 final_color = final_color.Max(current_color);
                 last_distance = hit.distance;

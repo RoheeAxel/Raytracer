@@ -43,6 +43,10 @@ void Raytracer::Raytracer::render()
     myfile << "P3" << std::endl << WIDTH << " " << HEIGHT << std::endl << "255" << std::endl;
     for (size_t i = 0; i < THREADS; i++) {
         std::ifstream file("test" + std::to_string(i) + ".ppm");
+        if (!file.is_open()) {
+            std::cout << "Error while opening file" << std::endl;
+            return;
+        }
         std::string line;
         while (std::getline(file, line)) {
             myfile << line << std::endl;

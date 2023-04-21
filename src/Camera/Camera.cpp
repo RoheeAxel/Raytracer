@@ -34,10 +34,10 @@ void Camera::render(Scene &scene)
     screenDiagonal = screenDiagonal.abs();
     std::ofstream myfile(this->_file);
 
-    for (int i = 0; i < _screen.getResolution().first; i++) {
-        for (int j = 0; j < _screen.getResolution().second; j++) {
-            dir.x = _screen.getTopLeft().x + j * screenDiagonal.x / _screen.getResolution().first;
-            dir.y = _screen.getTopLeft().y + i * screenDiagonal.y / _screen.getResolution().second;
+    for (int j = 0; j < _screen.getResolution().second; j++) {
+        for (int i = 0; i < _screen.getResolution().first; i++) {
+            dir.x = _screen.getTopLeft().x + i * screenDiagonal.x / _screen.getResolution().first;
+            dir.y = _screen.getTopLeft().y + j * screenDiagonal.y / _screen.getResolution().second;
             dir.z = _screen.getTopLeft().z;
             Ray ray(_position, dir);
             Vec3 color = scene.throwRay(ray, 0);

@@ -14,7 +14,7 @@
     #include <thread>
     #include <vector>
 
-    #define THREADS 2
+    #define THREADS 1
     #define HEIGHT 200
     #define WIDTH 200
 

@@ -35,7 +35,7 @@ void Raytracer::Raytracer::render()
 
     std::cout << "Rendering..." << std::endl;
     for (size_t i = 0; i < THREADS; i++) {
-        _cameras.push_back(Camera(Vec3(0, 0, 0), Vec3(0, 0, 0), Screen(Vec3(-1, value, 1), Vec3(1, value + (2 / THREADS), 1), std::pair<int, int>(WIDTH, HEIGHT / THREADS)), "test" + std::to_string(i) + ".ppm"));
+        _cameras.push_back(Camera(Vec3(0, 0, 0), Vec3(0, 0, 0), Screen(Vec3(-1, value, -1), Vec3(1, value + (2 / THREADS), -1), std::pair<int, int>(WIDTH, HEIGHT / THREADS)), "test" + std::to_string(i) + ".ppm"));
         _threads.push_back(std::thread(&Camera::render, &_cameras[i], std::ref(this->_scene)));
         value += (2 / THREADS);
     }

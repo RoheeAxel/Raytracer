@@ -10,9 +10,17 @@
 #include <fstream>
 
 namespace Raytracer {
-Camera::Camera(Vec3 top_left, Vec3 bot_right, std::pair<int, int> resolution)
+
+Camera::Camera()
 {
-    _screen = Screen(top_left, bot_right, resolution);
+}
+
+Camera::Camera(Vec3 position, Vec3 rotation, Screen screen, std::string file)
+{
+    _position = position;
+    _rotation = rotation;
+    _screen = screen;
+    _file = file;
 }
 
 Camera::~Camera()
@@ -24,9 +32,8 @@ void Camera::render(Scene &scene)
     Vec3 dir;
     Vec3 screenDiagonal = _screen.getBotRight() - _screen.getTopLeft();
     screenDiagonal = screenDiagonal.abs();
-    std::ofstream myfile("screenshot.ppm");
+    std::ofstream myfile(this->_file);
 
-    myfile << "P3" << std::endl << _screen.getResolution().first << " " << _screen.getResolution().second << std::endl << "255" << std::endl;
     for (int j = _screen.getResolution().second; j > 0; j--) {
         for (int i = 0; i < _screen.getResolution().first; i++) {
             Vec3 finalColor;

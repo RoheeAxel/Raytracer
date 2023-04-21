@@ -12,12 +12,13 @@
 #include "Screen.hpp"
 #include "Vec3.hpp"
 #include "Ray.hpp"
+#include <string>
 
 namespace Raytracer {
     class Camera {
         public:
-            Camera(Vec3 top_left, Vec3 bot_right, std::pair<int, int> resolution);
-            Camera() = default;
+            Camera();
+            Camera(Vec3 position, Vec3 rotation, Screen screen, std::string file);
             ~Camera();
             void render(Scene &scene);
         protected:
@@ -26,6 +27,7 @@ namespace Raytracer {
             Vec3 _position;
             Vec3 _rotation;
             Screen _screen = Screen(Vec3(-1, -1, 1), Vec3(1, 1, 1), std::pair<int, int>(200, 200));
+            std::string _file;
     };
 }
 

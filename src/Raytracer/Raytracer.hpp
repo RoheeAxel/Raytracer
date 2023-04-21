@@ -13,17 +13,23 @@
     #include "PointLight.hpp"
     #include "DirLight.hpp"
     #include "Vec3.hpp"
+    #include <thread>
+    #include <vector>
+
+    #define THREADS 1
+    #define HEIGHT 200
+    #define WIDTH 200
 
 namespace Raytracer {
     class Raytracer {
         public:
             Raytracer();
-            Raytracer(Vec3 top_left, Vec3 bot_right, std::pair<int, int> resolution);
             ~Raytracer() = default;
             void buildScene();
             void render();
         private:
-            Camera _camera;
+            std::vector<std::thread> _threads;
+            std::vector<Camera> _cameras;
             Scene _scene;
     };
 }

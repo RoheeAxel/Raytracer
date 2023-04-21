@@ -21,6 +21,16 @@ DirLight::~DirLight()
 
 Vec3 Raytracer::DirLight::illuminate(Raytracer::Vec3 point, Raytracer::Scene &scene)
 {
+    Raytracer::Ray ray = getRayToLight(point);
+    Raytracer::HitRecord hit;
+    for (auto &shape : scene.getShapes()) {
+        hit = shape->intersection(ray);
+        if (hit.hit == false)
+            continue;
+        if (hit.point != point) {
+            return Raytracer::Vec3(0,0,0);
+        }
+    }
     return Raytracer::Vec3(255,255,255);
 }
 

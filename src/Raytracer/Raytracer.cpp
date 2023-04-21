@@ -23,13 +23,9 @@ void Raytracer::Raytracer::buildScene()
     sphere->setMaterial(new Plastic());
     sphere3->setMaterial(new Plastic());
     PointLight *light = new PointLight(Vec3(-2, 0, -3), Vec3(255, 255, 255), 1);
-    PointLight *light2 = new PointLight(Vec3(2, 0, -3), Vec3(255, 255, 255), 1);
-
     _scene.addShape(sphere);
     _scene.addShape(sphere3);
     _scene.addLight(light);
-    _scene.addLight(light2);
-
 }
 
 void Raytracer::Raytracer::render()

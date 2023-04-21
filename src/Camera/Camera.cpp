@@ -27,6 +27,11 @@ Camera::~Camera()
 {
 }
 
+inline double random_double() {
+    // Returns a random real in [0,1).
+    return rand() / (RAND_MAX + 1.0);
+}
+
 void Camera::render(Scene &scene)
 {
     Vec3 dir;
@@ -34,14 +39,19 @@ void Camera::render(Scene &scene)
     screenDiagonal = screenDiagonal.abs();
     std::ofstream myfile(this->_file);
 
-    for (int j = 0; j < _screen.getResolution().second; j++) {
+    for (int j = _screen.getResolution().second; j > 0; j--) {
         for (int i = 0; i < _screen.getResolution().first; i++) {
-            dir.x = _screen.getTopLeft().x + i * screenDiagonal.x / _screen.getResolution().first;
-            dir.y = _screen.getTopLeft().y + j * screenDiagonal.y / _screen.getResolution().second;
-            dir.z = _screen.getTopLeft().z;
-            Ray ray(_position, dir);
-            Vec3 color = scene.throwRay(ray, 0);
-            myfile << color.x << " " << color.y << " " << color.z << std::endl;
+            Vec3 finalColor;
+            for (int k = 0; k < _sample_per_pixel; k++) {
+                dir.x = _screen.getTopLeft().x + (i + random_double()) * screenDiagonal.x / _screen.getResolution().first;
+                dir.y = _screen.getTopLeft().y + (j + random_double()) * screenDiagonal.y / _screen.getResolution().second;
+                dir.z = _screen.getTopLeft().z;
+                Ray ray(_position, dir);
+                Vec3 color = scene.throwRay(ray, 0);
+                finalColor += color;
+            }
+            finalColor /= _sample_per_pixel;
+            myfile << finalColor.x << " " << finalColor.y << " " << finalColor.z << std::endl;
         }
     }
     myfile.close();

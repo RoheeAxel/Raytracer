@@ -40,15 +40,17 @@ std::vector<IShape *> &Scene::getShapes()
 Vec3 Scene::throwRay(Ray ray, int depth)
 {
     Vec3 final_color;
+    double last_distance = -1;
 
     HitRecord hit;
     for (auto &shape : _shapes) {
         hit = shape->intersection(ray);
-        if (hit.hit) {
+        if (hit.hit && (hit.distance < last_distance || last_distance == -1)) {
             for (auto &light : _lights) {
                 hit.light = light->illuminate(hit.point, *this);
                 Ray light_dir = light->getRayToLight(hit.point);
                 final_color= hit.material->getColorAt(hit.point, hit.normal, light_dir, hit.light);
+                last_distance = hit.distance;
             }
         }
     }

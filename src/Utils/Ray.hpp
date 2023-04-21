@@ -19,6 +19,7 @@ struct HitRecord
     Raytracer::Vec3 light;
     Raytracer::Vec3 normal;
     Raytracer::IMaterial *material;
+    double distance;
 };
 class Ray {
     public:

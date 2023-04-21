@@ -12,7 +12,7 @@ int main(int ac, char **av)
 {
     if (ac != 2)
         return 84;
-    Raytracer::Raytracer raytracer(Raytracer::Vec3(-1, -1, -1), Raytracer::Vec3(1, 1, -1), std::pair<int, int>(200, 200));
+    Raytracer::Raytracer raytracer(Raytracer::Vec3(-1, -1, -1), Raytracer::Vec3(1, 1, -1), std::pair<int, int>(600, 600));
     raytracer.buildScene();
     raytracer.render();
     return 0;

@@ -19,11 +19,6 @@ Camera::~Camera()
 {
 }
 
-inline double random_double() {
-    // Returns a random real in [0,1).
-    return rand() / (RAND_MAX + 1.0);
-}
-
 void Camera::render(Scene &scene)
 {
     Vec3 dir;
@@ -36,8 +31,8 @@ void Camera::render(Scene &scene)
         for (int i = 0; i < _screen.getResolution().first; i++) {
             Vec3 finalColor;
             for (int k = 0; k < _sample_per_pixel; k++) {
-                dir.x = _screen.getTopLeft().x + (i + random_double()) * screenDiagonal.x / _screen.getResolution().first;
-                dir.y = _screen.getTopLeft().y + (j + random_double()) * screenDiagonal.y / _screen.getResolution().second;
+                dir.x = _screen.getTopLeft().x + (i + rand() / (RAND_MAX + 1.0)) * screenDiagonal.x / _screen.getResolution().first;
+                dir.y = _screen.getTopLeft().y + (j + rand() / (RAND_MAX + 1.0)) * screenDiagonal.y / _screen.getResolution().second;
                 dir.z = _screen.getTopLeft().z;
                 Ray ray(_position, dir);
                 Vec3 color = scene.throwRay(ray, 0);

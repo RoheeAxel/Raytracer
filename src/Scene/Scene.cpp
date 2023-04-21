@@ -50,6 +50,15 @@ Vec3 Scene::throwRay(Ray ray, int depth)
                 hit.light = light->illuminate(hit.point, *this);
                 Ray light_dir = light->getRayToLight(hit.point);
                 final_color= hit.material->getColorAt(hit.point, hit.normal, light_dir, hit.light);
+
+                if (depth < 5) {
+                    Ray new_ray = Ray(hit.point, hit.material->getNewRay(hit.point, hit.normal, ray.getDirection()));
+                    if (new_ray.getDirection() != Vec3(0, 0, 0)) {
+                        final_color += throwRay(new_ray, depth + 1);
+                        final_color /= 2;
+                    }
+                }
+                ;
                 last_distance = hit.distance;
             }
         }

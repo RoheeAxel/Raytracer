@@ -8,6 +8,7 @@
 #include "Raytracer.hpp"
 #include "Camera.hpp"
 #include "Plastic.hpp"
+#include "Normal.hpp"
 #include <iostream>
 
 
@@ -23,13 +24,13 @@ Raytracer::Raytracer::Raytracer(Vec3 top_left, Vec3 bot_right, std::pair<int, in
 
 void Raytracer::Raytracer::buildScene()
 {
-    Sphere *sphere = new Sphere(Vec3(0, 0, -3), 0.5);
-    Sphere *sphere2 = new Sphere(Vec3(0, -100.5, -1), 100);
-    sphere->setMaterial(new Plastic());
-    sphere2->setMaterial(new Plastic());
+    Sphere *sphere = new Sphere(Vec3(0, 0, -3), 1);
+    Sphere *sphere3 = new Sphere(Vec3(0, -101, -5), 100);
+    sphere->setMaterial(new Normal());
+    sphere3->setMaterial(new Plastic());
     PointLight *light = new PointLight(Vec3(2, 0, -1), Vec3(255, 255, 255), 1);
     _scene.addShape(sphere);
-    _scene.addShape(sphere2);
+    _scene.addShape(sphere3);
     _scene.addLight(light);
 }
 

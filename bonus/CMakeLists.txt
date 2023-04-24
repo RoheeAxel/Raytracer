@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project("raytracer")
+project("viewer")
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -9,7 +9,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 # Include directories
 include_directories(${CMAKE_SOURCE_DIR}/src/Graphics)
 
-include_directories(${CMAKE_SOURCE_DIR}/src/Loader)
+include_directories(${CMAKE_SOURCE_DIR}/src/Viewer)
 
 include_directories(${CMAKE_SOURCE_DIR}/src/Prog)
 
@@ -35,4 +35,7 @@ include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Shapes/Sphere)
 include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Utils)
 
 file(GLOB_RECURSE SOURCES "src/*.cpp")
-add_executable(raytracer ${SOURCES})
+add_executable(viewer ${SOURCES})
+
+find_package(SFML REQUIRED COMPONENTS graphics window system)
+target_link_libraries(viewer sfml-graphics sfml-window sfml-system)

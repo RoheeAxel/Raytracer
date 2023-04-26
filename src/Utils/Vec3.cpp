@@ -162,4 +162,8 @@ namespace Raytracer
     {
         return Vec3(y * other.z - z * other.y, z * other.x - x * other.z, x * other.y - y * other.x);
     }
+    Vec3 Vec3::Max(const Vec3 &other) const
+    {
+        return Vec3(std::max(x, other.x), std::max(y, other.y), std::max(z, other.z));
+    }
 }

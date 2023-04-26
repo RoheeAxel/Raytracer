@@ -7,7 +7,11 @@
 
 #include "Raytracer.hpp"
 #include "Camera.hpp"
+
 #include "Plastic.hpp"
+#include "Normal.hpp"
+#include "Lambertian.hpp"
+
 #include <iostream>
 #include <fstream>
 
@@ -17,12 +21,14 @@ Raytracer::Raytracer::Raytracer()
 
 void Raytracer::Raytracer::buildScene()
 {
-    Sphere *sphere = new Sphere(Vec3(0, 0, -3), 0.5);
-    Sphere *sphere2 = new Sphere(Vec3(0, -100.5, -1), 100);
-    sphere->setMaterial(new Plastic());
-    sphere2->setMaterial(new Plastic());
-    PointLight *light = new PointLight(Vec3(2, 0, -1), Vec3(255, 255, 255), 1);
+    Sphere *sphere = new Sphere(Vec3(0, 0, -3), 1);
+    Sphere *sphere3 = new Sphere(Vec3(0, -101, -5), 100);
+    sphere->setMaterial(new Lambertian(Vec3(255, 0, 0)));
+
+    sphere3->setMaterial(new Lambertian(Vec3(0, 255, 0)));
+    PointLight *light = new PointLight(Vec3(0, 5, -5), Vec3(255, 255, 255), 1);
     _scene.addShape(sphere);
+    _scene.addShape(sphere3);
     _scene.addLight(light);
 }
 

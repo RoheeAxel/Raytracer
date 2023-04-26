@@ -25,6 +25,9 @@ include_directories("src/Camera/Screen")
 
 include_directories("src/Materials")
 include_directories("src/Materials/Plastic")
+include_directories("src/Materials/Normal")
+include_directories("src/Materials/Lambertian")
+
 
 file(GLOB_RECURSE SOURCES "src/*.cpp")
 add_executable(raytracer ${SOURCES})

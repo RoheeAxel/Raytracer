@@ -34,19 +34,31 @@ void Raytracer::Raytracer::buildScene()
 
 void Raytracer::Raytracer::render()
 {
+    this->renderThread(THREADS);
+    this->mergeThread();
+}
+
+void Raytracer::Raytracer::renderThread(size_t nb_threads)
+{
     float value = -1;
     std::ofstream myfile("result.ppm");
 
     std::cout << "Rendering..." << std::endl;
-    for (size_t i = 0; i < THREADS; i++) {
-        _cameras.push_back(Camera(Vec3(0, 0, 0), Vec3(0, 0, 0), Screen(Vec3(-1, value, -1), Vec3(1, value + (2 / THREADS), -1), std::pair<int, int>(WIDTH, HEIGHT / THREADS)), "test" + std::to_string(i) + ".ppm"));
+    for (size_t i = 0; i < nb_threads; i++) {
+        _cameras.push_back(Camera(Vec3(0, 0, 0), Vec3(0, 0, 0), Screen(Vec3(-1, value, -1), Vec3(1, value + (2 / nb_threads), -1), std::pair<int, int>(WIDTH, HEIGHT / nb_threads)), "test" + std::to_string(i) + ".ppm"));
         _threads.push_back(std::thread(&Camera::render, &_cameras[i], std::ref(this->_scene)));
-        value += (2 / THREADS);
+        value += (2 / nb_threads);
     }
-    for (size_t i = 0; i < THREADS; i++) {
+    for (size_t i = 0; i < nb_threads; i++) {
         _threads[i].join();
     }
     std::cout << "Done!" << std::endl;
+}
+
+void Raytracer::Raytracer::mergeThread()
+{
+    std::ofstream myfile("result.ppm");
+
     std::cout << "Merging files..." << std::endl;
     myfile << "P3" << std::endl << WIDTH << " " << HEIGHT << std::endl << "255" << std::endl;
     for (size_t i = 0; i < THREADS; i++) {

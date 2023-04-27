@@ -7,6 +7,9 @@
 
 #include "PointLight.hpp"
 #include <iostream>
+#include <iomanip>
+
+#define EPSILON -0.0001
 
 namespace Raytracer
 {
@@ -25,7 +28,7 @@ Vec3 Raytracer::PointLight::illuminate(Raytracer::Vec3 point, Raytracer::Scene &
     Raytracer::HitRecord hit;
     for (auto &shape : scene.getShapes()) {
         hit = shape->intersection(ray);
-        if (hit.hit && hit.distance < (point - _position).Length()) {
+        if (hit.hit && (hit.distance - (point - _position).Length()) < EPSILON) {
             return Raytracer::Vec3(0, 0, 0);
         }
     }

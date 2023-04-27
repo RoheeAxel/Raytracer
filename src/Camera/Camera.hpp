@@ -8,6 +8,8 @@
 #ifndef CAMERA_HPP_
 #define CAMERA_HPP_
 
+#define SAMPLE_PER_PIXEL 100
+
 #include "Scene.hpp"
 #include "Screen.hpp"
 #include "Vec3.hpp"
@@ -18,7 +20,7 @@ namespace Raytracer {
     class Camera {
         public:
             Camera();
-            Camera(Vec3 position, Vec3 rotation, Screen screen, std::string file);
+            Camera(Vec3 position, Vec3 rotation, Screen screen, std::string file, size_t test);
             ~Camera();
             void render(Scene &scene);
         protected:
@@ -31,6 +33,7 @@ namespace Raytracer {
             Vec3 _rotation;
             Screen _screen = Screen(Vec3(-1, -1, 1), Vec3(1, 1, 1), std::pair<int, int>(200, 200));
             std::string _file;
+            size_t test;
     };
 }
 

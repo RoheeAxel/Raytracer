@@ -15,12 +15,13 @@ Camera::Camera()
 {
 }
 
-Camera::Camera(Vec3 position, Vec3 rotation, Screen screen, std::string file)
+Camera::Camera(Vec3 position, Vec3 rotation, Screen screen, std::string file, size_t test)
 {
     _position = position;
     _rotation = rotation;
     _screen = screen;
     _file = file;
+    this->test = test;
 }
 
 Camera::~Camera()
@@ -31,14 +32,17 @@ void Camera::render(Scene &scene)
 {
     std::ofstream myfile(this->_file);
 
+    std::cout << "Thread starting " << test << "!" <<  std::endl;
     for (int j = _screen.getResolution().second; j > 0; j--) {
         for (int i = 0; i < _screen.getResolution().first; i++) {
             Vec3 finalColor;
             finalColor = randomSuperSampling(scene, i, j);
+
             myfile << finalColor.x << " " << finalColor.y << " " << finalColor.z << std::endl;
         }
     }
     myfile.close();
+    std::cout << "Thread finished " << test << "!" <<  std::endl;
 }
 
 Vec3 Camera::randomSuperSampling(Scene &scene, int i, int j)
@@ -48,7 +52,7 @@ Vec3 Camera::randomSuperSampling(Scene &scene, int i, int j)
     screenDiagonal = screenDiagonal.abs();
     Vec3 finalColor;
 
-    for (int k = 0; k < _sample_per_pixel; k++) {
+    for (int k = 0; k < SAMPLE_PER_PIXEL; k++) {
         dir.x = _screen.getTopLeft().x + (i + rand() / (RAND_MAX + 1.0)) * screenDiagonal.x / _screen.getResolution().first;
         dir.y = _screen.getTopLeft().y + (j + rand() / (RAND_MAX + 1.0)) * screenDiagonal.y / _screen.getResolution().second;
         dir.z = _screen.getTopLeft().z;
@@ -56,7 +60,7 @@ Vec3 Camera::randomSuperSampling(Scene &scene, int i, int j)
         Vec3 color = scene.throwRay(ray, 0);
         finalColor += color;
     }
-    return finalColor / _sample_per_pixel;
+    return finalColor / SAMPLE_PER_PIXEL;
 }
 
 Vec3 Camera::regularSuperSampling(Scene &scene, int i, int j)

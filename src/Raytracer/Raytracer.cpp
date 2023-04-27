@@ -14,6 +14,7 @@
 
 #include <iostream>
 #include <fstream>
+#include <filesystem>
 
 Raytracer::Raytracer::Raytracer()
 {
@@ -45,9 +46,14 @@ void Raytracer::Raytracer::renderThread(size_t nb_threads)
 
     std::cout << "Rendering..." << std::endl;
     for (size_t i = 0; i < nb_threads; i++) {
-        _cameras.push_back(Camera(Vec3(0, 0, 0), Vec3(0, 0, 0), Screen(Vec3(-1, value, -1), Vec3(1, value + (2 / nb_threads), -1), std::pair<int, int>(WIDTH, HEIGHT / nb_threads)), "test" + std::to_string(i) + ".ppm"));
+        Camera cam(Vec3(0, 0, 0), Vec3(0, 0, 0), Screen(Vec3(-1, value, -1), Vec3(1, value + (2.0 / nb_threads), -1), std::pair<int, int>(WIDTH, HEIGHT / nb_threads)), "test" + std::to_string(i) + ".txt", i);
+        std::cout << "This is camera number " << i << ":" << std::endl;
+        std::cout << "First " << -1 << " " << value << " " << -1 << std::endl;
+        std::cout << "Second " << 1 << " " << value + (2.0 / nb_threads) << " " << -1 << std::endl;
+        std::cout << "Size : " << WIDTH << " " << HEIGHT / nb_threads << std::endl;
+        _cameras.push_back(cam);
         _threads.push_back(std::thread(&Camera::render, &_cameras[i], std::ref(this->_scene)));
-        value += (2 / nb_threads);
+        value = value + (2.0 / nb_threads);
     }
     for (size_t i = 0; i < nb_threads; i++) {
         _threads[i].join();
@@ -61,8 +67,8 @@ void Raytracer::Raytracer::mergeThread()
 
     std::cout << "Merging files..." << std::endl;
     myfile << "P3" << std::endl << WIDTH << " " << HEIGHT << std::endl << "255" << std::endl;
-    for (size_t i = 0; i < THREADS; i++) {
-        std::ifstream file("test" + std::to_string(i) + ".ppm");
+    for (int i = THREADS - 1; i > -1; i--) {
+        std::ifstream file("test" + std::to_string(i) + ".txt");
         if (!file.is_open()) {
             std::cout << "Error while opening file" << std::endl;
             return;
@@ -72,6 +78,7 @@ void Raytracer::Raytracer::mergeThread()
             myfile << line << std::endl;
         }
         file.close();
+        std::filesystem::remove("test" + std::to_string(i) + ".txt");
     }
     myfile.close();
     std::cout << "Done!" << std::endl;

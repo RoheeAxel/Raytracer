@@ -14,7 +14,9 @@
     #include "DirLight.hpp"
     #include "Vec3.hpp"
     #include <thread>
+    #include <array>
     #include <vector>
+    #include <semaphore>
 
     #define THREADS 1
     #define HEIGHT 300
@@ -28,6 +30,9 @@ namespace Raytracer {
             void buildScene();
             void render();
         private:
+            void renderThread(size_t nb_threads);
+            void mergeThread();
+            std::array<std::array<Vec3, WIDTH>, HEIGHT> _pixels;
             std::vector<std::thread> _threads;
             std::vector<Camera> _cameras;
             Scene _scene;

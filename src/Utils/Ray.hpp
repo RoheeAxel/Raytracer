@@ -12,15 +12,6 @@
 #include "IMaterial.hpp"
 
 namespace Raytracer {
-struct HitRecord
-{
-    bool hit;
-    Raytracer::Vec3 point;
-    Raytracer::Vec3 light;
-    Raytracer::Vec3 normal;
-    Raytracer::IMaterial *material;
-    double distance;
-};
 class Ray {
     public:
         Ray(Vec3 origin, Vec3 direction) : _origin(origin), _direction(direction) {};

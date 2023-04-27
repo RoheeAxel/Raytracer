@@ -21,14 +21,13 @@ Raytracer::Raytracer::Raytracer()
 
 void Raytracer::Raytracer::buildScene()
 {
-    Sphere *sphere = new Sphere(Vec3(0, 0, -3), 1);
-    Sphere *sphere3 = new Sphere(Vec3(0, -101, -5), 100);
+    Sphere *sphere = new Sphere(Vec3(0, 0, -3), 0.5);
+    Sphere *sphere2 = new Sphere(Vec3(0, -100.5, -3), 100);
     sphere->setMaterial(new Lambertian(Vec3(255, 0, 0)));
-
-    sphere3->setMaterial(new Lambertian(Vec3(0, 255, 0)));
-    PointLight *light = new PointLight(Vec3(0, 5, -5), Vec3(255, 255, 255), 1);
+    sphere2->setMaterial(new Lambertian(Vec3(255, 255, 255)));
+    PointLight *light = new PointLight(Vec3(8, 3, -3), Vec3(255, 255, 255), 1);
     _scene.addShape(sphere);
-    _scene.addShape(sphere3);
+    _scene.addShape(sphere2);
     _scene.addLight(light);
 }
 

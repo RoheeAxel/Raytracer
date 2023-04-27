@@ -26,11 +26,9 @@ Vec3 Raytracer::PointLight::illuminate(Raytracer::Vec3 point, Raytracer::Scene &
     for (auto &shape : scene.getShapes()) {
         hit = shape->intersection(ray);
         if (hit.hit && hit.distance < (point - _position).Length()) {
-            // An object is blocking the light
             return Raytracer::Vec3(0, 0, 0);
         }
     }
-    // No objects are blocking the light, return full intensity
     return _color;
 }
 
@@ -38,8 +36,6 @@ Raytracer::Ray Raytracer::PointLight::getRayToLight(Raytracer::Vec3 point)
 {
     Vec3 direction = point;
     direction -= _position;
-    direction.x *= -1;
-    direction.y *= -1;
     Raytracer::Ray ray(_position, direction.Normalize());
     return ray;
 }

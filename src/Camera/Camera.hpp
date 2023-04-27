@@ -26,7 +26,7 @@ namespace Raytracer {
             Vec3 randomSuperSampling(Scene &scene, int i, int j);
             Vec3 regularSuperSampling(Scene &scene, int i, int j);
             Vec3 (*samplingFunction)(Scene &scene, int i, int j);
-            int _sample_per_pixel = 100;
+            int _sample_per_pixel = 50;
             Vec3 _position;
             Vec3 _rotation;
             Screen _screen = Screen(Vec3(-1, -1, 1), Vec3(1, 1, 1), std::pair<int, int>(200, 200));

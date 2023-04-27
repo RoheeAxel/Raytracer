@@ -28,4 +28,10 @@ Vec3 Plastic::getNewRay(Vec3 point, Vec3 normal, Vec3 light)
 {
     return light - normal * 2 * normal.Dot(light);
 }
+
+double Plastic::getReflectivity()
+{
+    return 0.99;
+}
+
 }

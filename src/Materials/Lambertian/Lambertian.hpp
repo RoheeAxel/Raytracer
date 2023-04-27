@@ -20,7 +20,7 @@ class Lambertian : public IMaterial{
         ~Lambertian();
         Vec3 getColorAt(Vec3 point, Vec3 normal, Ray light, Vec3 lightColor) override;
         Vec3 getNewRay(Vec3 point, Vec3 normal, Vec3 light) override;
-
+        double getReflectivity() override;
     protected:
     private:
         Vec3 _base_color;

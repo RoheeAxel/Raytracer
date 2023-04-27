@@ -10,6 +10,7 @@
 
 #include "Vec3.hpp"
 #include "Ray.hpp"
+#include "HitRecord.hpp"
 
 namespace Raytracer {
 class IShape {

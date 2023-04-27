@@ -19,7 +19,7 @@ class Plastic : public IMaterial{
         ~Plastic();
         Vec3 getColorAt(Vec3 point, Vec3 normal, Ray light, Vec3 lightColor) override;
         Vec3 getNewRay(Vec3 point, Vec3 normal, Vec3 light) override;
-
+        double getReflectivity() override;
     protected:
     private:
 };

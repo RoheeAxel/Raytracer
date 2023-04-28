@@ -8,7 +8,7 @@
 #ifndef CAMERA_HPP_
 #define CAMERA_HPP_
 
-#define SAMPLE_PER_PIXEL 100
+#define SAMPLE_PER_PIXEL 10
 
 #include "Scene.hpp"
 #include "Screen.hpp"
@@ -28,7 +28,7 @@ namespace Raytracer {
             Vec3 randomSuperSampling(Scene &scene, int i, int j);
             Vec3 regularSuperSampling(Scene &scene, int i, int j);
             Vec3 (*samplingFunction)(Scene &scene, int i, int j);
-            int _sample_per_pixel = 50;
+            int _sample_per_pixel = 1000;
             Vec3 _position;
             Vec3 _rotation;
             Screen _screen = Screen(Vec3(-1, -1, 1), Vec3(1, 1, 1), std::pair<int, int>(200, 200));

@@ -27,7 +27,7 @@ void Raytracer::Raytracer::buildScene()
     sphere->setMaterial(new Lambertian(Vec3(255, 0, 0)));
     sphere2->setMaterial(new Lambertian(Vec3(255, 255, 255)));
     PointLight *light = new PointLight(Vec3(8, 3, -3), Vec3(255, 255, 255), 1);
-    AmbientLight *ambient = new AmbientLight(Vec3(255, 255, 255), 0.1);
+    AmbientLight *ambient = new AmbientLight(Vec3(255, 255, 255), 0.3);
     _scene.addShape(sphere);
     _scene.addShape(sphere2);
     _scene.addLight(light);

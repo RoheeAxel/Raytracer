@@ -12,6 +12,7 @@ include_directories(Camera/Screen)
 include_directories(Lights)
 include_directories(Lights/DirLight)
 include_directories(Lights/PointLight)
+include_directories(Lights/AmbientLight)
 
 include_directories(Materials)
 include_directories(Materials/Lambertian)

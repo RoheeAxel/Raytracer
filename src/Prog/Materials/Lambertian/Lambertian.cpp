@@ -27,7 +27,8 @@ Lambertian::~Lambertian()
 Vec3 Lambertian::getColorAt(Vec3 point, Vec3 normal, Ray light, Vec3 lightColor)
 {
     double intensity = normal.Dot(light.getDirection());
-    return (_base_color * lightColor * -intensity).Clamp(0, 255);
+    Vec3 unit_light = lightColor / 255;
+    return (_base_color  * -intensity * unit_light).Clamp(0, 255);
     //return Vec3(255, 25, 255) * intensity;
 }
 

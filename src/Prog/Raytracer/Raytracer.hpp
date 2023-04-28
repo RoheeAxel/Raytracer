@@ -12,6 +12,7 @@
     #include "Sphere.hpp"
     #include "PointLight.hpp"
     #include "DirLight.hpp"
+    #include "AmbientLight.hpp"
     #include "Vec3.hpp"
     #include <thread>
     #include <array>

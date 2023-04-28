@@ -46,10 +46,6 @@ void Raytracer::Raytracer::renderThread(size_t nb_threads)
     std::cout << "Rendering..." << std::endl;
     for (size_t i = 0; i < nb_threads; i++) {
         Camera cam(Vec3(0, 0, 0), Vec3(0, 0, 0), Screen(Vec3(-1, value, -1), Vec3(1, value + (2.0 / nb_threads), -1), std::pair<int, int>(WIDTH, HEIGHT / nb_threads)), "test" + std::to_string(i) + ".txt", i);
-        std::cout << "This is camera number " << i << ":" << std::endl;
-        std::cout << "First " << -1 << " " << value << " " << -1 << std::endl;
-        std::cout << "Second " << 1 << " " << value + (2.0 / nb_threads) << " " << -1 << std::endl;
-        std::cout << "Size : " << WIDTH << " " << HEIGHT / nb_threads << std::endl;
         _cameras.push_back(cam);
         value = value + (2.0 / nb_threads);
     }

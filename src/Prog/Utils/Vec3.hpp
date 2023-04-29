@@ -20,10 +20,10 @@ namespace Raytracer
         ~Vec3() = default;
 
         Vec3& operator=(const Vec3& other);
-        Vec3 operator+(const Vec3& other);
-        Vec3 operator-(const Vec3& other);
-        Vec3 operator*(const Vec3& other);
-        Vec3 operator/(const Vec3& other);
+        Vec3 operator+(const Vec3& other) const;
+        Vec3 operator-(const Vec3& other) const;
+        Vec3 operator*(const Vec3& other) const;
+        Vec3 operator/(const Vec3& other) const;
         Vec3 operator*(double scalar) const;
         Vec3 operator/(double scalar) const;
         Vec3& operator+=(const Vec3& other);
@@ -42,6 +42,7 @@ namespace Raytracer
         double Dot(const Vec3& other) const;
         Vec3 Cross(const Vec3& other) const;
         Vec3 Max(const Vec3& other) const;
+        Vec3 Clamp(const double min, const double max) const;
 
         double x;
         double y;

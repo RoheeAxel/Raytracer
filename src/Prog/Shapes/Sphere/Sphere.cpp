@@ -40,10 +40,11 @@ HitRecord Raytracer::Sphere::intersection(Ray r)
             hitRecord.hit = false;
             return hitRecord;
         }
-        hitRecord.point = r.getOrigin() + r.getDirection() * std::min(t1, t2);
+        hitRecord.point = r.getOrigin() + r.getDirection() * t1;
         hitRecord.normal = (hitRecord.point - _position).Normalize();
         hitRecord.distance = (hitRecord.point - r.getOrigin()).Length();
         hitRecord.material = this->getMaterial();
+        hitRecord.set_face_normal(r);
         return hitRecord;
     }
 }

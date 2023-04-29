@@ -7,6 +7,7 @@
 
 #include "Vec3.hpp"
 #include <cmath>
+#include <algorithm>
 
 namespace Raytracer
 {
@@ -37,22 +38,22 @@ namespace Raytracer
         return *this;
     }
 
-    Vec3 Vec3::operator+(const Vec3 &other)
+    Vec3 Vec3::operator+(const Vec3 &other) const
     {
         return Vec3(x + other.x, y + other.y, z + other.z);
     }
 
-    Vec3 Vec3::operator-(const Vec3 &other)
+    Vec3 Vec3::operator-(const Vec3 &other) const
     {
         return Vec3(x - other.x, y - other.y, z - other.z);
     }
 
-    Vec3 Vec3::operator*(const Vec3 &other)
+    Vec3 Vec3::operator*(const Vec3 &other) const
     {
         return Vec3(x * other.x, y * other.y, z * other.z);
     }
 
-    Vec3 Vec3::operator/(const Vec3 &other)
+    Vec3 Vec3::operator/(const Vec3 &other) const
     {
         return Vec3(x / other.x, y / other.y, z / other.z);
     }
@@ -165,5 +166,10 @@ namespace Raytracer
     Vec3 Vec3::Max(const Vec3 &other) const
     {
         return Vec3(std::max(x, other.x), std::max(y, other.y), std::max(z, other.z));
+    }
+
+    Vec3 Vec3::Clamp(const double min, const double max) const
+    {
+        return Vec3(std::clamp(x, min, max), std::clamp(y, min, max), std::clamp(z, min, max));
     }
 }

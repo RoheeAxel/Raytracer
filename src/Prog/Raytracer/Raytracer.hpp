@@ -12,15 +12,16 @@
     #include "Sphere.hpp"
     #include "PointLight.hpp"
     #include "DirLight.hpp"
+    #include "AmbientLight.hpp"
     #include "Vec3.hpp"
     #include <thread>
     #include <array>
     #include <vector>
     #include <semaphore>
 
-    #define THREADS 4
-    #define HEIGHT 300
-    #define WIDTH 300
+    #define THREADS 10
+    #define HEIGHT 200
+    #define WIDTH 200
 
 namespace Raytracer {
     class Raytracer {
@@ -32,7 +33,6 @@ namespace Raytracer {
         private:
             void renderThread(size_t nb_threads);
             void mergeThread();
-            std::array<std::array<Vec3, WIDTH>, HEIGHT> _pixels;
             std::vector<std::thread> _threads;
             std::vector<Camera> _cameras;
             Scene _scene;

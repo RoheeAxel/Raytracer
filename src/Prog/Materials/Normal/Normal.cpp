@@ -30,4 +30,9 @@ Vec3 Normal::getNewRay(Vec3 point, Vec3 normal, Vec3 light)
 {
     return Vec3(0,0,0);
 }
+
+double Normal::getReflectivity()
+{
+    return 0;
+}
 }

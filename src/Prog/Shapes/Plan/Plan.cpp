@@ -7,6 +7,7 @@
 
 #include "Plan.hpp"
 #include <iostream>
+#include "AABB.hpp"
 #include <cmath>
 
 namespace Raytracer {
@@ -54,5 +55,10 @@ void Plan::setMaterial(IMaterial *material)
 IMaterial *Plan::getMaterial()
 {
     return _material;
+}
+
+AABB Plan::getAABB()
+{
+    return AABB(Vec3(-1000000, -1000000, -1000000), Vec3(1000000, 1000000, 1000000));
 }
 }

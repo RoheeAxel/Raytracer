@@ -9,16 +9,19 @@
 #define IShape_HPP_
 
 #include "Vec3.hpp"
-#include "Ray.hpp"
 #include "HitRecord.hpp"
+#include "IMaterial.hpp"
 
 namespace Raytracer {
+class Ray;
+class AABB;
 class IShape {
     public:
         virtual ~IShape() = default;
         virtual HitRecord intersection(Ray ray) = 0;
         virtual void setMaterial(IMaterial *material) = 0;
         virtual IMaterial *getMaterial() = 0;
+        virtual AABB getAABB() = 0;
     protected:
     private:
 };

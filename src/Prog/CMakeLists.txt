@@ -27,6 +27,7 @@ include_directories(Scene)
 include_directories(Shapes)
 include_directories(Shapes/Sphere)
 include_directories(Shapes/Plan)
+include_directories(Shapes/AABB)
 
 include_directories(Utils)
 

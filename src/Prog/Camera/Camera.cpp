@@ -8,6 +8,7 @@
 #include "Camera.hpp"
 #include <iostream>
 #include <fstream>
+#include <cmath>
 
 namespace Raytracer {
 
@@ -55,7 +56,11 @@ Vec3 Camera::randomSuperSampling(Scene &scene, int i, int j)
         Vec3 color = scene.throwRay(ray, 0);
         finalColor += color;
     }
-    return finalColor / SAMPLE_PER_PIXEL;
+    double scale = 1.0 / SAMPLE_PER_PIXEL;
+    finalColor = finalColor / 255;
+    finalColor = Vec3(sqrt(finalColor.x * scale), sqrt(finalColor.y * scale), sqrt(finalColor.z * scale));
+    finalColor = finalColor * 255;
+    return finalColor;
 }
 
 Vec3 Camera::regularSuperSampling(Scene &scene, int i, int j)

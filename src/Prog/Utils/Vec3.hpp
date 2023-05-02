@@ -43,6 +43,10 @@ namespace Raytracer
         Vec3 Cross(const Vec3& other) const;
         Vec3 Max(const Vec3& other) const;
         Vec3 Clamp(const double min, const double max) const;
+        Vec3 random();
+
+        double operator[](int i) const;
+        double& operator[](int i);
 
         double x;
         double y;

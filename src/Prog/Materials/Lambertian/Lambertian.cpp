@@ -34,24 +34,27 @@ Vec3 Lambertian::getColorAt(Vec3 point, Vec3 normal, Ray light, Vec3 lightColor)
         intensity = -normal.Dot(light.getDirection());
 
     unit_light = lightColor / 255;
-    return (_base_color  * intensity * unit_light).Clamp(0, 255);
+    Vec3 color_at_point;
+    if (int(point.x) > 0)
+        color_at_point = Vec3(255, 255, 255);
+    else
+        color_at_point = Vec3(0, 0, 0);
+    return (color_at_point  * intensity * unit_light).Clamp(0, 255);
 }
 
-Vec3 Lambertian::getNewRay(Vec3 point, Vec3 normal, Vec3 light)
+Vec3 Lambertian::getNewRay(HitRecord record, Vec3 light)
 {
-    Vec3 p = Vec3(rand() / (RAND_MAX + 1.0) * 2 - 1, rand() / (RAND_MAX + 1.0) * 2 - 1, rand() / (RAND_MAX + 1.0) * 2 - 1);
+    Vec3 p = Vec3(drand48() * 2 - 1, drand48() * 2 - 1, drand48() * 2 - 1);
+    Vec3 inSphere = (record.normal + p).Normalize();
 
-    return light - normal * 2 * normal.Dot(light) + p * 0.8;
-    // while (true) {
-    //     Vec3 p = Vec3(rand() / (RAND_MAX + 1.0) * 2 - 1, rand() / (RAND_MAX + 1.0) * 2 - 1, rand() / (RAND_MAX + 1.0) * 2 - 1);
-    //     if (p.Length() >= 1)
-    //         continue;
-    //     return p;
-    // }
+    if (inSphere.Dot(record.normal) > 0.0)
+        return inSphere;
+    else
+        return inSphere * -1;
 }
 
 double Lambertian::getReflectivity()
 {
-    return 0.45;
+    return 0.5;
 }
 }

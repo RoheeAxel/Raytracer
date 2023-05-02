@@ -172,4 +172,29 @@ namespace Raytracer
     {
         return Vec3(std::clamp(x, min, max), std::clamp(y, min, max), std::clamp(z, min, max));
     }
+
+    Vec3 Vec3::random() {
+        while (true) {
+            Vec3 p = (Vec3(drand48(), drand48(), drand48()) * 2) - Vec3(1, 1, 1);
+            if (p.Length() >= 1) continue;
+            return p;
+        }
+    }
+
+    double Vec3::operator[](int i) const
+    {
+        if (i == 0)
+            return x;
+        if (i == 1)
+            return y;
+        return z;
+    }
+    double &Vec3::operator[](int i)
+    {
+        if (i == 0)
+            return x;
+        if (i == 1)
+            return y;
+        return z;
+    }
 }

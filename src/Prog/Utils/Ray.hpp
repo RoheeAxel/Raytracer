@@ -9,7 +9,6 @@
 #define RAY_HPP_
 
 #include "Vec3.hpp"
-#include "IMaterial.hpp"
 
 namespace Raytracer {
 class Ray {

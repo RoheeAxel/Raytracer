@@ -9,6 +9,7 @@
 #define IMATERIAL_HPP_
 
 #include "Vec3.hpp"
+#include "HitRecord.hpp"
 
 namespace Raytracer {
 class Ray;
@@ -16,7 +17,7 @@ class IMaterial {
     public:
         virtual ~IMaterial() = default;
         virtual Vec3 getColorAt(Vec3 point, Vec3 normal, Ray light, Vec3 lightColor) = 0;
-        virtual Vec3 getNewRay(Vec3 point, Vec3 normal, Vec3 light) = 0;
+        virtual Vec3 getNewRay(HitRecord record, Vec3 light) = 0;
         virtual double getReflectivity() = 0;
 
     protected:

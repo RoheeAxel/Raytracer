@@ -26,7 +26,7 @@ Vec3 Normal::getColorAt(Vec3 point, Vec3 normal, Ray light, Vec3 lightColor)
     //return Vec3(255, 25, 255) * intensity;
 }
 
-Vec3 Normal::getNewRay(Vec3 point, Vec3 normal, Vec3 light)
+Vec3 Normal::getNewRay(HitRecord record, Vec3 light)
 {
     return Vec3(0,0,0);
 }

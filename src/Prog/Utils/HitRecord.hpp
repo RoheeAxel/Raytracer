@@ -8,9 +8,12 @@
 #ifndef HITRECORD_HPP_
 #define HITRECORD_HPP_
 #include "Vec3.hpp"
-#include "IMaterial.hpp"
+#include "Ray.hpp"
+#include <iostream>
 
 namespace Raytracer {
+class Ray;
+class IMaterial;
 class HitRecord {
     public:
         HitRecord() = default;
@@ -23,9 +26,9 @@ class HitRecord {
         double distance;
         bool front_face;
 
-        void set_face_normal(Ray& r) {
-            front_face = r.getDirection().Dot(normal) < 0;
-            normal = front_face ? normal : normal * -1;
+        void set_face_normal(Ray& r, Vec3& out_normal) {
+            front_face = r.getDirection().Dot(out_normal) < 0;
+            normal = front_face ? out_normal : out_normal * -1;
         }
 
     protected:

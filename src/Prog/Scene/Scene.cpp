@@ -7,6 +7,7 @@
 
 #include "Scene.hpp"
 #include <iostream>
+#include <cmath>
 
 namespace Raytracer {
 Scene::Scene()
@@ -56,18 +57,18 @@ Vec3 Scene::throwRay(Ray ray, int depth)
                 if (depth < 10) {
                     reflect = hit.material->getReflectivity();
 
-                    Ray new_ray = Ray(hit.point, hit.material->getNewRay(hit.point, hit.normal, ray.getDirection()));
+                    Ray new_ray = Ray(hit.point, hit.material->getNewRay(hit, ray.getDirection()));
                     if (new_ray.getDirection() != Vec3(0, 0, 0)) {
-                        current_color =  current_color * (1 - reflect) +  throwRay(new_ray, depth + 1) * reflect;
+                        current_color = (current_color / 255) * throwRay(new_ray, depth + 1); //* reflect; //  current_color * (1 - reflect)
                     }
                 }
-                final_color = final_color.Max(current_color);
+                final_color = current_color;
                 last_distance = hit.distance;
             }
         }
     }
     if (has_hit == false)
-        return Vec3(0, 167, 188);
+        return Vec3(255, 255, 255) * (1.0- 0.5*(ray.getDirection().y + 1.0)) + Vec3(127, 178, 255) * (0.5*(ray.getDirection().y + 1.0));
     return final_color;
 }
 }

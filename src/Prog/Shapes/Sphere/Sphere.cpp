@@ -7,6 +7,7 @@
 
 #include "Sphere.hpp"
 #include <iostream>
+#include "AABB.hpp"
 #include <cmath>
 
 namespace Raytracer {
@@ -40,11 +41,17 @@ HitRecord Raytracer::Sphere::intersection(Ray r)
             hitRecord.hit = false;
             return hitRecord;
         }
-        hitRecord.point = r.getOrigin() + r.getDirection() * t1;
-        hitRecord.normal = (hitRecord.point - _position).Normalize();
+        if (t1 < 0)
+            hitRecord.distance = t2;
+        else if (t2 < 0)
+            hitRecord.distance = t1;
+        else
+            hitRecord.distance = t1 < t2 ? t1 : t2;
+        hitRecord.point = r.getOrigin() + r.getDirection() * hitRecord.distance;
         hitRecord.distance = (hitRecord.point - r.getOrigin()).Length();
         hitRecord.material = this->getMaterial();
-        hitRecord.set_face_normal(r);
+        Vec3 out_normal = (hitRecord.point - _position) / _radius;
+        hitRecord.set_face_normal(r, out_normal);
         return hitRecord;
     }
 }
@@ -57,5 +64,12 @@ void Sphere::setMaterial(IMaterial *material)
 IMaterial *Sphere::getMaterial()
 {
     return _material;
+}
+
+AABB Sphere::getAABB()
+{
+    Vec3 bot = _position - Vec3(_radius, _radius, _radius);
+    Vec3 top = _position + Vec3(_radius, _radius, _radius);
+    return AABB(bot, top);
 }
 }

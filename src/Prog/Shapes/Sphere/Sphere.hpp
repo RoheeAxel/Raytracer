@@ -18,6 +18,7 @@ class Sphere : public IShape{
         HitRecord intersection(Ray ray);
         void setMaterial(IMaterial *material);
         IMaterial *getMaterial();
+        AABB getAABB();
     protected:
     private:
         IMaterial *_material;

@@ -12,6 +12,7 @@
     #include "Sphere.hpp"
     #include "PointLight.hpp"
     #include "DirLight.hpp"
+    #include "AmbientLight.hpp"
     #include "Vec3.hpp"
     #include <thread>
     #include <array>
@@ -19,6 +20,9 @@
     #include <vector>
     #include <semaphore>
 
+    #define THREADS 10
+    #define HEIGHT 200
+    #define WIDTH 200
 
 namespace Raytracer {
     class Raytracer {

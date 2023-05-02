@@ -28,6 +28,19 @@ include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Shapes/Sphere)
 
 include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Utils)
 
+# Find and install Zenity package
+if(UNIX)
+    if(EXISTS "/etc/lsb-release")
+        execute_process(COMMAND grep "DISTRIB_ID" "/etc/lsb-release" OUTPUT_VARIABLE LSB_RELEASE_ID)
+        string(REGEX REPLACE "DISTRIB_ID=([^\n]+)\n" "\\1" LSB_RELEASE_ID "${LSB_RELEASE_ID}")
+        if("${LSB_RELEASE_ID}" STREQUAL "Ubuntu")
+            execute_process(COMMAND apt-get install zenity)
+        elseif(EXISTS "/etc/fedora-release")
+            execute_process(COMMAND dnf install zenity)
+        endif()
+    endif()
+endif()
+
 file(GLOB_RECURSE SOURCES "*.cpp")
 add_executable(graphics ${SOURCES})
 

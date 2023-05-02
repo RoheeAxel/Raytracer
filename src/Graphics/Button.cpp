@@ -8,9 +8,9 @@
 #include "Button.hpp"
 
 Graphics::Button::Button(sf::Texture &texture, sf::Vector2f position, Graphics::ButtonType type)
-    : m_sprite(texture), m_type(type)
+    : _sprite(texture), _type(type)
 {
-    m_sprite.setPosition(position);
+    this->_sprite.setPosition(position);
 }
 
 Graphics::Button::~Button()
@@ -19,8 +19,8 @@ Graphics::Button::~Button()
 
 Graphics::ButtonType Graphics::Button::handleClick(sf::Vector2f clickPos)
 {
-    if (m_sprite.getGlobalBounds().contains(clickPos)) {
-        switch (m_type) {
+    if (this->_sprite.getGlobalBounds().contains(clickPos)) {
+        switch (this->_type) {
             case ButtonType::THREAD:
                 return ButtonType::THREAD;
             case ButtonType::CLUSTER:
@@ -40,5 +40,5 @@ Graphics::ButtonType Graphics::Button::handleClick(sf::Vector2f clickPos)
 
 sf::Sprite Graphics::Button::getSprite() const
 {
-    return m_sprite;
+    return this->_sprite;
 }

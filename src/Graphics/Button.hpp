@@ -23,14 +23,14 @@ namespace Graphics {
 
     class Button {
         public:
-            Button(sf::Texture& texture, sf::Vector2f position, Graphics::ButtonType type);
+            Button(sf::Texture &texture, sf::Vector2f position, Graphics::ButtonType type);
             ~Button();
             Graphics::ButtonType handleClick(sf::Vector2f clickPos);
             sf::Sprite getSprite() const;
 
         private:
-            sf::Sprite m_sprite;
-            Graphics::ButtonType m_type;
+            sf::Sprite _sprite;
+            Graphics::ButtonType _type;
     };
 }
 

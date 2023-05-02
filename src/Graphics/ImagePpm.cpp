@@ -9,6 +9,8 @@
 
 Viewer::ImagePpm::ImagePpm(const std::string filename)
 {
+    if (filename == "")
+        return;
     std::ifstream file(filename);
     sf::Color color;
     std::string format;
@@ -41,19 +43,10 @@ Viewer::ImagePpm::~ImagePpm()
 
 void Viewer::ImagePpm::draw(sf::RenderWindow &window)
 {
-    // Get the size of the window
     sf::Vector2u windowSize = window.getSize();
-
-    // Get the size of the image
     sf::Vector2u imageSize = this->_texture.getSize();
-
-    // Compute the position of the image to center it on the window
     float x = (windowSize.x - imageSize.x) / 2.0f;
     float y = (windowSize.y - imageSize.y) / 2.0f;
-
-    // Set the position of the sprite to center the image on the window
     this->_sprite.setPosition(x, y);
-
-    // Draw the sprite on the window
     window.draw(this->_sprite);
 }

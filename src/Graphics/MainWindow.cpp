@@ -6,15 +6,19 @@
 */
 
 #include "MainWindow.hpp"
+#include <fstream>
 
 Graphics::MainWindow::MainWindow(sf::Vector2f size, std::string title)
-    : m_window(sf::VideoMode(size.x, size.y), title), m_buttons(), m_imageSprite(), m_size(size)
+    : _window(sf::VideoMode(size.x, size.y), title), _buttons(), _imageSprite(), _size(size),
+    _font(), _clusterWindow(sf::Vector2f(200, 150), sf::Vector2f(400, 270), this->_font), _imagePpm("")
 {
-    m_imageSprite.setPosition(0, 50);
-    m_window.setFramerateLimit(60);
-    m_rectangle.setFillColor(sf::Color(97, 148, 176));
-    m_rectangle.setOutlineThickness(4);
-    m_rectangle.setOutlineColor(sf::Color(0, 0, 0));
+    this->_imageSprite.setPosition(0, 50);
+    this->_window.setFramerateLimit(60);
+    this->_rectangle.setFillColor(sf::Color(97, 148, 176));
+    this->_rectangle.setOutlineThickness(4);
+    this->_rectangle.setOutlineColor(sf::Color(0, 0, 0));
+    this->_font.loadFromFile("assets/font.ttf");
+    this->_clusterWindow.setFont(this->_font);
 }
 
 Graphics::MainWindow::~MainWindow()
@@ -23,45 +27,62 @@ Graphics::MainWindow::~MainWindow()
 
 void Graphics::MainWindow::addButton(Button button)
 {
-    m_buttons.push_back(button);
+    this->_buttons.push_back(button);
 }
 
 void Graphics::MainWindow::run()
 {
     Graphics::ButtonType tmp;
 
-    m_rectangle.setSize(sf::Vector2f(m_size.x, m_buttons[0].getSprite().getGlobalBounds().height + 10));
-    while (m_window.isOpen()) {
+    this->_rectangle.setSize(sf::Vector2f(this->_size.x, this->_buttons[0].getSprite().getGlobalBounds().height + 10));
+    while (this->_window.isOpen()) {
         sf::Event event;
-        while (m_window.pollEvent(event)) {
+        while (this->_window.pollEvent(event)) {
             if (event.type == sf::Event::Closed)
-                m_window.close();
+                this->_window.close();
+            if (this->_clusterWindow.getInputClose() == true) {
+                tmp = ButtonType::NONE;
+                this->_clusterWindow.setInputClose(false);
+            }
+            if (tmp == ButtonType::CLUSTER && this->_clusterWindow.getInputClose() == false)
+                this->_clusterWindow.handleEvent(event);
             else if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
-                for (Button& button : m_buttons) {
+                for (Button& button : this->_buttons) {
                     tmp = button.handleClick(sf::Vector2f(event.mouseButton.x, event.mouseButton.y));
-                    if (tmp != ButtonType::NONE)
+                    if (tmp == ButtonType::LOAD) {
+                        std::system("zenity --file-selection > path.txt");
+                        this->fillPathPpm();
+                        std::system("rm path.txt");
+                    } else if (tmp != ButtonType::NONE)
                         break;
                 }
             }
         }
-        m_window.clear(sf::Color(152, 152, 152));
-        m_window.draw(m_rectangle);
-        for (Button& button : m_buttons)
-            m_window.draw(button.getSprite());
-        if (tmp == ButtonType::THREAD)
-            std::cout << "THREAD" << std::endl;
-        else if (tmp == ButtonType::CLUSTER)
-            std::cout << "CLUSTER" << std::endl;
-        else if (tmp == ButtonType::SETTINGS)
-            std::cout << "SETTINGS" << std::endl;
-        else if (tmp == ButtonType::LOAD)
-            std::cout << "LOAD" << std::endl;
-        else if (tmp == ButtonType::PLAY){
-            Viewer::ImagePpm image("result.ppm");
-            image.draw(this->m_window);
+        this->_window.clear(sf::Color(152, 152, 152));
+        this->_window.draw(this->_rectangle);
+        for (Button& button : this->_buttons)
+            this->_window.draw(button.getSprite());
+        if (tmp == ButtonType::PLAY){
+            this->_imagePpm = Viewer::ImagePpm(this->_path);
         }
-        else if (tmp == ButtonType::NONE)
-            std::cout << "NONE" << std::endl;
-        m_window.display();
+        this->_imagePpm.draw(this->_window);
+        if (tmp == ButtonType::CLUSTER)
+            this->_clusterWindow.draw(this->_window, sf::BlendAlpha);
+        // else if (tmp == ButtonType::THREAD)
+        //     this->createThreadWindow();
+        // else if (tmp == ButtonType::SETTINGS)
+        //     this->createSettingsWindow();
+        this->_window.display();
     }
+}
+
+void Graphics::MainWindow::fillPathPpm()
+{
+    std::ifstream file("path.txt");
+
+    if (file.is_open()) {
+        std::getline(file, this->_path, '\n');
+        file.close();
+    } else
+        this->_path = "";
 }

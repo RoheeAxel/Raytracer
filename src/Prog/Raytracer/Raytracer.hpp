@@ -15,12 +15,10 @@
     #include "Vec3.hpp"
     #include <thread>
     #include <array>
+    #include <list>
     #include <vector>
     #include <semaphore>
 
-    #define THREADS 4
-    #define HEIGHT 1080
-    #define WIDTH 1920
 
 namespace Raytracer {
     class Raytracer {

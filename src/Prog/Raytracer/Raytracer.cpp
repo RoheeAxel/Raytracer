@@ -47,35 +47,38 @@ void Raytracer::Raytracer::renderThread(size_t nb_threads)
 
     std::cout << "Rendering..." << std::endl;
     for (size_t i = 0; i < nb_threads; i++) {
-        Camera cam(Vec3(0, 0, 0), Vec3(0, 0, 0), Screen(Vec3(-1, value, -1), Vec3(1, value + (2.0 / nb_threads), -1), std::pair<int, int>(WIDTH, HEIGHT / nb_threads)), "test" + std::to_string(i) + ".txt", i);
+        Camera cam(Vec3(0, 0, 0), Vec3(0, 0, 0), Screen(Vec3(value, -1, -1), Vec3(value + (2.0 / nb_threads), 1, -1), std::pair<int, int>(WIDTH / THREADS, HEIGHT)), i);
         _cameras.push_back(cam);
         value = value + (2.0 / nb_threads);
     }
-    for (size_t i = 0; i < nb_threads; i++)
+    for (size_t i = 0; i < nb_threads; i++) {
         _threads.push_back(std::thread(&Camera::render, &_cameras[i], std::ref(this->_scene)));
-    for (size_t i = 0; i < nb_threads; i++)
+    }
+    for (size_t i = 0; i < nb_threads; i++) {
         _threads[i].join();
+    }
     std::cout << "Done!" << std::endl;
 }
 
 void Raytracer::Raytracer::mergeThread()
 {
     std::ofstream myfile("result.ppm");
+    size_t index = 0;
+    size_t pos = 0;
+    size_t divider = WIDTH / THREADS;
+    std::vector<std::vector<Vec3>> pixels;
 
     std::cout << "Merging files..." << std::endl;
+    for (size_t i = 0; i < THREADS; i++) {
+        pixels.push_back(_cameras[i].getPixels());
+    }
     myfile << "P3" << std::endl << WIDTH << " " << HEIGHT << std::endl << "255" << std::endl;
-    for (int i = THREADS - 1; i > -1; i--) {
-        std::ifstream file("test" + std::to_string(i) + ".txt");
-        if (!file.is_open()) {
-            std::cout << "Error while opening file" << std::endl;
-            return;
+    for (size_t j = 0; j < HEIGHT; j++) {
+        for (size_t i = 0; i < WIDTH; i++) {
+            index = (i) / (divider);
+            pos = (divider * j) + i - (index * divider);
+            myfile << _cameras[index].getPixels()[pos].x << " " << _cameras[index].getPixels()[pos].y << " " <<_cameras[index].getPixels()[pos].z << std::endl;
         }
-        std::string line;
-        while (std::getline(file, line)) {
-            myfile << line << std::endl;
-        }
-        file.close();
-        std::filesystem::remove("test" + std::to_string(i) + ".txt");
     }
     myfile.close();
     std::cout << "Done!" << std::endl;

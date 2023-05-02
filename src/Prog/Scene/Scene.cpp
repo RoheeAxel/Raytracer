@@ -54,7 +54,7 @@ Vec3 Scene::throwRay(Ray ray, int depth)
                 hit.light = light->illuminate(hit.point, *this);
                 Ray light_dir = light->getRayToLight(hit.point);
                 current_color = hit.material->getColorAt(hit.point, hit.normal, light_dir, hit.light);
-                if (depth < 10) {
+                if (depth < 8) {
                     reflect = hit.material->getReflectivity();
 
                     Ray new_ray = Ray(hit.point, hit.material->getNewRay(hit, ray.getDirection()));

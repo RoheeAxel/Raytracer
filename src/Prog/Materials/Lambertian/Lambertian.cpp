@@ -34,11 +34,7 @@ Vec3 Lambertian::getColorAt(Vec3 point, Vec3 normal, Ray light, Vec3 lightColor)
         intensity = -normal.Dot(light.getDirection());
 
     unit_light = lightColor / 255;
-    Vec3 color_at_point;
-    if (int(point.x) > 0)
-        color_at_point = Vec3(255, 255, 255);
-    else
-        color_at_point = Vec3(0, 0, 0);
+    Vec3 color_at_point = _base_color;
     return (color_at_point  * intensity * unit_light).Clamp(0, 255);
 }
 

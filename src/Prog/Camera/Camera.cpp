@@ -15,13 +15,12 @@ Camera::Camera()
 {
 }
 
-Camera::Camera(Vec3 position, Vec3 rotation, Screen screen, std::string file, size_t test)
+Camera::Camera(Vec3 position, Vec3 rotation, Screen screen, size_t id)
 {
     _position = position;
     _rotation = rotation;
     _screen = screen;
-    _file = file;
-    this->test = test;
+    _id = id;
 }
 
 Camera::~Camera()
@@ -30,19 +29,15 @@ Camera::~Camera()
 
 void Camera::render(Scene &scene)
 {
-    std::ofstream myfile(this->_file);
-
-    std::cout << "Thread starting " << test << "!" <<  std::endl;
-    for (int j = _screen.getResolution().second; j > 0; j--) {
-        for (int i = 0; i < _screen.getResolution().first; i++) {
-            Vec3 finalColor;
-            finalColor = randomSuperSampling(scene, i, j);
-
-            myfile << finalColor.x << " " << finalColor.y << " " << finalColor.z << std::endl;
+    std::cout << "Thread " << _id << " starting" << std::endl;
+    std::pair<int, int> resolution = _screen.getResolution();
+    for (int j = resolution.second; j > 0; j--) {
+        for (int i = 0; i < resolution.first; i++) {
+            Vec3 finalColor = randomSuperSampling(scene, i, j);
+            _pixels.push_back(finalColor);
         }
     }
-    myfile.close();
-    std::cout << "Thread finished " << test << "!" <<  std::endl;
+    std::cout << "Thread " << _id << " ending" << std::endl;
 }
 
 Vec3 Camera::randomSuperSampling(Scene &scene, int i, int j)

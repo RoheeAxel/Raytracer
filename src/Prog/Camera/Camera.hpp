@@ -15,14 +15,18 @@
 #include "Vec3.hpp"
 #include "Ray.hpp"
 #include <string>
+#include <array>
+#include <list>
 
 namespace Raytracer {
     class Camera {
         public:
             Camera();
-            Camera(Vec3 position, Vec3 rotation, Screen screen, std::string file, size_t test);
+            Camera(Vec3 position, Vec3 rotation, Screen screen, size_t id);
             ~Camera();
             void render(Scene &scene);
+            Vec3 getPixel(size_t index) { return _pixels[index]; };
+            std::vector<Vec3> &getPixels() { return _pixels; };
         protected:
         private:
             Vec3 randomSuperSampling(Scene &scene, int i, int j);
@@ -32,8 +36,8 @@ namespace Raytracer {
             Vec3 _position;
             Vec3 _rotation;
             Screen _screen = Screen(Vec3(-1, -1, 1), Vec3(1, 1, 1), std::pair<int, int>(200, 200));
-            std::string _file;
-            size_t test;
+            std::vector<Vec3> _pixels;
+            size_t _id;
     };
 }
 

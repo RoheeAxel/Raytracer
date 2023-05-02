@@ -17,6 +17,7 @@
     #include "Vec3.hpp"
     #include <thread>
     #include <array>
+    #include <list>
     #include <vector>
     #include <semaphore>
 

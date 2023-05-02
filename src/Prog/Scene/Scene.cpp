@@ -43,7 +43,6 @@ Vec3 Scene::throwRay(Ray ray, int depth)
     Vec3 final_color;
     Vec3 current_color;
     double last_distance = -1;
-    double reflect = 0;
     HitRecord hit;
     bool has_hit = false;
     for (auto &shape : _shapes) {
@@ -55,8 +54,6 @@ Vec3 Scene::throwRay(Ray ray, int depth)
                 Ray light_dir = light->getRayToLight(hit.point);
                 current_color = hit.material->getColorAt(hit.point, hit.normal, light_dir, hit.light);
                 if (depth < 8) {
-                    reflect = hit.material->getReflectivity();
-
                     Ray new_ray = Ray(hit.point, hit.material->getNewRay(hit, ray.getDirection()));
                     if (new_ray.getDirection() != Vec3(0, 0, 0)) {
                         current_color = (current_color / 255) * throwRay(new_ray, depth + 1); //* reflect; //  current_color * (1 - reflect)

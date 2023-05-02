@@ -28,9 +28,9 @@ Plastic::~Plastic()
 {
 }
 
-Vec3 Plastic::getColorAt(Vec3 point, Vec3 normal, Ray light, Vec3 lightColor)
+Vec3 Plastic::getColorAt([[maybe_unused]]Vec3 point, [[maybe_unused]]Vec3 normal, [[maybe_unused]]Ray light, [[maybe_unused]]Vec3 lightColor)
 {
-    double intensity = normal.Dot(light.getDirection());
+    // double intensity = normal.Dot(light.getDirection());
     return _base_color;
 }
 

@@ -24,12 +24,12 @@ Emitive::~Emitive()
 {
 }
 
-Vec3 Emitive::getColorAt(Vec3 point, Vec3 normal, Ray light, Vec3 lightColor)
+Vec3 Emitive::getColorAt([[maybe_unused]]Vec3 point, [[maybe_unused]]Vec3 normal, [[maybe_unused]]Ray light, [[maybe_unused]]Vec3 lightColor)
 {
     return _base_color;
 }
 
-Vec3 Emitive::getNewRay(HitRecord record, Vec3 light)
+Vec3 Emitive::getNewRay([[maybe_unused]]HitRecord record, [[maybe_unused]]Vec3 light)
 {
     return Vec3(0, 0, 0);
 }

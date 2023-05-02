@@ -34,7 +34,7 @@ Vec3 Raytracer::DirLight::illuminate(Raytracer::Vec3 point, Raytracer::Scene &sc
     return Raytracer::Vec3(255,255,255);
 }
 
-Raytracer::Ray Raytracer::DirLight::getRayToLight(Raytracer::Vec3 point)
+Raytracer::Ray Raytracer::DirLight::getRayToLight([[maybe_unused]]Raytracer::Vec3 point)
 {
     return Raytracer::Ray(_position, _dir);
 }

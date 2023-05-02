@@ -22,7 +22,7 @@ AmbientLight::~AmbientLight()
 {
 }
 
-Vec3 Raytracer::AmbientLight::illuminate(Raytracer::Vec3 point, Raytracer::Scene &scene)
+Vec3 Raytracer::AmbientLight::illuminate([[maybe_unused]]Raytracer::Vec3 point, [[maybe_unused]]Raytracer::Scene &scene)
 {
     return _color * _intensity;
 }

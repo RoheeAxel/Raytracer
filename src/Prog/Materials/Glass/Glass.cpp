@@ -20,9 +20,8 @@ Glass::~Glass()
 {
 }
 
-Vec3 Glass::getColorAt(Vec3 point, Vec3 normal, Ray light, Vec3 lightColor)
+Vec3 Glass::getColorAt([[maybe_unused]]Vec3 point, [[maybe_unused]]Vec3 normal, [[maybe_unused]]Ray light, [[maybe_unused]]Vec3 lightColor)
 {
-    double intensity = normal.Dot(light.getDirection());
     return Vec3(255, 255, 255);
 }
 

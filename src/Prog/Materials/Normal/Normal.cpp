@@ -18,7 +18,7 @@ Normal::~Normal()
 {
 }
 
-Vec3 Normal::getColorAt(Vec3 point, Vec3 normal, Ray light, Vec3 lightColor)
+Vec3 Normal::getColorAt([[maybe_unused]]Vec3 point, Vec3 normal, [[maybe_unused]]Ray light, [[maybe_unused]]Vec3 lightColor)
 {
     // double intensity = normal.Dot(light.getDirection());
     Vec3 normalized = (normal+Vec3(1))* 0.5;
@@ -26,7 +26,7 @@ Vec3 Normal::getColorAt(Vec3 point, Vec3 normal, Ray light, Vec3 lightColor)
     //return Vec3(255, 25, 255) * intensity;
 }
 
-Vec3 Normal::getNewRay(HitRecord record, Vec3 light)
+Vec3 Normal::getNewRay([[maybe_unused]]HitRecord record, [[maybe_unused]]Vec3 light)
 {
     return Vec3(0,0,0);
 }

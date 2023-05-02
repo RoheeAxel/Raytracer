@@ -24,7 +24,7 @@ Lambertian::~Lambertian()
 {
 }
 
-Vec3 Lambertian::getColorAt(Vec3 point, Vec3 normal, Ray light, Vec3 lightColor)
+Vec3 Lambertian::getColorAt([[maybe_unused]]Vec3 point, Vec3 normal, Ray light, [[maybe_unused]]Vec3 lightColor)
 {
     double intensity;
     Vec3 unit_light;
@@ -38,7 +38,7 @@ Vec3 Lambertian::getColorAt(Vec3 point, Vec3 normal, Ray light, Vec3 lightColor)
     return (color_at_point  * intensity * unit_light).Clamp(0, 255);
 }
 
-Vec3 Lambertian::getNewRay(HitRecord record, Vec3 light)
+Vec3 Lambertian::getNewRay(HitRecord record, [[maybe_unused]]Vec3 light)
 {
     Vec3 p = Vec3(drand48() * 2 - 1, drand48() * 2 - 1, drand48() * 2 - 1);
     Vec3 inSphere = (record.normal + p).Normalize();

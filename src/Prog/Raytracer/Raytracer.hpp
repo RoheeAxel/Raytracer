@@ -10,6 +10,7 @@
     #include "Scene.hpp"
     #include "Camera.hpp"
     #include "Sphere.hpp"
+    #include "Plan.hpp"
     #include "PointLight.hpp"
     #include "DirLight.hpp"
     #include "AmbientLight.hpp"

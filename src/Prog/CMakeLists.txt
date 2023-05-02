@@ -18,6 +18,7 @@ include_directories(Materials)
 include_directories(Materials/Lambertian)
 include_directories(Materials/Normal)
 include_directories(Materials/Plastic)
+include_directories(Materials/Glass)
 
 include_directories(Raytracer)
 
@@ -25,6 +26,7 @@ include_directories(Scene)
 
 include_directories(Shapes)
 include_directories(Shapes/Sphere)
+include_directories(Shapes/Plan)
 
 include_directories(Utils)
 

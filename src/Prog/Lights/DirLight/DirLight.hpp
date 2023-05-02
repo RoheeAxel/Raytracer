@@ -17,7 +17,7 @@ namespace Raytracer {
     class Ray;
     class DirLight : public ILight{
         public:
-            DirLight(Vec3 position, Vec3 color, double intensity);
+            DirLight(Vec3 position, Vec3 dir, Vec3 color, double intensity);
             ~DirLight();
             Raytracer::Vec3 illuminate(Raytracer::Vec3 point, Scene &scene) override;
             Raytracer::Ray getRayToLight(Raytracer::Vec3 point) override;

@@ -31,7 +31,7 @@ Vec3 Plastic::getNewRay(Vec3 point, Vec3 normal, Vec3 light)
 
 double Plastic::getReflectivity()
 {
-    return 0.99;
+    return 0.67;
 }
 
 }

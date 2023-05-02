@@ -13,7 +13,7 @@
 namespace Raytracer {
 class Plan : public IShape{
     public:
-        Plan(Vec3 position);
+        Plan(Vec3 position, Vec3 normal);
         ~Plan();
         HitRecord intersection(Ray ray);
         void setMaterial(IMaterial *material);

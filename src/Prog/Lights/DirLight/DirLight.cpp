@@ -10,8 +10,8 @@
 
 namespace Raytracer
 {
-DirLight::DirLight(Vec3 dir, Vec3 color, double intensity)
-    : _dir(_dir), _color(color), _intensity(intensity)
+DirLight::DirLight(Vec3 pos, Vec3 dir, Vec3 color, double intensity)
+    : _position(pos), _dir(dir), _color(color), _intensity(intensity)
 {
 }
 
@@ -36,6 +36,6 @@ Vec3 Raytracer::DirLight::illuminate(Raytracer::Vec3 point, Raytracer::Scene &sc
 
 Raytracer::Ray Raytracer::DirLight::getRayToLight(Raytracer::Vec3 point)
 {
-    return Raytracer::Ray(Vec3(0, 0, 0), point);
+    return Raytracer::Ray(_position, _dir);
 }
 }

@@ -10,20 +10,22 @@
 
 #include "IMaterial.hpp"
 #include "Ray.hpp"
+#include "ParsingUtils.hpp"
 
 namespace Raytracer
 {
-class Lambertian : public IMaterial{
-    public:
-        Lambertian();
-        Lambertian(Vec3 color);
-        ~Lambertian();
-        Vec3 getColorAt(Vec3 point, Vec3 normal, Ray light, Vec3 lightColor) override;
-        Vec3 getNewRay(HitRecord record, Vec3 light) override;
-        double getReflectivity() override;
-    protected:
-    private:
-        Vec3 _base_color;
+    class Lambertian : public IMaterial{
+        public:
+            Lambertian();
+            Lambertian(const Vec3& color);
+            Lambertian(const std::string &options);
+            ~Lambertian() override = default;
+
+            Vec3 getColorAt(Vec3 point, Vec3 normal, Ray light, Vec3 lightColor) override;
+            Vec3 getNewRay(HitRecord record, Vec3 light) override;
+            double getReflectivity() override;
+        private:
+            Vec3 _base_color;
 };
 }
 #endif /* !LAMBERTIAN_HPP_ */

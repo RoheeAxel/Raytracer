@@ -13,16 +13,17 @@
 
 namespace Raytracer
 {
-class Glass : public IMaterial{
-    public:
-        Glass();
-        ~Glass();
-        Vec3 getColorAt(Vec3 point, Vec3 normal, Ray light, Vec3 lightColor) override;
-        Vec3 getNewRay(HitRecord record, Vec3 light) override;
-        double getReflectivity() override;
-    protected:
-    private:
-        double refractionIndex = 1.5;
+    class Glass : public IMaterial{
+        public:
+            Glass() = default;
+            Glass(const std::string &options);
+            ~Glass() override = default;
+
+            Vec3 getColorAt(Vec3 point, Vec3 normal, Ray light, Vec3 lightColor) override;
+            Vec3 getNewRay(HitRecord record, Vec3 light) override;
+            double getReflectivity() override;
+        private:
+            double refractionIndex = 1.5;
 };
 }
 #endif /* !GLASS_HPP_ */

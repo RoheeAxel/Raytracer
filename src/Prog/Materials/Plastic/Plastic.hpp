@@ -10,18 +10,21 @@
 
 #include "IMaterial.hpp"
 #include "Ray.hpp"
+#include "ParsingUtils.hpp"
 
 namespace Raytracer
 {
 class Plastic : public IMaterial{
     public:
         Plastic();
-        Plastic(Vec3 color, double reflectivity, double roughness);
-        ~Plastic();
+        Plastic(const Vec3& color, double reflectivity, double roughness);
+        Plastic(const std::string &);
+        ~Plastic() override = default;
+
         Vec3 getColorAt(Vec3 point, Vec3 normal, Ray light, Vec3 lightColor) override;
         Vec3 getNewRay(HitRecord record, Vec3 light) override;
         double getReflectivity() override;
-    protected:
+
     private:
         Vec3 _base_color;
         double _reflectivity;

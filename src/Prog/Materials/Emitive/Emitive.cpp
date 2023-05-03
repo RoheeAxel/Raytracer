@@ -10,32 +10,28 @@
 
 namespace Raytracer
 {
-Emitive::Emitive()
-{
+    Emitive::Emitive() {
     _base_color = Vec3(500, 500, 500);
-}
+    }
 
-Emitive::Emitive(Vec3 color)
-{
-    _base_color = color;
-}
+    Emitive::Emitive(const Vec3 &color) {
+        _base_color = color;
+    }
 
-Emitive::~Emitive()
-{
-}
+    Emitive::Emitive(const std::string &options) {
+        Vec3 color = ParsingUtils::getVec3(options, "color");
+        this->_base_color = color;
+    }
 
-Vec3 Emitive::getColorAt([[maybe_unused]]Vec3 point, [[maybe_unused]]Vec3 normal, [[maybe_unused]]Ray light, [[maybe_unused]]Vec3 lightColor)
-{
-    return _base_color;
-}
+    Vec3 Emitive::getColorAt([[maybe_unused]]Vec3 point, [[maybe_unused]]Vec3 normal, [[maybe_unused]]Ray light, [[maybe_unused]]Vec3 lightColor) {
+        return _base_color;
+    }
 
-Vec3 Emitive::getNewRay([[maybe_unused]]HitRecord record, [[maybe_unused]]Vec3 light)
-{
-    return Vec3(0, 0, 0);
-}
+    Vec3 Emitive::getNewRay([[maybe_unused]]HitRecord record, [[maybe_unused]]Vec3 light) {
+        return {0, 0, 0};
+    }
 
-double Emitive::getReflectivity()
-{
-    return 0;
-}
+    double Emitive::getReflectivity() {
+        return 0;
+    }
 }

@@ -13,23 +13,23 @@
 
 namespace Raytracer
 {
-AmbientLight::AmbientLight(Vec3 color, double intensity)
-    : _color(color), _intensity(intensity)
-{
-}
+    AmbientLight::AmbientLight(const Vec3 &color, double intensity)
+    : _color(color), _intensity(intensity) {}
 
-AmbientLight::~AmbientLight()
-{
-}
+    Vec3 Raytracer::AmbientLight::illuminate([[maybe_unused]]Raytracer::Vec3 point, [[maybe_unused]]Raytracer::Scene &scene) {
+        return _color * _intensity;
+    }
 
-Vec3 Raytracer::AmbientLight::illuminate([[maybe_unused]]Raytracer::Vec3 point, [[maybe_unused]]Raytracer::Scene &scene)
-{
-    return _color * _intensity;
-}
+    Raytracer::Ray Raytracer::AmbientLight::getRayToLight(Raytracer::Vec3 point) {
+        return {point, Vec3(0)};
+    }
 
-Raytracer::Ray Raytracer::AmbientLight::getRayToLight(Raytracer::Vec3 point)
-{
-    Raytracer::Ray ray(point, Vec3(0));
-    return ray;
-}
+    void AmbientLight::setColor(const Vec3 &color) {
+        this->_color = color;
+    }
+
+    void AmbientLight::setIntensity(double intensity) {
+        this->_intensity = intensity;
+    }
+
 }

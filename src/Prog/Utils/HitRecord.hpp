@@ -7,6 +7,8 @@
 
 #ifndef HITRECORD_HPP_
 #define HITRECORD_HPP_
+
+#include <memory>
 #include "Vec3.hpp"
 #include "Ray.hpp"
 #include <iostream>
@@ -22,7 +24,7 @@ class HitRecord {
         Raytracer::Vec3 point;
         Raytracer::Vec3 light;
         Raytracer::Vec3 normal;
-        Raytracer::IMaterial *material;
+        std::shared_ptr<Raytracer::IMaterial> material;
         double distance;
         bool front_face;
 

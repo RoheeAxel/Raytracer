@@ -17,11 +17,17 @@ namespace Raytracer {
     class Ray;
     class DirLight : public ILight{
         public:
-            DirLight(Vec3 position, Vec3 dir, Vec3 color, double intensity);
-            ~DirLight();
+            DirLight() = default;
+            DirLight(const Vec3 &position, const Vec3 &dir, const Vec3 &color, double intensity);
+            ~DirLight() override = default;
             Raytracer::Vec3 illuminate(Raytracer::Vec3 point, Scene &scene) override;
             Raytracer::Ray getRayToLight(Raytracer::Vec3 point) override;
-        protected:
+
+            void setPosition(const Vec3 &position);
+            void setDir(const Vec3 &dir);
+            void setColor(const Vec3 &color);
+            void setIntensity(double intensity);
+
         private:
             Vec3 _position;
             Vec3 _dir;

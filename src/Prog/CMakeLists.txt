@@ -9,6 +9,10 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 include_directories(Camera)
 include_directories(Camera/Screen)
 
+include_directories(Exceptions)
+
+include_directories(Factories)
+
 include_directories(Lights)
 include_directories(Lights/DirLight)
 include_directories(Lights/PointLight)

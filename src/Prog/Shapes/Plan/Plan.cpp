@@ -11,54 +11,52 @@
 #include <cmath>
 
 namespace Raytracer {
-Plan::Plan(Vec3 position, Vec3 normal) : _position(position) , _normal(normal)
-{
-}
+    Plan::Plan(const Vec3 &position, const Vec3 &normal) : _position(position) , _normal(normal) {}
 
-Plan::~Plan()
-{
-}
+    HitRecord Raytracer::Plan::intersection(Ray r) {
+        HitRecord hitRecord;
+        float epsilon = 0.0001f;
+        float ndotu = r.getDirection().Dot( _normal);
 
-HitRecord Raytracer::Plan::intersection(Ray r)
-{
-    HitRecord hitRecord;
-    float epsilon = 0.0001f;
-    float ndotu = r.getDirection().Dot( _normal);
+        if (fabs(ndotu) < epsilon) {
+            // The ray is parallel to the plan, there is no intersection
+            hitRecord.hit = false;
+            return hitRecord;
+        }
 
-    if (fabs(ndotu) < epsilon) {
-        // The ray is parallel to the plan, there is no intersection
-        hitRecord.hit = false;
+        float t = (_position - r.getOrigin()).Dot(_normal) / ndotu;
+
+        if (t < 0) {
+            // The intersection point is behind the ray's origin, there is no intersection
+            hitRecord.hit = false;
+            return hitRecord;
+        }
+
+        hitRecord.hit = true;
+        hitRecord.distance = t;
+        hitRecord.point = r.getOrigin() + r.getDirection() * t;
+        hitRecord.normal = _normal;
+        hitRecord.material = this->getMaterial();
         return hitRecord;
     }
 
-    float t = (_position - r.getOrigin()).Dot(_normal) / ndotu;
-
-    if (t < 0) {
-        // The intersection point is behind the ray's origin, there is no intersection
-        hitRecord.hit = false;
-        return hitRecord;
+    AABB Plan::getAABB() {
+        return {Vec3(-1000000, -1000000, -1000000), Vec3(1000000, 1000000, 1000000)};
     }
 
-    hitRecord.hit = true;
-    hitRecord.distance = t;
-    hitRecord.point = r.getOrigin() + r.getDirection() * t;
-    hitRecord.normal = _normal;
-    hitRecord.material = this->getMaterial();
-    return hitRecord;
-}
+    void Plan::setPosition(const Vec3 &position)
+    {
+        this->_position = position;
+    }
 
-void Plan::setMaterial(IMaterial *material)
-{
-    _material = material;
-}
+    void Plan::setNormal(const Vec3 &normal)
+    {
+        this->_normal = normal;
+    }
 
-IMaterial *Plan::getMaterial()
-{
-    return _material;
-}
+    void Plan::setCenter(const Vec3 &center)
+    {
+        this->_center = center;
+    }
 
-AABB Plan::getAABB()
-{
-    return AABB(Vec3(-1000000, -1000000, -1000000), Vec3(1000000, 1000000, 1000000));
-}
 }

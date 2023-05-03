@@ -10,7 +10,8 @@
 
 Graphics::MainWindow::MainWindow(sf::Vector2f size, std::string title)
     : _window(sf::VideoMode(size.x, size.y), title), _buttons(), _imageSprite(), _size(size),
-    _font(), _clusterWindow(sf::Vector2f(200, 150), sf::Vector2f(400, 270), this->_font), _imagePpm("")
+    _font(), _clusterWindow(sf::Vector2f((1920 / 2) - (400 / 2), (1080 / 2) - 150), sf::Vector2f(400, 270), this->_font),
+    _imagePpm(""), _threadWindow(sf::Vector2f((1920 / 2) - (400 / 2), (1080 / 2) - 150), sf::Vector2f(400, 150), this->_font)
 {
     this->_imageSprite.setPosition(0, 50);
     this->_window.setFramerateLimit(60);
@@ -19,6 +20,7 @@ Graphics::MainWindow::MainWindow(sf::Vector2f size, std::string title)
     this->_rectangle.setOutlineColor(sf::Color(0, 0, 0));
     this->_font.loadFromFile("assets/font.ttf");
     this->_clusterWindow.setFont(this->_font);
+    this->_threadWindow.setFont(this->_font);
 }
 
 Graphics::MainWindow::~MainWindow()
@@ -40,12 +42,14 @@ void Graphics::MainWindow::run()
         while (this->_window.pollEvent(event)) {
             if (event.type == sf::Event::Closed)
                 this->_window.close();
-            if (this->_clusterWindow.getInputClose() == true) {
+            if (this->_clusterWindow.getInputClose() == true || this->_threadWindow.getInputClose() == true) {
                 tmp = ButtonType::NONE;
                 this->_clusterWindow.setInputClose(false);
-            }
-            if (tmp == ButtonType::CLUSTER && this->_clusterWindow.getInputClose() == false)
+                this->_threadWindow.setInputClose(false);
+            } if (tmp == ButtonType::CLUSTER && this->_clusterWindow.getInputClose() == false)
                 this->_clusterWindow.handleEvent(event);
+            else if (tmp == ButtonType::THREAD && this->_threadWindow.getInputClose() == false)
+                this->_threadWindow.handleEvent(event);
             else if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
                 for (Button& button : this->_buttons) {
                     tmp = button.handleClick(sf::Vector2f(event.mouseButton.x, event.mouseButton.y));
@@ -62,14 +66,13 @@ void Graphics::MainWindow::run()
         this->_window.draw(this->_rectangle);
         for (Button& button : this->_buttons)
             this->_window.draw(button.getSprite());
-        if (tmp == ButtonType::PLAY){
+        if (tmp == ButtonType::PLAY)
             this->_imagePpm = Viewer::ImagePpm(this->_path);
-        }
         this->_imagePpm.draw(this->_window);
         if (tmp == ButtonType::CLUSTER)
             this->_clusterWindow.draw(this->_window, sf::BlendAlpha);
-        // else if (tmp == ButtonType::THREAD)
-        //     this->createThreadWindow();
+        if (tmp == ButtonType::THREAD)
+            this->_threadWindow.draw(this->_window, sf::BlendAlpha);
         // else if (tmp == ButtonType::SETTINGS)
         //     this->createSettingsWindow();
         this->_window.display();

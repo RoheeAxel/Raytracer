@@ -15,6 +15,7 @@
     #include "ImagePpm.hpp"
     #include "Input.hpp"
     #include "ClusterWindow.hpp"
+    #include "ThreadWindow.hpp"
 
 namespace Graphics {
     class MainWindow {
@@ -38,6 +39,7 @@ namespace Graphics {
         sf::Font _font;
         ClusterWindow _clusterWindow;
         Viewer::ImagePpm _imagePpm;
+        ThreadWindow _threadWindow;
     };
 }
 

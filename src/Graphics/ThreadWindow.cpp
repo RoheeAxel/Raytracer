@@ -2,26 +2,33 @@
 ** EPITECH PROJECT, 2023
 ** B-OOP-400-REN-4-1-raytracer-axel.rohee
 ** File description:
-** ClusterWindow
+** ThreadWindow
 */
 
-#include "ClusterWindow.hpp"
+#include "ThreadWindow.hpp"
 
-Graphics::ClusterWindow::ClusterWindow(sf::Vector2f position, sf::Vector2f size, sf::Font &font)
+Graphics::ThreadWindow::ThreadWindow(sf::Vector2f position, sf::Vector2f size, sf::Font &font)
     : _background(size), _close_button(sf::Vector2f(20.f, 20.f)), _has_focus(false), _is_closed(false), _font(font)
 {
     this->_background.setPosition(position);
     this->_background.setFillColor(sf::Color(200, 200, 200));
     this->_title.setFont(this->_font);
-    this->_title.setString("Clustering");
+    this->_title.setString("Multithreading");
     this->_title.setCharacterSize(24);
     this->_title.setFillColor(sf::Color::Black);
     this->_title.setPosition(this->_background.getPosition() + sf::Vector2f(10.f, 10.f));
     createCloseButton();
-    createInputs();
+    sf::Vector2f input_size(this->_background.getSize().x - 20.f, 30.f);
+    Input input = Input(this->_background.getPosition() + sf::Vector2f(10.f, 4000.f), input_size, this->_font, "Nb thread");
+    this->_input.push_back(input);
+    this->_input[0].setPosition(this->_background.getPosition() + sf::Vector2f(10.f, 70.f + 0 * (this->_input[0].getSize().y + 20.f)));
 }
 
-void Graphics::ClusterWindow::handleEvent(sf::Event &event)
+Graphics::ThreadWindow::~ThreadWindow()
+{
+}
+
+void Graphics::ThreadWindow::handleEvent(sf::Event &event)
 {
     if (event.type == sf::Event::MouseButtonPressed) {
         if (this->_close_button.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y)) {
@@ -29,21 +36,21 @@ void Graphics::ClusterWindow::handleEvent(sf::Event &event)
             return;
         }
     }
-    for (auto& input : this->_inputs)
+    for (auto& input : this->_input)
         input.handleEvent(event);
 }
 
-void Graphics::ClusterWindow::draw(sf::RenderWindow &window, sf::RenderStates states)
+void Graphics::ThreadWindow::draw(sf::RenderWindow &window, sf::RenderStates states)
 {
     window.draw(this->_background, states);
     window.draw(this->_close_button, states);
     window.draw(this->_close_text, states);
     window.draw(this->_title, states);
-    for (auto &input : this->_inputs)
+    for (auto &input : this->_input)
         input.draw(window);
 }
 
-void Graphics::ClusterWindow::createCloseButton()
+void Graphics::ThreadWindow::createCloseButton()
 {
     this->_close_button.setFillColor(sf::Color::Red);
     this->_close_button.setPosition(this->_background.getPosition() + sf::Vector2f(this->_background.getSize().x - this->_close_button.getSize().x, 0.f));
@@ -54,35 +61,17 @@ void Graphics::ClusterWindow::createCloseButton()
     this->_close_text.setPosition(this->_close_button.getPosition() + sf::Vector2f(4.f, 0.f));
 }
 
-void Graphics::ClusterWindow::createInputs()
-{
-    float input_height = 30.f;
-    float input_spacing = 50.f;
-    sf::Vector2f input_size(this->_background.getSize().x - 20.f, input_height);
-    for (int i = 0; i < 4; i++) {
-        Input input(this->_background.getPosition() + sf::Vector2f(10.f, input_spacing + i * (input_height + input_spacing)), input_size, this->_font, "Ip cluster " + std::to_string(i + 1));
-        this->_inputs.push_back(input);
-    }
-    updateInputPositions();
-}
-
-void Graphics::ClusterWindow::updateInputPositions()
-{
-    for (int i = 0; i < 4; i++)
-        this->_inputs[i].setPosition(this->_background.getPosition() + sf::Vector2f(10.f, 70.f + i * (this->_inputs[i].getSize().y + 20.f)));
-}
-
-bool Graphics::ClusterWindow::getInputClose()
+bool Graphics::ThreadWindow::getInputClose()
 {
     return this->_is_closed;
 }
 
-void Graphics::ClusterWindow::setInputClose(bool close)
+void Graphics::ThreadWindow::setInputClose(bool close)
 {
     this->_is_closed = close;
 }
 
-void Graphics::ClusterWindow::setFont(sf::Font font)
+void Graphics::ThreadWindow::setFont(sf::Font font)
 {
     this->_font = font;
 }

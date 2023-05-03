@@ -29,13 +29,22 @@ void Raytracer::Raytracer::buildScene()
     Sphere *sphere3 = new Sphere(Vec3(1, 0, -3), 0.5); // Gold
     Sphere *sphere4 = new Sphere(Vec3(-1, 0, -3), -0.5); // Silver
     Triangle *triangle = new Triangle(Vec3(0, 0, -3), Vec3(0, 1, -2), Vec3(1, 0, -3));
+    Triangle *triangle2 = new Triangle(Vec3(0, 1, -2), Vec3(1, 1, -2), Vec3(1, 0, -3));
 
 
-    sphere->setMaterial(new Glass());
-    sphere2->setMaterial(new Lambertian(Vec3(0,255,0)));
-    sphere3->setMaterial(new Plastic(Vec3(255 * 0.8, 255 * 0.6, 255 * 0.2), 0.5, 0.1));
-    sphere4->setMaterial(new Emitive(Vec3(512, 512, 512)));
-    triangle->setMaterial(new Lambertian(Vec3(255, 0, 0)));
+
+    std::shared_ptr<Glass> glass = std::make_shared<Glass>();
+    std::shared_ptr<Lambertian> lambertian = std::make_shared<Lambertian>(Vec3(0, 255, 0));
+    std::shared_ptr<Plastic> plastic = std::make_shared<Plastic>(Vec3(255 * 0.8, 255 * 0.6, 255 * 0.2), 0.5, 0.1);
+    std::shared_ptr<Emitive> emitive = std::make_shared<Emitive>(Vec3(512, 512, 512));
+    std::shared_ptr<Lambertian> lambertian2 = std::make_shared<Lambertian>(Vec3(255, 0, 0));
+
+    sphere->setMaterial(glass);
+    sphere2->setMaterial(lambertian);
+    sphere3->setMaterial(plastic);
+    sphere4->setMaterial(emitive);
+    triangle->setMaterial(lambertian2);
+    triangle2->setMaterial(lambertian2);
 
     //DirLight *light = new DirLight(Vec3(0, 0, 0), Vec3(0 ,0, -1), Vec3(255, 255, 255), 1);
     AmbientLight *ambient = new AmbientLight(Vec3(255, 255, 255), 0.7);
@@ -44,6 +53,7 @@ void Raytracer::Raytracer::buildScene()
     // _scene.addShape(sphere3);
     // _scene.addShape(sphere4);
     _scene.addShape(triangle);
+    _scene.addShape(triangle2);
     //_scene.addLight(light);
     _scene.addLight(ambient);
 }

@@ -8,23 +8,28 @@
 #ifndef AABB_HPP_
 #define AABB_HPP_
 
-#include "IShape.hpp"
+#include "AShape.hpp"
 
 namespace Raytracer {
-class AABB : public IShape{
+class AABB : public AShape{
     public:
-        AABB(Vec3 bot, Vec3 top);
-        ~AABB();
-        HitRecord intersection(Ray ray);
-        void setMaterial(IMaterial *material);
-        IMaterial *getMaterial();
-        AABB getAABB();
+        AABB() = default;
+        AABB(const Vec3 &bot, const Vec3 &top);
+
+        ~AABB() override = default;
+
+        HitRecord intersection(Ray ray) override;
+        AABB getAABB() override;
+
+        void setPosition(const Vec3 &position);
+        void setBot(const Vec3 &bot);
+        void setTop(const Vec3 &top);
         AABB surroundingBox(AABB box0, AABB box1);
         Vec3 getTop() {return _top;};
         Vec3 getBot() {return _bot;};
-    protected:
+
     private:
-        IMaterial *_material;
+        std::shared_ptr<IMaterial> _material;
         Vec3 _position;
         Vec3 _bot;
         Vec3 _top;

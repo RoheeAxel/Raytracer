@@ -10,32 +10,46 @@
 
 namespace Raytracer
 {
-DirLight::DirLight(Vec3 pos, Vec3 dir, Vec3 color, double intensity)
-    : _position(pos), _dir(dir), _color(color), _intensity(intensity)
-{
-}
+    DirLight::DirLight(const Vec3 &pos, const Vec3 &dir, const Vec3 &color, double intensity)
+    : _position(pos), _dir(dir), _color(color), _intensity(intensity) {}
 
-DirLight::~DirLight()
-{
-}
 
-Vec3 Raytracer::DirLight::illuminate(Raytracer::Vec3 point, Raytracer::Scene &scene)
-{
-    Raytracer::Ray ray = getRayToLight(point);
-    Raytracer::HitRecord hit;
-    for (auto &shape : scene.getShapes()) {
-        hit = shape->intersection(ray);
-        if (hit.hit == false)
-            continue;
-        if (hit.point != point) {
-            return Raytracer::Vec3(0,0,0);
+    Vec3 Raytracer::DirLight::illuminate(Raytracer::Vec3 point, Raytracer::Scene &scene) {
+        Raytracer::Ray ray = getRayToLight(point);
+        Raytracer::HitRecord hit;
+        for (auto &shape : scene.getShapes()) {
+            hit = shape->intersection(ray);
+            if (!hit.hit)
+                continue;
+            if (hit.point != point) {
+                return {0,0,0};
+            }
         }
+        return {255,255,255};
     }
-    return Raytracer::Vec3(255,255,255);
-}
 
-Raytracer::Ray Raytracer::DirLight::getRayToLight([[maybe_unused]]Raytracer::Vec3 point)
-{
-    return Raytracer::Ray(_position, _dir);
-}
+    Raytracer::Ray Raytracer::DirLight::getRayToLight([[maybe_unused]]Raytracer::Vec3 point) {
+        return {_position, _dir};
+    }
+
+    void DirLight::setPosition(const Vec3 &position)
+    {
+        this->_position = position;
+    }
+
+    void DirLight::setDir(const Vec3 &dir)
+    {
+        this->_dir = dir;
+    }
+
+    void DirLight::setColor(const Vec3 &color)
+    {
+        this->_color = color;
+    }
+
+    void DirLight::setIntensity(double intensity)
+    {
+        this->_intensity = intensity;
+    }
+
 }

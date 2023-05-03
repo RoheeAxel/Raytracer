@@ -8,23 +8,22 @@
 #ifndef SPHERE_HPP_
 #define SPHERE_HPP_
 
-#include "IShape.hpp"
+#include "AShape.hpp"
 
 namespace Raytracer {
-class Sphere : public IShape{
-    public:
-        Sphere(Vec3 position, double radius);
-        ~Sphere();
-        HitRecord intersection(Ray ray);
-        void setMaterial(IMaterial *material);
-        IMaterial *getMaterial();
-        AABB getAABB();
-    protected:
-    private:
-        IMaterial *_material;
-        Vec3 _position;
-        double _radius;
-};
+    class Sphere : public AShape{
+        public:
+            Sphere(const Vec3 &position, double radius);
+            ~Sphere() override = default;
+            HitRecord intersection(Ray ray) override;
+            AABB getAABB() override;
+
+            void setPosition(const Vec3 &position);
+            void setRadius(double radius);
+        private:
+            Vec3 _position;
+            double _radius;
+    };
 }
 
 #endif /* !SPHERE_HPP_ */

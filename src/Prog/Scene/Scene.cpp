@@ -56,7 +56,7 @@ Vec3 Scene::throwRay(Ray ray, int depth)
                 if (depth < 8) {
                     Ray new_ray = Ray(hit.point, hit.material->getNewRay(hit, ray.getDirection()));
                     if (new_ray.getDirection() != Vec3(0, 0, 0)) {
-                        current_color = (current_color / 255) * throwRay(new_ray, depth + 1); //* reflect; //  current_color * (1 - reflect)
+                        current_color = (current_color / 255) * throwRay(new_ray, depth + 1);
                     }
                 }
                 final_color = current_color;

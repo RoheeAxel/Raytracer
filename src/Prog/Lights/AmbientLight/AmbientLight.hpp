@@ -17,11 +17,15 @@ namespace Raytracer {
     class Ray;
     class AmbientLight : public ILight{
         public:
-            AmbientLight(Vec3 color, double intensity);
-            ~AmbientLight();
+            AmbientLight() = default;
+            AmbientLight(const Vec3 &color, double intensity);
+            ~AmbientLight() override = default;
+
             Raytracer::Vec3 illuminate(Raytracer::Vec3 point, Scene &scene) override;
             Raytracer::Ray getRayToLight(Raytracer::Vec3 point) override;
-        protected:
+
+            void setColor(const Vec3 &color);
+            void setIntensity(double intensity);
         private:
             Vec3 _color;
             double _intensity;

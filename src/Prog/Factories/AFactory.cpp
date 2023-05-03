@@ -14,30 +14,30 @@ namespace Raytracer {
     }
 
     template<typename T>
-    std::unique_ptr<T> AFactory<T>::get(const std::string &name)
+    std::shared_ptr<T> AFactory<T>::get(const std::string &name, const std::string &options)
     {
         try {
-            return getFromPlugin(name);
+            return getFromPlugin(name, options);
         } catch (const InvalidPluginException &e) {
-            return getFromBuiltin(name);
+            return getFromBuiltin(name, options);
         }
     }
 
     template<typename T>
-    std::unique_ptr<T> AFactory<T>::getFromPlugin(const std::string &name)
+    std::shared_ptr<T> AFactory<T>::getFromPlugin(const std::string &name, const std::string &options)
     {
         LDLoader<T> loader;
         std::string path = _dirName + "/" + name + EXTENSION;
 
-        loader.loadLib(path, "create");
-        return std::unique_ptr<T>(loader.get());
+        loader.loadLib(path, "create", options);
+        return std::shared_ptr<T>(loader.get());
     }
 
     template<typename T>
-    std::unique_ptr<T> AFactory<T>::getFromBuiltin(const std::string &name)
+    std::shared_ptr<T> AFactory<T>::getFromBuiltin(const std::string &name, const std::string &options)
     {
         if (_builtins.find(name) == _builtins.end())
             throw FactoryNotFoundException("Factory not found");
-        return std::unique_ptr<T>(_builtins[name].get());
+        return std::shared_ptr<T>(_builtins[name].get());
     }
 }

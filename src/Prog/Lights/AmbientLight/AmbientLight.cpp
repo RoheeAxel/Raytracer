@@ -16,6 +16,14 @@ namespace Raytracer
     AmbientLight::AmbientLight(const Vec3 &color, double intensity)
     : _color(color), _intensity(intensity) {}
 
+    AmbientLight::AmbientLight(const std::string &options) {
+        Vec3 color = ParsingUtils::getVec3(options, "color");
+        auto intensity = ParsingUtils::getDouble(options, "intensity");
+
+        this->_color = color;
+        this->_intensity = intensity;
+    }
+
     Vec3 Raytracer::AmbientLight::illuminate([[maybe_unused]]Raytracer::Vec3 point, [[maybe_unused]]Raytracer::Scene &scene) {
         return _color * _intensity;
     }

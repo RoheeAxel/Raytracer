@@ -20,14 +20,14 @@ namespace Raytracer {
             explicit AFactory(const std::string &dirName);
             ~AFactory() override = default;
 
-            std::unique_ptr<T> get(const std::string &name) override;
+            std::shared_ptr<T> get(const std::string &name, const std::string &options) override;
 
         protected:
-            std::unique_ptr<T> getFromPlugin(const std::string &name);
-            std::unique_ptr<T> getFromBuiltin(const std::string &name);
+            std::shared_ptr<T> getFromPlugin(const std::string &name, const std::string &options);
+            std::shared_ptr<T> getFromBuiltin(const std::string &name, const std::string &options);
 
             std::string _dirName;
-            std::unordered_map<std::string, std::unique_ptr<T>> _builtins;
+            std::unordered_map<std::string, std::shared_ptr<T>> _builtins;
     };
 
 } // Raytracer

@@ -43,7 +43,7 @@ public:
      * @param path Path to the library
      * @param entryPoint Name of the entry point
      */
-    void loadLib(const std::string &path, const std::string &entryPoint)
+    void loadLib(const std::string &path, const std::string &entryPoint, const std::string &options)
     {
         this->_handle = dlopen(path.c_str(), RTLD_LAZY);
         if (!this->_handle)
@@ -52,7 +52,7 @@ public:
         void *entry = dlsym(this->_handle, entryPoint.c_str());
         if (!entry)
             throw Raytracer::InvalidPluginException("Failed to load plugin " + path + ": " + dlerror());
-        this->_instance = reinterpret_cast<T *(*)(void)>(entry)();
+        this->_instance = reinterpret_cast<T *(*)(const std::string &)> (entry)(options);
     }
 
     /**

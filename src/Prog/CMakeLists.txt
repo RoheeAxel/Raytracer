@@ -35,7 +35,10 @@ include_directories(Shapes)
 include_directories(Shapes/Sphere)
 include_directories(Shapes/Plan)
 include_directories(Shapes/AABB)
+include_directories(Shapes/BVH)
 include_directories(Shapes/Triangle)
+
+include_directories(ITextures)
 
 include_directories(Utils)
 

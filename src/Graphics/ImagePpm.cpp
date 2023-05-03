@@ -13,10 +13,8 @@ Viewer::ImagePpm::ImagePpm(const std::string filename)
     std::string format;
     int maxColor;
 
-    if (!file) {
-        std::cerr << "Failed to open file." << std::endl;
-        throw std::exception();
-    }
+    if (!file)
+        return;
     std::getline(file, format);
     file >> this->_width >> this->_height >> maxColor;
     file.get();

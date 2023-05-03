@@ -8,6 +8,7 @@
 #ifndef VEC3_HPP_
 #define VEC3_HPP_
 
+#include <vector>
 #include "FromString.hpp"
 #include "Exception.hpp"
 

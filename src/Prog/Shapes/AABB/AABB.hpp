@@ -19,6 +19,9 @@ class AABB : public IShape{
         void setMaterial(IMaterial *material);
         IMaterial *getMaterial();
         AABB getAABB();
+        AABB surroundingBox(AABB box0, AABB box1);
+        Vec3 getTop() {return _top;};
+        Vec3 getBot() {return _bot;};
     protected:
     private:
         IMaterial *_material;

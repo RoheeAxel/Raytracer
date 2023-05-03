@@ -51,4 +51,15 @@ AABB AABB::getAABB()
 {
     return *this;
 }
+AABB AABB::surroundingBox(AABB box0, AABB box1)
+{
+    Vec3 small(fmin(box0.getBot().x, box1.getBot().x),
+                 fmin(box0.getBot().y, box1.getBot().y),
+                 fmin(box0.getBot().z, box1.getBot().z));
+
+    Vec3 big(fmax(box0.getTop().x, box1.getTop().x),
+               fmax(box0.getTop().y, box1.getTop().y),
+               fmax(box0.getTop().z, box1.getTop().z));
+    return AABB(small,big);
+}
 }

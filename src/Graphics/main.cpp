@@ -39,33 +39,3 @@ int main() {
     mainWindow.run();
     return 0;
 }
-
-// #include <SFML/Graphics.hpp>
-// #include "ClusterWindow.hpp"
-
-// int main() {
-//     sf::RenderWindow window(sf::VideoMode(1920, 1080), "Thread Window Test");
-
-//     sf::Font font;
-//     if (!font.loadFromFile("assets/font.ttf")) {
-//         return 1;
-//     }
-//     Graphics::ClusterWindow thread_window(sf::Vector2f(200, 150), sf::Vector2f(400, 270), font);
-
-//     while (window.isOpen()) {
-//         sf::Event event;
-//         while (window.pollEvent(event)) {
-//             if (event.type == sf::Event::Closed) {
-//                 window.close();
-//             } else {
-//                 thread_window.handleEvent(event);
-//             }
-//         }
-//         window.clear(sf::Color::White);
-//         if (thread_window.getInputClose() == false) {
-//             thread_window.draw(window, sf::BlendAlpha);
-//         }
-//         window.display();
-//     }
-//     return 0;
-// }

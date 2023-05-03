@@ -9,33 +9,34 @@
 
 Viewer::ImagePpm::ImagePpm(const std::string filename)
 {
-    if (filename == "")
-        return;
-    std::ifstream file(filename);
-    sf::Color color;
+    std::ifstream file(filename, std::ios::binary);
     std::string format;
     int maxColor;
-    float r, g, b;
 
     if (!file) {
         std::cerr << "Failed to open file." << std::endl;
         throw std::exception();
     }
-    file >> format >> this->_width >> this->_height >> maxColor;
+    std::getline(file, format);
+    file >> this->_width >> this->_height >> maxColor;
+    file.get();
     this->_image.create(this->_width, this->_height);
+    std::vector<sf::Color> pixelData(this->_width * this->_height);
     for (int i = 0; i < this->_height; i++) {
         for (int j = 0; j < this->_width; j++) {
-            file >> r >> g >> b;
-            color.r = static_cast<sf::Uint8>(r / maxColor * 255);
-            color.g = static_cast<sf::Uint8>(g / maxColor * 255);
-            color.b = static_cast<sf::Uint8>(b / maxColor * 255);
-            this->_image.setPixel(j, i, color);
+            sf::Color color;
+            file.read(reinterpret_cast<char*>(&color.r), 1);
+            file.read(reinterpret_cast<char*>(&color.g), 1);
+            file.read(reinterpret_cast<char*>(&color.b), 1);
+            pixelData[i * this->_width + j] = color;
         }
     }
+    for (int i = 0; i < this->_height; i++)
+        for (int j = 0; j < this->_width; j++)
+            this->_image.setPixel(j, i, pixelData[i * this->_width + j]);
     this->_texture.loadFromImage(this->_image);
     this->_sprite.setTexture(this->_texture);
 }
-
 
 Viewer::ImagePpm::~ImagePpm()
 {

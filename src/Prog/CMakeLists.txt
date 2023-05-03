@@ -12,6 +12,8 @@ include_directories(Camera/Screen)
 include_directories(Exceptions)
 
 include_directories(Factories)
+include_directories(Factories/Material)
+include_directories(Factories/Light)
 
 include_directories(Lights)
 include_directories(Lights/DirLight)

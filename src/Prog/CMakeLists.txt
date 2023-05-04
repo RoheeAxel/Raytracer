@@ -28,6 +28,8 @@ include_directories(Materials/Plastic)
 include_directories(Materials/Glass)
 include_directories(Materials/Emitive)
 
+include_directories(Parser)
+
 include_directories(Raytracer)
 
 include_directories(Scene)

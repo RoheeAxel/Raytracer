@@ -17,8 +17,8 @@ namespace Raytracer
 class Emitive : public IMaterial {
     public:
         Emitive();
-        explicit Emitive(const Vec3& color);
-        explicit Emitive(const std::string &options);
+        Emitive(const Vec3& color);
+        Emitive(const std::string &options);
         ~Emitive() override = default;
 
         Vec3 getColorAt(Vec3 point, Vec3 normal, Ray light, Vec3 lightColor) override;

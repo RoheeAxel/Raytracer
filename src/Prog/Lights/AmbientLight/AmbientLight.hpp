@@ -20,7 +20,7 @@ namespace Raytracer {
         public:
             AmbientLight() = default;
             AmbientLight(const Vec3 &color, double intensity);
-            explicit AmbientLight(const std::string &options);
+            AmbientLight(const std::string &options);
             ~AmbientLight() override = default;
 
             Raytracer::Vec3 illuminate(Raytracer::Vec3 point, Scene &scene) override;

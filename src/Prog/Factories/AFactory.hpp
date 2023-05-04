@@ -42,7 +42,7 @@ namespace Raytracer {
 
             virtual std::shared_ptr<T> getFromBuiltin([[maybe_unused]]const std::string &name, [[maybe_unused]]const std::string &options)
             {
-                return nullptr;
+                throw FactoryNotFoundException(name + " not found.");
             }
 
             std::string _dirName;

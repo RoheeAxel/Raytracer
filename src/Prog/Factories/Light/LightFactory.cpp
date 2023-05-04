@@ -19,7 +19,6 @@ namespace Raytracer {
             return std::make_shared<DirLight>(options);
         else if (name == "ambient")
             return std::make_shared<AmbientLight>(options);
-        else
-            return nullptr;
+        return AFactory::getFromBuiltin(name, options);
     }
 } // Raytracer

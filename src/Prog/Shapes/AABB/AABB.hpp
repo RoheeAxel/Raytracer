@@ -22,6 +22,7 @@ class AABB : public AShape{
 
         HitRecord intersection(Ray ray) override;
         AABB getAABB() override;
+        AABB surroundingBox(AABB box0, AABB box1);
 
     private:
         Vec3 _bot;

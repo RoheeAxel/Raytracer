@@ -37,10 +37,12 @@ namespace Raytracer
         double reflect_prob = r0 + (1-r0)*pow((1 - cos_theta),5);
 
         if (cannot_refract || reflect_prob > drand48()) {
-            Scattered = light - record.normal * 2 * record.normal.Dot(light);
-        } else {
             Scattered = (r_out_perp + r_out_parallel);
+
+        } else {
+            Scattered = light - record.normal * 2 * record.normal.Dot(light);
         }
+
         return Scattered;
     }
 

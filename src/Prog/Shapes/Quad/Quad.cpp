@@ -2,19 +2,19 @@
 ** EPITECH PROJECT, 2023
 ** B-OOP-400-REN-4-1-raytracer-axel.rohee
 ** File description:
-** Triangle
+** Quad
 */
 
-#include "Triangle.hpp"
+#include "Quad.hpp"
 #include <iostream>
 #include "AABB.hpp"
 #include <cmath>
 
 namespace Raytracer {
-    Triangle::Triangle(const Vec3 &vertice1, const Vec3 &vertice2, const Vec3 &vertice3)
-    : _vertice1(vertice1), _vertice2(vertice2), _vertice3(vertice3) {}
+    Quad::Quad(const Vec3 &vertice1, const Vec3 &vertice2, const Vec3 &vertice3, const Vec3 &vertice4)
+    : _vertice1(vertice1), _vertice2(vertice2), _vertice3(vertice3), _vertice4(vertice4) {}
 
-    HitRecord Raytracer::Triangle::intersection(Ray r) {
+    HitRecord Raytracer::Quad::intersection(Ray r) {
         HitRecord hitRecord;
         hitRecord.hit = false;
 
@@ -29,7 +29,6 @@ namespace Raytracer {
         double t;
 
         t = -(N.Dot(r.getOrigin()) + d) / NdotRayDirection;
-
         if (t < 0) return hitRecord;
         Vec3 P = r.getOrigin() + r.getDirection() * t;
         Vec3 C;
@@ -42,10 +41,11 @@ namespace Raytracer {
         C = edge1.Cross(vp1);
         if (N.Dot(C) < 0)  return hitRecord;
         // edge 2
-        Vec3 edge2 = _vertice1 - _vertice3;
+        Vec3 edge2 = _vertice4 - _vertice3;
         Vec3 vp2 = P - _vertice3;
         C = edge2.Cross(vp2);
         if (N.Dot(C) < 0) return hitRecord;
+
         hitRecord.hit = true;
         hitRecord.distance = t;
         hitRecord.point = P;
@@ -54,29 +54,33 @@ namespace Raytracer {
         return hitRecord;
     }
 
-    AABB Triangle::getAABB() {
+    AABB Quad::getAABB() {
     return {Vec3(-1000000, -1000000, -1000000), Vec3(1000000, 1000000, 1000000)};
     }
 
-    void Triangle::setPosition(const Vec3 &position)
+    void Quad::setPosition(const Vec3 &position)
     {
         this->_position = position;
     }
 
-    void Triangle::setNormal(const Vec3 &normal) {
+    void Quad::setNormal(const Vec3 &normal) {
         this->_normal = normal;
     }
 
-    void Triangle::setVertice1(const Vec3 &vertice1) {
+    void Quad::setVertice1(const Vec3 &vertice1) {
         this->_vertice1 = vertice1;
     }
 
-    void Triangle::setVertice2(const Vec3 &vertice2) {
+    void Quad::setVertice2(const Vec3 &vertice2) {
         this->_vertice2 = vertice2;
     }
 
-    void Triangle::setVertice3(const Vec3 &vertice3) {
+    void Quad::setVertice3(const Vec3 &vertice3) {
         this->_vertice3 = vertice3;
+    }
+
+    void Quad::setVertice4(const Vec3 &vertice4) {
+        this->_vertice4 = vertice4;
     }
 
 }

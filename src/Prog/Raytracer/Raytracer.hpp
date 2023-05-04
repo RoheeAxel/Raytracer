@@ -11,6 +11,7 @@
     #include "Camera.hpp"
     #include "Sphere.hpp"
     #include "Triangle.hpp"
+    #include "Quad.hpp"
     #include "Plan.hpp"
     #include "PointLight.hpp"
     #include "DirLight.hpp"
@@ -22,9 +23,9 @@
     #include <vector>
     #include <semaphore>
 
-    #define THREADS 8
-    #define HEIGHT 200
-    #define WIDTH 200
+    #define THREADS 10
+    #define HEIGHT 500
+    #define WIDTH 500
 
 namespace Raytracer {
     class Raytracer {

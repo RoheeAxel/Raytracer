@@ -14,6 +14,7 @@ include_directories(Exceptions)
 include_directories(Factories)
 include_directories(Factories/Material)
 include_directories(Factories/Light)
+include_directories(Factories/Shape)
 
 include_directories(Lights)
 include_directories(Lights/DirLight)
@@ -45,4 +46,9 @@ include_directories(Utils)
 
 file(GLOB_RECURSE SOURCES "*.cpp")
 add_executable(raytracer ${SOURCES})
+
+target_link_libraries(raytracer pthread)
+target_link_libraries(raytracer dl)
+target_link_libraries(raytracer config++)
+
 set_target_properties(raytracer PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}")

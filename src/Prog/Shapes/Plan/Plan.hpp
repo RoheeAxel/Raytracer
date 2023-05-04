@@ -8,6 +8,8 @@
 #ifndef PLAN_HPP_
 #define PLAN_HPP_
 
+#include <string>
+#include "ParsingUtils.hpp"
 #include "AShape.hpp"
 
 namespace Raytracer {
@@ -15,6 +17,7 @@ namespace Raytracer {
     class Plan : public AShape{
         public:
             Plan(const Vec3 &position, const Vec3 &normal);
+            Plan(const std::string &options);
             ~Plan() override = default;
             HitRecord intersection(Ray ray) override;
             AABB getAABB() override;

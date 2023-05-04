@@ -23,8 +23,8 @@
     #include <semaphore>
 
     #define THREADS 8
-    #define HEIGHT 400
-    #define WIDTH 400
+    #define HEIGHT 200
+    #define WIDTH 200
 
 namespace Raytracer {
     class Raytracer {

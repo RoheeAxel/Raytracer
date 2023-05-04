@@ -24,6 +24,9 @@ class AABB : public AShape{
         AABB getAABB() override;
         AABB surroundingBox(AABB box0, AABB box1);
 
+        Vec3 getBot() const;
+        Vec3 getTop() const;
+
     private:
         Vec3 _bot;
         Vec3 _top;

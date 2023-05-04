@@ -52,4 +52,12 @@ namespace Raytracer {
         return *this;
     }
 
+    Vec3 AABB::getBot() const {
+        return this->_bot;
+    }
+
+    Vec3 AABB::getTop() const {
+        return this->_top;
+    }
+
 }

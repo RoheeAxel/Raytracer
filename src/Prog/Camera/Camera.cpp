@@ -43,23 +43,24 @@ void Camera::render(Scene &scene)
 
 Vec3 Camera::randomSuperSampling(Scene &scene, int i, int j)
 {
-    Vec3 dir;
     Vec3 screenDiagonal = _screen.getBotRight() - _screen.getTopLeft();
     screenDiagonal = screenDiagonal.abs();
     Vec3 finalColor;
 
     for (int k = 0; k < SAMPLE_PER_PIXEL; k++) {
-        dir.x = _screen.getTopLeft().x + (i + rand() / (RAND_MAX + 1.0)) * screenDiagonal.x / _screen.getResolution().first;
-        dir.y = _screen.getTopLeft().y + (j + rand() / (RAND_MAX + 1.0)) * screenDiagonal.y / _screen.getResolution().second;
-        dir.z = _screen.getTopLeft().z;
+        Vec3 dir (
+            _screen.getTopLeft().x + (i + rand() / (RAND_MAX + 1.0)) * screenDiagonal.x / _screen.getResolution().first,
+            _screen.getTopLeft().y + (j + rand() / (RAND_MAX + 1.0)) * screenDiagonal.y / _screen.getResolution().second,
+            _screen.getTopLeft().z
+        );
         Ray ray(_position, dir);
         Vec3 color = scene.throwRay(ray, 0);
         finalColor += color;
     }
     double scale = 1.0 / SAMPLE_PER_PIXEL;
-    finalColor = finalColor / 255;
+    finalColor /= 255;
     finalColor = Vec3(sqrt(finalColor.x * scale), sqrt(finalColor.y * scale), sqrt(finalColor.z * scale));
-    finalColor = finalColor * 255;
+    finalColor *= 255;
     return finalColor;
 }
 

@@ -2,23 +2,22 @@
 ** EPITECH PROJECT, 2023
 ** B-OOP-400-REN-4-1-raytracer-axel.rohee
 ** File description:
-** ClusterWindow
+** ThreadWindow
 */
 
-#ifndef ClusterWindow_HPP_
-    #define ClusterWindow_HPP_
+#ifndef THREADWINDOW_HPP_
+    #define THREADWINDOW_HPP_
 
     #include "Input.hpp"
 
 namespace Graphics {
-    class ClusterWindow {
+    class ThreadWindow {
         public:
-            ClusterWindow(sf::Vector2f position, sf::Vector2f size, sf::Font &font);
+            ThreadWindow(sf::Vector2f position, sf::Vector2f size, sf::Font &font);
+            ~ThreadWindow();
             void handleEvent(sf::Event &event);
             void draw(sf::RenderWindow &window, sf::RenderStates states);
             void createCloseButton();
-            void createInputs();
-            void updateInputPositions();
             bool getInputClose();
             void setInputClose(bool close);
             void setFont(sf::Font font);
@@ -31,8 +30,8 @@ namespace Graphics {
             bool _is_closed;
             sf::Text _close_text;
             sf::Font _font;
-            std::vector<Input> _inputs;
+            std::vector<Input> _input;
     };
 }
 
-#endif /* !ClusterWindow_HPP_ */
+#endif /* !THREADWINDOW_HPP_ */

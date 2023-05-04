@@ -12,6 +12,11 @@
 namespace Raytracer {
     AABB::AABB(const Vec3 &bot, const Vec3 &top) : _bot(bot), _top(top) {}
 
+    AABB::AABB(const std::string &options) {
+        this->_top = ParsingUtils::getVec3(options, "top");
+        this->_bot = ParsingUtils::getVec3(options, "bot");
+    }
+
     HitRecord Raytracer::AABB::intersection(Ray r) {
         double t_min = 0.0;
         double t_max = 100000.0;
@@ -30,24 +35,29 @@ namespace Raytracer {
         return hit;
     }
 
+    AABB AABB::surroundingBox(AABB box0, AABB box1)
+    {
+        Vec3 small(fmin(box0.getBot().x, box1.getBot().x),
+                    fmin(box0.getBot().y, box1.getBot().y),
+                    fmin(box0.getBot().z, box1.getBot().z));
+
+        Vec3 big(fmax(box0.getTop().x, box1.getTop().x),
+                fmax(box0.getTop().y, box1.getTop().y),
+                fmax(box0.getTop().z, box1.getTop().z));
+        return AABB(small,big);
+    }
+
     AABB AABB::getAABB()
     {
         return *this;
     }
 
-    void AABB::setPosition(const Vec3 &position)
-    {
-        this->_position = position;
+    Vec3 AABB::getBot() const {
+        return this->_bot;
     }
 
-    void AABB::setBot(const Vec3 &bot)
-    {
-        this->_bot = bot;
-    }
-
-    void AABB::setTop(const Vec3 &top)
-    {
-        this->_top = top;
+    Vec3 AABB::getTop() const {
+        return this->_top;
     }
 
 }

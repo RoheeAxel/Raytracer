@@ -11,6 +11,7 @@
 #include "ILight.hpp"
 #include "Ray.hpp"
 #include "Scene.hpp"
+#include "ParsingUtils.hpp"
 
 namespace Raytracer {
     class Scene;
@@ -19,6 +20,7 @@ namespace Raytracer {
         public:
             DirLight() = default;
             DirLight(const Vec3 &position, const Vec3 &dir, const Vec3 &color, double intensity);
+            DirLight(const std::string &options);
             ~DirLight() override = default;
             Raytracer::Vec3 illuminate(Raytracer::Vec3 point, Scene &scene) override;
             Raytracer::Ray getRayToLight(Raytracer::Vec3 point) override;

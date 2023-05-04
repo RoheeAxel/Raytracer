@@ -15,9 +15,9 @@ namespace Raytracer {
     template<typename T>
     class IFactory {
         public:
-            virtual ~IFactory() = 0;
+            virtual ~IFactory() = default;
 
-            virtual std::unique_ptr<T> get(const std::string &) = 0;
+            virtual std::shared_ptr<T> get(const std::string &, const std::string &) = 0;
     };
 }
 

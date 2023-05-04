@@ -13,6 +13,11 @@
 namespace Raytracer {
     Sphere::Sphere(const Vec3 &position, double radius) : _position(position), _radius(radius) {}
 
+    Sphere::Sphere(const std::string &options) {
+        this->_position = ParsingUtils::getVec3(options, "position");
+        this->_radius = ParsingUtils::getDouble(options, "radius");
+    }
+
     HitRecord Raytracer::Sphere::intersection(Ray r) {
         HitRecord hitRecord;
         Vec3 oc = r.getOrigin() - _position;
@@ -52,16 +57,6 @@ namespace Raytracer {
         Vec3 bot = _position - Vec3(_radius, _radius, _radius);
         Vec3 top = _position + Vec3(_radius, _radius, _radius);
         return {bot, top};
-    }
-
-    void Sphere::setPosition(const Vec3 &position)
-    {
-        this->_position = position;
-    }
-
-    void Sphere::setRadius(double radius)
-    {
-        this->_radius = radius;
     }
 
 }

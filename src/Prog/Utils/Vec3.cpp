@@ -11,23 +11,38 @@
 
 namespace Raytracer
 {
-    Vec3::Vec3() : x(0), y(0), z(0)
-    {
-    }
+    Vec3::Vec3() : x(0), y(0), z(0) {}
 
-    Vec3::Vec3(double scalar) : x(scalar), y(scalar), z(scalar)
-    {
-    }
+    Vec3::Vec3(double scalar) : x(scalar), y(scalar), z(scalar) {}
 
-    Vec3::Vec3(double x, double y, double z) : x(x), y(y), z(z)
-    {
-    }
+    Vec3::Vec3(double x, double y, double z) : x(x), y(y), z(z) {}
 
     Vec3::Vec3(const Vec3 &other)
     {
         x = other.x;
         y = other.y;
         z = other.z;
+    }
+
+    Vec3::Vec3(const std::string &str) {
+        std::vector<std::string> vec;
+        size_t pos = 0;
+        std::string token;
+        std::string delimiter = ",";
+        std::string tmp = str;
+        tmp.erase(std::remove(tmp.begin(), tmp.end(), '{'), tmp.end());
+        tmp.erase(std::remove(tmp.begin(), tmp.end(), '}'), tmp.end());
+        while ((pos = tmp.find(delimiter) != std::string::npos)){
+            token = tmp.substr(0, pos);
+            vec.push_back(token);
+            tmp.erase(0, pos + delimiter.length());
+        }
+
+        if (vec.size() != 3)
+            throw Exception("Vec3: invalid string");
+        x = std::stod(vec[0]);
+        y = std::stod(vec[1]);
+        z = std::stod(vec[2]);
     }
 
     Vec3& Vec3::operator=(const Raytracer::Vec3 &other)
@@ -40,32 +55,32 @@ namespace Raytracer
 
     Vec3 Vec3::operator+(const Vec3 &other) const
     {
-        return Vec3(x + other.x, y + other.y, z + other.z);
+        return {x + other.x, y + other.y, z + other.z};
     }
 
     Vec3 Vec3::operator-(const Vec3 &other) const
     {
-        return Vec3(x - other.x, y - other.y, z - other.z);
+        return {x - other.x, y - other.y, z - other.z};
     }
 
     Vec3 Vec3::operator*(const Vec3 &other) const
     {
-        return Vec3(x * other.x, y * other.y, z * other.z);
+        return {x * other.x, y * other.y, z * other.z};
     }
 
     Vec3 Vec3::operator/(const Vec3 &other) const
     {
-        return Vec3(x / other.x, y / other.y, z / other.z);
+        return {x / other.x, y / other.y, z / other.z};
     }
 
     Vec3 Vec3::operator*(double scalar) const
     {
-        return Vec3(x * scalar, y * scalar, z * scalar);
+        return {x * scalar, y * scalar, z * scalar};
     }
 
     Vec3 Vec3::operator/(double scalar) const
     {
-        return Vec3(x / scalar, y / scalar, z / scalar);
+        return {x / scalar, y / scalar, z / scalar};
     }
 
     Vec3& Vec3::operator+=(const Vec3 &other)
@@ -151,7 +166,7 @@ namespace Raytracer
     Vec3 Vec3::Normalized() const
     {
         double length = Length();
-        return Vec3(x / length, y / length, z / length);
+        return {x / length, y / length, z / length};
     }
 
     double Vec3::Dot(const Vec3 &other) const
@@ -161,16 +176,16 @@ namespace Raytracer
 
     Vec3 Vec3::Cross(const Vec3 &other) const
     {
-        return Vec3(y * other.z - z * other.y, z * other.x - x * other.z, x * other.y - y * other.x);
+        return {y * other.z - z * other.y, z * other.x - x * other.z, x * other.y - y * other.x};
     }
     Vec3 Vec3::Max(const Vec3 &other) const
     {
-        return Vec3(std::max(x, other.x), std::max(y, other.y), std::max(z, other.z));
+        return {std::max(x, other.x), std::max(y, other.y), std::max(z, other.z)};
     }
 
     Vec3 Vec3::Clamp(const double min, const double max) const
     {
-        return Vec3(std::clamp(x, min, max), std::clamp(y, min, max), std::clamp(z, min, max));
+        return {std::clamp(x, min, max), std::clamp(y, min, max), std::clamp(z, min, max)};
     }
 
     Vec3 Vec3::random() {
@@ -197,4 +212,5 @@ namespace Raytracer
             return y;
         return z;
     }
+
 }

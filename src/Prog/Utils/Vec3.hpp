@@ -8,15 +8,20 @@
 #ifndef VEC3_HPP_
 #define VEC3_HPP_
 
+#include <vector>
+#include "FromString.hpp"
+#include "Exception.hpp"
+
 namespace Raytracer
 {
-    class Vec3
+    class Vec3 : public FromString
     {
     public:
         Vec3();
-        Vec3(double scalar);
+        explicit Vec3(double scalar);
         Vec3(double x, double y, double z);
         Vec3(const Vec3& other);
+        explicit Vec3(const std::string& str);
         ~Vec3() = default;
 
         Vec3& operator=(const Vec3& other);

@@ -13,6 +13,17 @@ namespace Raytracer
     DirLight::DirLight(const Vec3 &pos, const Vec3 &dir, const Vec3 &color, double intensity)
     : _position(pos), _dir(dir), _color(color), _intensity(intensity) {}
 
+    DirLight::DirLight(const std::string &options) {
+        Vec3 pos = ParsingUtils::getVec3(options, "position");
+        Vec3 dir = ParsingUtils::getVec3(options, "direction");
+        Vec3 color = ParsingUtils::getVec3(options, "color");
+        auto intensity = ParsingUtils::getDouble(options, "intensity");
+
+        _position = pos;
+        _dir = dir;
+        _color = color;
+        _intensity = intensity;
+    }
 
     Vec3 Raytracer::DirLight::illuminate(Raytracer::Vec3 point, Raytracer::Scene &scene) {
         Raytracer::Ray ray = getRayToLight(point);

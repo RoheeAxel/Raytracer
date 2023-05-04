@@ -16,7 +16,7 @@ int main(int ac, char **av)
         std::cout << "USAGE" << std::endl;
         std::cout << "\t./raytracer [file]" << std::endl;
         std::cout << "DESCRIPTION" << std::endl;
-        std::cout << "\t[file]\t\tfile describing the scene to render, in PPM format" << std::endl;
+        std::cout << "\t[file]\t\tfile describing the scene to render, in PPM6 format" << std::endl;
         return 0;
     }
     try {

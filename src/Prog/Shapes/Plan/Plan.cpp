@@ -13,6 +13,11 @@
 namespace Raytracer {
     Plan::Plan(const Vec3 &position, const Vec3 &normal) : _position(position) , _normal(normal) {}
 
+    Plan::Plan(const std::string &options) {
+        this->_position = ParsingUtils::getVec3(options, "position");
+        this->_normal = ParsingUtils::getVec3(options, "normal");
+    }
+
     HitRecord Raytracer::Plan::intersection(Ray r) {
         HitRecord hitRecord;
         float epsilon = 0.0001f;

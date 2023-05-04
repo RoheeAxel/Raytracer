@@ -8,18 +8,19 @@
 #ifndef SPHERE_HPP_
 #define SPHERE_HPP_
 
+#include <string>
+#include "ParsingUtils.hpp"
 #include "AShape.hpp"
 
 namespace Raytracer {
     class Sphere : public AShape{
         public:
             Sphere(const Vec3 &position, double radius);
+            Sphere(const std::string &options);
             ~Sphere() override = default;
             HitRecord intersection(Ray ray) override;
             AABB getAABB() override;
 
-            void setPosition(const Vec3 &position);
-            void setRadius(double radius);
         private:
             Vec3 _position;
             double _radius;

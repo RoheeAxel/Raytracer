@@ -8,6 +8,8 @@
 #ifndef AABB_HPP_
 #define AABB_HPP_
 
+#include <string>
+#include "ParsingUtils.hpp"
 #include "AShape.hpp"
 
 namespace Raytracer {
@@ -15,19 +17,13 @@ class AABB : public AShape{
     public:
         AABB() = default;
         AABB(const Vec3 &bot, const Vec3 &top);
-
+        AABB(const std::string &options);
         ~AABB() override = default;
 
         HitRecord intersection(Ray ray) override;
         AABB getAABB() override;
 
-        void setPosition(const Vec3 &position);
-        void setBot(const Vec3 &bot);
-        void setTop(const Vec3 &top);
-
     private:
-        std::shared_ptr<IMaterial> _material;
-        Vec3 _position;
         Vec3 _bot;
         Vec3 _top;
 };

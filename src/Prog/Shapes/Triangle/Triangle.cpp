@@ -14,6 +14,12 @@ namespace Raytracer {
     Triangle::Triangle(const Vec3 &vertice1, const Vec3 &vertice2, const Vec3 &vertice3)
     : _vertice1(vertice1), _vertice2(vertice2), _vertice3(vertice3) {}
 
+    Triangle::Triangle(const std::string &options) {
+        this->_vertice1 = ParsingUtils::getVec3(options, "vertice1");
+        this->_vertice2 = ParsingUtils::getVec3(options, "vertice2");
+        this->_vertice3 = ParsingUtils::getVec3(options, "vertice3");
+    }
+
     HitRecord Raytracer::Triangle::intersection(Ray r) {
         HitRecord hitRecord;
         hitRecord.hit = false;
@@ -56,27 +62,6 @@ namespace Raytracer {
 
     AABB Triangle::getAABB() {
     return {Vec3(-1000000, -1000000, -1000000), Vec3(1000000, 1000000, 1000000)};
-    }
-
-    void Triangle::setPosition(const Vec3 &position)
-    {
-        this->_position = position;
-    }
-
-    void Triangle::setNormal(const Vec3 &normal) {
-        this->_normal = normal;
-    }
-
-    void Triangle::setVertice1(const Vec3 &vertice1) {
-        this->_vertice1 = vertice1;
-    }
-
-    void Triangle::setVertice2(const Vec3 &vertice2) {
-        this->_vertice2 = vertice2;
-    }
-
-    void Triangle::setVertice3(const Vec3 &vertice3) {
-        this->_vertice3 = vertice3;
     }
 
 }

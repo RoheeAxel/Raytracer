@@ -32,7 +32,8 @@ namespace Raytracer {
         } catch (Exception &e) {}
         try {
             Vec3 rotation = ParsingUtils::getVec3(options, "rotation");
-            shape->setRotation(rotation);
+            Vec3 center = ParsingUtils::getVec3(options, "rotation_center");
+            shape->setRotation(rotation, center);
         } catch (Exception &e) {}
         return shape;
     }

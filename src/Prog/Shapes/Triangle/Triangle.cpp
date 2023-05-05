@@ -57,6 +57,7 @@ namespace Raytracer {
         hitRecord.point = P;
         hitRecord.normal = _normal;
         hitRecord.material = this->getMaterial();
+        hitRecord.uv = this->getUV(P);
         return hitRecord;
     }
 
@@ -64,4 +65,21 @@ namespace Raytracer {
     return {Vec3(-1000000, -1000000, -1000000), Vec3(1000000, 1000000, 1000000)};
     }
 
+    std::pair<double, double> Triangle::getUV(Vec3 point)
+    {
+        Vec3 v0 = _vertice2 - _vertice1;
+        Vec3 v1 = _vertice3 - _vertice1;
+        Vec3 v2 = point - _vertice1;
+
+        double d00 = v0.Dot(v0);
+        double d01 = v0.Dot(v1);
+        double d11 = v1.Dot(v1);
+        double d20 = v2.Dot(v0);
+        double d21 = v2.Dot(v1);
+        double denom = d00 * d11 - d01 * d01;
+        double v = (d11 * d20 - d01 * d21) / denom;
+        double w = (d00 * d21 - d01 * d20) / denom;
+        double u = 1.0f - v - w;
+        return {u, v};
+    }
 }

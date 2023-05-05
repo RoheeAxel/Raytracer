@@ -27,6 +27,7 @@ class HitRecord {
         std::shared_ptr<Raytracer::IMaterial> material;
         double distance;
         bool front_face;
+        std::pair<double, double> uv;
 
         void set_face_normal(Ray& r, Vec3& out_normal) {
             front_face = r.getDirection().Dot(out_normal) < 0;

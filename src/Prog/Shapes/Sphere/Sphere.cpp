@@ -49,6 +49,7 @@ namespace Raytracer {
             hitRecord.material = this->getMaterial();
             Vec3 out_normal = (hitRecord.point - _position) / _radius;
             hitRecord.set_face_normal(r, out_normal);
+            hitRecord.uv = this->getUV(out_normal);
             return hitRecord;
         }
     }
@@ -57,6 +58,14 @@ namespace Raytracer {
         Vec3 bot = _position - Vec3(_radius, _radius, _radius);
         Vec3 top = _position + Vec3(_radius, _radius, _radius);
         return {bot, top};
+    }
+
+    std::pair<double, double> Sphere::getUV(Vec3 point) {
+        double theta = acos(-point.y);
+        double phi = atan2(-point.z, point.x) + M_PI;
+        double u = phi / (2 * M_PI);
+        double v = theta / M_PI;
+        return {u, v};
     }
 
 }

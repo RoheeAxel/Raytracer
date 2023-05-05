@@ -21,6 +21,7 @@ namespace Raytracer {
             ~Triangle() override = default;
             HitRecord intersection(Ray ray) override;
             AABB getAABB() override;
+            std::pair<double, double> getUV(Vec3 point) override;
 
         private:
             Vec3 _normal;

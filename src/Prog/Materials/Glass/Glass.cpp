@@ -17,7 +17,7 @@ namespace Raytracer
             std::cerr << "Warning: Options are specified for Glass Material but not needed" << std::endl;
     }
 
-    Vec3 Glass::getColorAt([[maybe_unused]]Vec3 point, [[maybe_unused]]Vec3 normal, [[maybe_unused]]Ray light, [[maybe_unused]]Vec3 lightColor) {
+    Vec3 Glass::getColorAt([[maybe_unused]]HitRecord record, [[maybe_unused]]Ray light, [[maybe_unused]]Vec3 lightColor) {
         return {255, 255, 255};
     }
 

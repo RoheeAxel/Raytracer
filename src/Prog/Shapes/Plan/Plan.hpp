@@ -21,6 +21,7 @@ namespace Raytracer {
             ~Plan() override = default;
             HitRecord intersection(Ray ray) override;
             AABB getAABB() override;
+            std::pair<double, double> getUV(Vec3 point) override;
 
             void setPosition(const Vec3 &position);
             void setNormal(const Vec3 &normal);

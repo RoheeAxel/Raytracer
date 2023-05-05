@@ -21,8 +21,8 @@
     #include <memory>
 
     #define THREADS 10
-    #define HEIGHT 200
-    #define WIDTH 200
+    #define HEIGHT 500
+    #define WIDTH 500
 
 namespace Raytracer {
     class Raytracer {

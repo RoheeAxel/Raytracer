@@ -23,6 +23,7 @@ class IShape {
         virtual void setMaterial(std::shared_ptr<IMaterial> material) = 0;
         virtual std::shared_ptr<IMaterial> getMaterial() = 0;
         virtual AABB getAABB() = 0;
+        virtual std::pair<double, double> getUV(Vec3 point) = 0;
     protected:
     private:
 };

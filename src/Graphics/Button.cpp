@@ -25,8 +25,6 @@ Graphics::ButtonType Graphics::Button::handleClick(sf::Vector2f clickPos)
                 return ButtonType::THREAD;
             case ButtonType::CLUSTER:
                 return ButtonType::CLUSTER;
-            case ButtonType::SETTINGS:
-                return ButtonType::SETTINGS;
             case ButtonType::LOAD:
                 return ButtonType::LOAD;
             case ButtonType::PLAY:

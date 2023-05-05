@@ -16,8 +16,9 @@
 namespace Viewer {
     class ImagePpm {
     public:
-        ImagePpm(const std::string filename);
+        ImagePpm();
         ~ImagePpm();
+        void run(const std::string filename);
         void draw(sf::RenderWindow &window);
 
     private:

@@ -7,14 +7,24 @@
 
 #include "ImagePpm.hpp"
 
-Viewer::ImagePpm::ImagePpm(const std::string filename)
+Viewer::ImagePpm::ImagePpm()
+{
+}
+
+Viewer::ImagePpm::~ImagePpm()
+{
+}
+
+void Viewer::ImagePpm::run(const std::string filename)
 {
     std::ifstream file(filename, std::ios::binary);
     std::string format;
     int maxColor;
 
-    if (!file)
+    if (!file) {
+        std::cout << "Failed to open file." << std::endl;
         return;
+    }
     std::getline(file, format);
     file >> this->_width >> this->_height >> maxColor;
     file.get();
@@ -34,10 +44,6 @@ Viewer::ImagePpm::ImagePpm(const std::string filename)
             this->_image.setPixel(j, i, pixelData[i * this->_width + j]);
     this->_texture.loadFromImage(this->_image);
     this->_sprite.setTexture(this->_texture);
-}
-
-Viewer::ImagePpm::~ImagePpm()
-{
 }
 
 void Viewer::ImagePpm::draw(sf::RenderWindow &window)

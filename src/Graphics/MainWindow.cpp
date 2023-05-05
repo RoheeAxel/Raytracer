@@ -11,7 +11,7 @@
 Graphics::MainWindow::MainWindow(sf::Vector2f size, std::string title)
     : _window(sf::VideoMode(size.x, size.y), title), _buttons(), _imageSprite(), _size(size),
     _font(), _clusterWindow(sf::Vector2f((1920 / 2) - (400 / 2), (1080 / 2) - 150), sf::Vector2f(400, 270), this->_font),
-    _imagePpm(""), _threadWindow(sf::Vector2f((1920 / 2) - (400 / 2), (1080 / 2) - 150), sf::Vector2f(400, 150), this->_font)
+    _imagePpm(), _threadWindow(sf::Vector2f((1920 / 2) - (400 / 2), (1080 / 2) - 150), sf::Vector2f(400, 150), this->_font)
 {
     this->_imageSprite.setPosition(0, 50);
     this->_window.setFramerateLimit(60);
@@ -66,8 +66,9 @@ void Graphics::MainWindow::run()
         this->_window.draw(this->_rectangle);
         for (Button& button : this->_buttons)
             this->_window.draw(button.getSprite());
-        if (tmp == ButtonType::PLAY)
-            this->_imagePpm = Viewer::ImagePpm(this->_path);
+        if (tmp == ButtonType::PLAY) {
+            this->_imagePpm.run(this->_path);
+        }
         this->_imagePpm.draw(this->_window);
         if (tmp == ButtonType::CLUSTER)
             this->_clusterWindow.draw(this->_window, sf::BlendAlpha);

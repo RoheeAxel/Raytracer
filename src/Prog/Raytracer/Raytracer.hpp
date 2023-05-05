@@ -12,6 +12,7 @@
     #include "Parser.hpp"
     #include "SceneBuilder.hpp"
     #include "Vec3.hpp"
+    #include "Settings.hpp"
 
     #include <thread>
     #include <array>
@@ -38,7 +39,7 @@ namespace Raytracer {
             std::vector<std::thread> _threads;
             std::vector<Camera> _cameras;
 
-            //Screen _screen;
+            std::shared_ptr<Settings> _settings;
             std::shared_ptr<Scene> _scene;
     };
 }

@@ -14,11 +14,17 @@
 namespace Raytracer {
 class Screen {
     public:
-        Screen(Raytracer::Vec3 topLeft, Raytracer::Vec3 botRight, std::pair<int, int> res)
+        Screen(const Raytracer::Vec3 &topLeft, const Raytracer::Vec3 &botRight, std::pair<int, int> res)
         {
             _topLeft = topLeft;
             _botRight = botRight;
             _resolution = res;
+        };
+        Screen(const Raytracer::Vec3 &topLeft, const Raytracer::Vec3 &botRight, int width, int height)
+        {
+            _topLeft = topLeft;
+            _botRight = botRight;
+            _resolution = std::pair<int, int>(width, height);
         };
 
         ~Screen() = default;

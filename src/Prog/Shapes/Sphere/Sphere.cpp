@@ -65,7 +65,7 @@ namespace Raytracer {
         double phi = atan2(-point.z, point.x) + M_PI;
         double u = phi / (2 * M_PI);
         double v = theta / M_PI;
-        return {u, v};
+        return {u, 1 - v};
     }
 
     void Sphere::setTranslation(Vec3 translation) {

@@ -69,7 +69,7 @@ namespace Raytracer {
     }
 
     void Sphere::setTranslation(Vec3 translation) {
-        _position = translation;
+        _position = _position + translation;
     }
     void Sphere::setRotation(Vec3 rotation, Vec3 center)
     {

@@ -66,4 +66,9 @@ namespace Raytracer {
         return this->_top;
     }
 
+    void AABB::setTranslation(Vec3 translation)
+    {
+        this->_bot += translation;
+        this->_top += translation;
+    }
 }

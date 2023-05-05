@@ -68,4 +68,7 @@ namespace Raytracer {
         return {u, v};
     }
 
+    void Sphere::setTranslation(Vec3 translation) {
+        _position = translation;
+    }
 }

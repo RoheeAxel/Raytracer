@@ -22,6 +22,7 @@ namespace Raytracer {
             HitRecord intersection(Ray ray) override;
             AABB getAABB() override;
             std::pair<double, double> getUV(Vec3 point) override;
+            void setTranslation(Vec3 translation) override;
 
         private:
             Vec3 _normal;

@@ -25,6 +25,7 @@ namespace Raytracer {
             void setVertice2(const Vec3 &vertice2);
             void setVertice3(const Vec3 &vertice3);
             void setVertice4(const Vec3 &vertice4);
+            void setTranslation(Vec3 translation) override;
 
         private:
             Vec3 _position;

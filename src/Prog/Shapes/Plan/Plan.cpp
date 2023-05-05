@@ -71,4 +71,8 @@ namespace Raytracer {
         this->_center = center;
     }
 
+    void Plan::setTranslation(Vec3 translation)
+    {
+        this->_position += translation;
+    }
 }

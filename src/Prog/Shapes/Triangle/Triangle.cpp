@@ -82,4 +82,10 @@ namespace Raytracer {
         double u = 1.0f - v - w;
         return {u, v};
     }
+
+    void Triangle::setTranslation(Vec3 translation) {
+        this->_vertice1 += translation;
+        this->_vertice2 += translation;
+        this->_vertice3 += translation;
+    }
 }

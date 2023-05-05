@@ -83,4 +83,13 @@ namespace Raytracer {
         this->_vertice4 = vertice4;
     }
 
+    void Quad::setTranslation(Vec3 translation)
+    {
+        this->_position = this->_position + translation;
+        this->_vertice1 = this->_vertice1 + translation;
+        this->_vertice2 = this->_vertice2 + translation;
+        this->_vertice3 = this->_vertice3 + translation;
+        this->_vertice4 = this->_vertice4 + translation;
+    }
+
 }

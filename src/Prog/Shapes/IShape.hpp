@@ -24,6 +24,7 @@ class IShape {
         virtual std::shared_ptr<IMaterial> getMaterial() = 0;
         virtual AABB getAABB() = 0;
         virtual std::pair<double, double> getUV(Vec3 point) = 0;
+        virtual void setTranslation(Vec3 translation) = 0;
     protected:
     private:
 };

@@ -11,7 +11,9 @@
 #include "IMaterial.hpp"
 #include "Ray.hpp"
 #include "ParsingUtils.hpp"
-#include "Dammier.hpp"
+#include "ITexture.hpp"
+#include <memory>
+#include "Image.hpp"
 
 namespace Raytracer
 {
@@ -27,6 +29,7 @@ namespace Raytracer
             double getReflectivity() override;
         private:
             Vec3 _base_color;
+            std::shared_ptr<ITexture> _tex = nullptr;
 };
 }
 #endif /* !LAMBERTIAN_HPP_ */

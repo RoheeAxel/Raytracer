@@ -11,7 +11,7 @@
 #include "ITexture.hpp"
 
 namespace Raytracer {
-    class Dammier {
+    class Dammier : public ITexture {
         public:
             Dammier();
             ~Dammier();

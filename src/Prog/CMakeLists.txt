@@ -45,6 +45,7 @@ include_directories(Shapes/Quad)
 
 include_directories(ITexture)
 include_directories(ITexture/Dammier)
+include_directories(ITexture/Image)
 
 include_directories(Utils)
 

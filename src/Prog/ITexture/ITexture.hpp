@@ -11,10 +11,10 @@
 #include "Vec3.hpp"
 
 namespace Raytracer {
-class Texture {
+class ITexture {
     public:
-        virtual ~Texture() = default;
-        virtual Vec3 getColorAt(int x, int y) = 0;
+        virtual ~ITexture() = default;
+        virtual Vec3 getColorAt(float x, float y) = 0;
     protected:
     private:
 };

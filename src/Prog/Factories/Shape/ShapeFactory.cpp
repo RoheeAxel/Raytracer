@@ -24,4 +24,13 @@ namespace Raytracer {
         return AFactory::getFromBuiltin(name, options);
     }
 
+    std::shared_ptr<IShape> ShapeFactory::get(const std::string &name, const std::string &options) {
+        std::shared_ptr<IShape> shape = AFactory::get(name, options);
+        try {
+            Vec3 translation = ParsingUtils::getVec3(options, "translation");
+            shape->setTranslation(translation);
+        } catch (Exception &e) {}
+        return shape;
+    }
+
 } // Raytracer

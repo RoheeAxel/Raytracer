@@ -111,4 +111,47 @@ namespace Raytracer {
         return ss.str();
     }
 
+    std::shared_ptr<Settings> Parser::parseSettings() {
+        std::shared_ptr<Settings> settings = std::make_shared<Settings>();
+
+        if (!this->_cfg.exists("settings"))
+            throw Config::MissingGroupException("settings");
+
+        libconfig::Setting &settingsGroup = this->_cfg.lookup("settings");
+        if (settingsGroup.exists("threads")) {
+            settings->setThreads(settingsGroup.lookup("threads"));
+        } else {
+            settings->setThreads(1);
+        }
+
+        if (settingsGroup.exists("sample_per_pixel")) {
+            settings->setSamples(settingsGroup.lookup("sample_per_pixel"));
+        } else {
+            settings->setSamples(10);
+        }
+
+        if (!this->_cfg.exists("camera"))
+            throw Config::MissingGroupException("camera");
+
+        libconfig::Setting &cameraGroup = this->_cfg.lookup("camera");
+        if (cameraGroup.exists("screen")) {
+            settings->setWidth(cameraGroup.lookup("screen").lookup("width"));
+            settings->setHeight(cameraGroup.lookup("screen").lookup("height"));
+        } else {
+            settings->setWidth(200);
+            settings->setHeight(200);
+        }
+        if (cameraGroup.exists("position")) {
+            settings->setPosition(this->convertGroup(cameraGroup.lookup("position")));
+        } else {
+            settings->setPosition(Vec3(0));
+        }
+        if (cameraGroup.exists("rotation")) {
+            settings->setRotation(this->convertGroup(cameraGroup.lookup("rotation")));
+        } else {
+            settings->setRotation(Vec3(0));
+        }
+        return settings;
+    }
+
 } // Raytracer

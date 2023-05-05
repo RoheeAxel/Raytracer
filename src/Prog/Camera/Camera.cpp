@@ -5,80 +5,72 @@
 ** Camera
 */
 
-#include "Camera.hpp"
 #include <iostream>
-#include <fstream>
 #include <cmath>
+#include "Camera.hpp"
 
 namespace Raytracer {
 
-Camera::Camera()
-{
-}
+    Camera::Camera(const Vec3& position, const Vec3& rotation, const Screen& screen, size_t id, int sample_per_pixel)
+    {
+        _position = position;
+        _rotation = rotation;
+        _screen = screen;
+        _id = id;
+        _sample_per_pixel = sample_per_pixel;
+    }
 
-Camera::Camera(Vec3 position, Vec3 rotation, Screen screen, size_t id)
-{
-    _position = position;
-    _rotation = rotation;
-    _screen = screen;
-    _id = id;
-}
-
-Camera::~Camera()
-{
-}
-
-void Camera::render(Scene &scene)
-{
-    std::cout << "Thread " << _id << " starting" << std::endl;
-    std::pair<int, int> resolution = _screen.getResolution();
-    for (int j = resolution.second; j > 0; j--) {
-        for (int i = 0; i < resolution.first; i++) {
-            Vec3 finalColor = randomSuperSampling(scene, i, j);
-            _pixels.push_back(finalColor);
+    void Camera::render(Scene &scene)
+    {
+        std::cout << "Thread " << _id << " starting" << std::endl;
+        std::pair<int, int> resolution = _screen.getResolution();
+        for (int j = resolution.second; j > 0; j--) {
+            for (int i = 0; i < resolution.first; i++) {
+                Vec3 finalColor = randomSuperSampling(scene, i, j);
+                _pixels.push_back(finalColor);
+            }
         }
+        std::cout << "Thread " << _id << " ending" << std::endl;
     }
-    std::cout << "Thread " << _id << " ending" << std::endl;
-}
 
-Vec3 Camera::randomSuperSampling(Scene &scene, int i, int j)
-{
-    Vec3 screenDiagonal = _screen.getBotRight() - _screen.getTopLeft();
-    screenDiagonal = screenDiagonal.abs();
-    Vec3 finalColor;
+    Vec3 Camera::randomSuperSampling(Scene &scene, int i, int j)
+    {
+        Vec3 screenDiagonal = _screen.getBotRight() - _screen.getTopLeft();
+        screenDiagonal = screenDiagonal.abs();
+        Vec3 finalColor;
 
-    for (int k = 0; k < SAMPLE_PER_PIXEL; k++) {
-        Vec3 dir (
-            _screen.getTopLeft().x + (i + rand() / (RAND_MAX + 1.0)) * screenDiagonal.x / _screen.getResolution().first,
-            _screen.getTopLeft().y + (j + rand() / (RAND_MAX + 1.0)) * screenDiagonal.y / _screen.getResolution().second,
-            _screen.getTopLeft().z
-        );
-        Ray ray(_position, dir);
-        Vec3 color = scene.throwRay(ray, 0);
-        finalColor += color;
+        for (int k = 0; k < _sample_per_pixel; k++) {
+            Vec3 dir (
+                _screen.getTopLeft().x + (i + rand() / (RAND_MAX + 1.0)) * screenDiagonal.x / _screen.getResolution().first,
+                _screen.getTopLeft().y + (j + rand() / (RAND_MAX + 1.0)) * screenDiagonal.y / _screen.getResolution().second,
+                _screen.getTopLeft().z
+            );
+            Ray ray(_position, dir);
+            Vec3 color = scene.throwRay(ray, 0);
+            finalColor += color;
+        }
+        double scale = 1.0 / _sample_per_pixel;
+        finalColor /= 255;
+        finalColor = Vec3(sqrt(finalColor.x * scale), sqrt(finalColor.y * scale), sqrt(finalColor.z * scale));
+        finalColor *= 255;
+        return finalColor;
     }
-    double scale = 1.0 / SAMPLE_PER_PIXEL;
-    finalColor /= 255;
-    finalColor = Vec3(sqrt(finalColor.x * scale), sqrt(finalColor.y * scale), sqrt(finalColor.z * scale));
-    finalColor *= 255;
-    return finalColor;
-}
 
-Vec3 Camera::regularSuperSampling(Scene &scene, int i, int j)
-{
-    Vec3 dir;
-    Vec3 screenDiagonal = _screen.getBotRight() - _screen.getTopLeft();
-    screenDiagonal = screenDiagonal.abs();
-    Vec3 finalColor;
+    Vec3 Camera::regularSuperSampling(Scene &scene, int i, int j)
+    {
+        Vec3 dir;
+        Vec3 screenDiagonal = _screen.getBotRight() - _screen.getTopLeft();
+        screenDiagonal = screenDiagonal.abs();
+        Vec3 finalColor;
 
-    for (int k = 0; k < 9; k++) {
-        dir.x = _screen.getTopLeft().x + (i + double(k % 3 - 1) / 4) * screenDiagonal.x / _screen.getResolution().first;
-        dir.y = _screen.getTopLeft().y + (j + double(k / 3 - 1) / 4) * screenDiagonal.y / _screen.getResolution().second;
-        dir.z = _screen.getTopLeft().z;
-        Ray ray(_position, dir);
-        Vec3 color = scene.throwRay(ray, 0);
-        finalColor += color;
+        for (int k = 0; k < 9; k++) {
+            dir.x = _screen.getTopLeft().x + (i + double(k % 3 - 1) / 4) * screenDiagonal.x / _screen.getResolution().first;
+            dir.y = _screen.getTopLeft().y + (j + double(k / 3 - 1) / 4) * screenDiagonal.y / _screen.getResolution().second;
+            dir.z = _screen.getTopLeft().z;
+            Ray ray(_position, dir);
+            Vec3 color = scene.throwRay(ray, 0);
+            finalColor += color;
+        }
+        return finalColor / 9;
     }
-    return finalColor / 9;
-}
 }

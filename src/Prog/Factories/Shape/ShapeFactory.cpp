@@ -30,6 +30,10 @@ namespace Raytracer {
             Vec3 translation = ParsingUtils::getVec3(options, "translation");
             shape->setTranslation(translation);
         } catch (Exception &e) {}
+        try {
+            Vec3 rotation = ParsingUtils::getVec3(options, "rotation");
+            shape->setRotation(rotation);
+        } catch (Exception &e) {}
         return shape;
     }
 

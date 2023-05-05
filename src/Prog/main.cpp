@@ -6,14 +6,19 @@
 */
 
 #include "Raytracer.hpp"
-#include "Vec3.hpp"
 
 int main(int ac, char **av)
 {
-    if (ac != 2)
+    if (ac != 2) {
+        std::cerr << "Usage: ./raytracer [scene file]" << std::endl;
         return 84;
-    Raytracer::Raytracer raytracer;
-    raytracer.buildScene();
-    raytracer.render();
+    }
+    try {
+        Raytracer::Raytracer raytracer(av[1]);
+        raytracer.render();
+    } catch (Raytracer::Exception &e) {
+        std::cerr << "Unexcepted error! " << e.what() << std::endl;
+        return 84;
+    }
     return 0;
 }

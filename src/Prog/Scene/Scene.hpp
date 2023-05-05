@@ -10,23 +10,25 @@
 
 #include "ILight.hpp"
 #include "IShape.hpp"
+#include <memory>
 #include <vector>
 
 namespace Raytracer {
     class Scene {
         public:
-            Scene();
-            ~Scene();
+            Scene() = default;
+            ~Scene() = default;
 
-            void addLight(ILight *light);
-            void addShape(IShape *shape);
-            std::vector<ILight *> &getLights();
-            std::vector<IShape *> &getShapes();
+            void addLight(std::shared_ptr<ILight> light);
+            void addShape(std::shared_ptr<IShape> shape);
+
+            std::vector<std::shared_ptr<ILight>> &getLights();
+            std::vector<std::shared_ptr<IShape>> &getShapes();
 
             Vec3 throwRay(Ray ray, int depth);
         private:
-            std::vector<ILight *> _lights;
-            std::vector<IShape *> _shapes;
+            std::vector<std::shared_ptr<ILight>> _lights;
+            std::vector<std::shared_ptr<IShape>> _shapes;
     };
 }
 

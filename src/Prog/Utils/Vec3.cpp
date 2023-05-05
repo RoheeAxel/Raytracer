@@ -7,6 +7,9 @@
 
 #include "Vec3.hpp"
 #include <cmath>
+#include <sstream>
+#include <istream>
+#include <iostream>
 #include <algorithm>
 
 namespace Raytracer
@@ -26,18 +29,14 @@ namespace Raytracer
 
     Vec3::Vec3(const std::string &str) {
         std::vector<std::string> vec;
-        size_t pos = 0;
-        std::string token;
-        std::string delimiter = ",";
         std::string tmp = str;
         tmp.erase(std::remove(tmp.begin(), tmp.end(), '{'), tmp.end());
         tmp.erase(std::remove(tmp.begin(), tmp.end(), '}'), tmp.end());
-        while ((pos = tmp.find(delimiter) != std::string::npos)){
-            token = tmp.substr(0, pos);
-            vec.push_back(token);
-            tmp.erase(0, pos + delimiter.length());
+        std::stringstream ss(tmp);
+        std::string item;
+        while (std::getline(ss, item, ',')) {
+            vec.push_back(item);
         }
-
         if (vec.size() != 3)
             throw Exception("Vec3: invalid string");
         x = std::stod(vec[0]);

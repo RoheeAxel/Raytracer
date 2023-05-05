@@ -7,6 +7,7 @@
 
 #include "AABB.hpp"
 #include <iostream>
+#include "Quaternion.hpp"
 #include <cmath>
 
 namespace Raytracer {
@@ -70,5 +71,12 @@ namespace Raytracer {
     {
         this->_bot += translation;
         this->_top += translation;
+    }
+
+    void AABB::setRotation(Vec3 rotation, Vec3 center)
+    {
+        Quaternion q(rotation);
+        _bot = q.rotate(this->_bot, center);
+        _top = q.rotate(this->_top, center);
     }
 }

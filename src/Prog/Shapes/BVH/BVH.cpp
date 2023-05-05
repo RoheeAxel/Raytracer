@@ -36,4 +36,9 @@ namespace Raytracer {
         _left->setTranslation(translation);
         _right->setTranslation(translation);
     }
+    void BVH::setRotation(Vec3 rotation, Vec3 center)
+    {
+        _left->setRotation(rotation, center);
+        _right->setRotation(rotation, center);
+    }
 }

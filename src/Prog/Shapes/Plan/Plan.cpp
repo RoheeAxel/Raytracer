@@ -75,4 +75,10 @@ namespace Raytracer {
     {
         this->_position += translation;
     }
+    void Plan::setRotation(Vec3 rotation, Vec3 center)
+    {
+        Quaternion q(rotation);
+        _position = q.rotate(_position, center);
+        _normal = q.rotate(_normal, center);
+    }
 }

@@ -28,6 +28,7 @@ class AABB : public AShape{
         Vec3 getBot() const;
         Vec3 getTop() const;
         void setTranslation(Vec3 translation) override;
+        virtual void setRotation(Vec3 rotation, Vec3 center) override;
 
     private:
         Vec3 _bot;

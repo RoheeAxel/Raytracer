@@ -21,7 +21,7 @@ class BVH : public AShape{
 
         HitRecord intersection(Ray ray) override;
         AABB getAABB() override;
-
+        void setTranslation(Vec3 translation) override;
     private:
         std::shared_ptr<IMaterial> _material;
         std::shared_ptr<AShape> _left;

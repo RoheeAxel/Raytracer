@@ -2,25 +2,19 @@
 ** EPITECH PROJECT, 2023
 ** B-OOP-400-REN-4-1-raytracer-axel.rohee
 ** File description:
-** Triangle
+** Quad
 */
 
-#include "Triangle.hpp"
+#include "Quad.hpp"
 #include <iostream>
 #include "AABB.hpp"
 #include <cmath>
 
 namespace Raytracer {
-    Triangle::Triangle(const Vec3 &vertice1, const Vec3 &vertice2, const Vec3 &vertice3)
-    : _vertice1(vertice1), _vertice2(vertice2), _vertice3(vertice3) {}
+    Quad::Quad(const Vec3 &vertice1, const Vec3 &vertice2, const Vec3 &vertice3, const Vec3 &vertice4)
+    : _vertice1(vertice1), _vertice2(vertice2), _vertice3(vertice3), _vertice4(vertice4) {}
 
-    Triangle::Triangle(const std::string &options) {
-        this->_vertice1 = ParsingUtils::getVec3(options, "vertice1");
-        this->_vertice2 = ParsingUtils::getVec3(options, "vertice2");
-        this->_vertice3 = ParsingUtils::getVec3(options, "vertice3");
-    }
-
-    HitRecord Raytracer::Triangle::intersection(Ray r) {
+    HitRecord Raytracer::Quad::intersection(Ray r) {
         HitRecord hitRecord;
         hitRecord.hit = false;
 
@@ -35,7 +29,6 @@ namespace Raytracer {
         double t;
 
         t = -(N.Dot(r.getOrigin()) + d) / NdotRayDirection;
-
         if (t < 0) return hitRecord;
         Vec3 P = r.getOrigin() + r.getDirection() * t;
         Vec3 C;
@@ -48,44 +41,55 @@ namespace Raytracer {
         C = edge1.Cross(vp1);
         if (N.Dot(C) < 0)  return hitRecord;
         // edge 2
-        Vec3 edge2 = _vertice1 - _vertice3;
+        Vec3 edge2 = _vertice4 - _vertice3;
         Vec3 vp2 = P - _vertice3;
         C = edge2.Cross(vp2);
         if (N.Dot(C) < 0) return hitRecord;
+
         hitRecord.hit = true;
         hitRecord.distance = t;
         hitRecord.point = P;
         hitRecord.normal = _normal;
         hitRecord.material = this->getMaterial();
-        hitRecord.uv = this->getUV(P);
         return hitRecord;
     }
 
-    AABB Triangle::getAABB() {
+    AABB Quad::getAABB() {
     return {Vec3(-1000000, -1000000, -1000000), Vec3(1000000, 1000000, 1000000)};
     }
 
-    std::pair<double, double> Triangle::getUV(Vec3 point)
+    void Quad::setPosition(const Vec3 &position)
     {
-        Vec3 v0 = _vertice2 - _vertice1;
-        Vec3 v1 = _vertice3 - _vertice1;
-        Vec3 v2 = point - _vertice1;
-
-        double d00 = v0.Dot(v0);
-        double d01 = v0.Dot(v1);
-        double d11 = v1.Dot(v1);
-        double d20 = v2.Dot(v0);
-        double d21 = v2.Dot(v1);
-        double denom = d00 * d11 - d01 * d01;
-        double v = (d11 * d20 - d01 * d21) / denom;
-        double w = (d00 * d21 - d01 * d20) / denom;
-        double u = 1.0f - v - w;
-        return {u, v};
+        this->_position = position;
     }
 
-    void Triangle::setTranslation(Vec3 translation) {
-        this->_vertice1 += translation;
-        this->_vertice2 += translation;
-        this->_vertice3 += translation;
+    void Quad::setNormal(const Vec3 &normal) {
+        this->_normal = normal;
     }
+
+    void Quad::setVertice1(const Vec3 &vertice1) {
+        this->_vertice1 = vertice1;
+    }
+
+    void Quad::setVertice2(const Vec3 &vertice2) {
+        this->_vertice2 = vertice2;
+    }
+
+    void Quad::setVertice3(const Vec3 &vertice3) {
+        this->_vertice3 = vertice3;
+    }
+
+    void Quad::setVertice4(const Vec3 &vertice4) {
+        this->_vertice4 = vertice4;
+    }
+
+    void Quad::setTranslation(Vec3 translation)
+    {
+        this->_position = this->_position + translation;
+        this->_vertice1 = this->_vertice1 + translation;
+        this->_vertice2 = this->_vertice2 + translation;
+        this->_vertice3 = this->_vertice3 + translation;
+        this->_vertice4 = this->_vertice4 + translation;
+    }
+
 }

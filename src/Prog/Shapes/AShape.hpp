@@ -20,6 +20,8 @@ namespace Raytracer {
             void setMaterial(std::shared_ptr<IMaterial> material) override;
             std::shared_ptr<IMaterial> getMaterial() override;
             virtual AABB getAABB() = 0;
+            virtual std::pair<double, double> getUV(Vec3 point) = 0;
+            virtual void setTranslation(Vec3 translation) = 0;
 
         protected:
             std::shared_ptr<IMaterial> _material;

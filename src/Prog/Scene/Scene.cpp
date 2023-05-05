@@ -26,7 +26,7 @@ namespace Raytracer {
                 for (auto &light : _lights) {
                     hit.light = light->illuminate(hit.point, *this);
                     Ray light_dir = light->getRayToLight(hit.point);
-                    current_color = hit.material->getColorAt(hit.point, hit.normal, light_dir, hit.light);
+                    current_color = hit.material->getColorAt(hit, light_dir, hit.light);
                     if (depth < 8) {
                         Ray new_ray = Ray(hit.point, hit.material->getNewRay(hit, ray.getDirection()));
                         if (new_ray.getDirection() != Vec3(0, 0, 0)) {

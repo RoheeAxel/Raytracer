@@ -17,7 +17,7 @@ namespace Raytracer
             std::cerr << "Warning: Options are specified for Glass Material but not needed" << std::endl;
     }
 
-    Vec3 Glass::getColorAt([[maybe_unused]]Vec3 point, [[maybe_unused]]Vec3 normal, [[maybe_unused]]Ray light, [[maybe_unused]]Vec3 lightColor) {
+    Vec3 Glass::getColorAt([[maybe_unused]]HitRecord record, [[maybe_unused]]Ray light, [[maybe_unused]]Vec3 lightColor) {
         return {255, 255, 255};
     }
 
@@ -37,10 +37,12 @@ namespace Raytracer
         double reflect_prob = r0 + (1-r0)*pow((1 - cos_theta),5);
 
         if (cannot_refract || reflect_prob > drand48()) {
-            Scattered = light - record.normal * 2 * record.normal.Dot(light);
-        } else {
             Scattered = (r_out_perp + r_out_parallel);
+
+        } else {
+            Scattered = light - record.normal * 2 * record.normal.Dot(light);
         }
+
         return Scattered;
     }
 

@@ -30,4 +30,10 @@ namespace Raytracer {
     {
         return _box;
     }
+
+    void BVH::setTranslation(Vec3 translation)
+    {
+        _left->setTranslation(translation);
+        _right->setTranslation(translation);
+    }
 }

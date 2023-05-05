@@ -49,6 +49,13 @@ namespace Raytracer {
         return {Vec3(-1000000, -1000000, -1000000), Vec3(1000000, 1000000, 1000000)};
     }
 
+    std::pair<double, double> Plan::getUV(Vec3 point)
+    {
+        double u = point.x - floor(point.x);
+        double v = point.z - floor(point.z);
+        return {u, v};
+    }
+
     void Plan::setPosition(const Vec3 &position)
     {
         this->_position = position;
@@ -64,4 +71,8 @@ namespace Raytracer {
         this->_center = center;
     }
 
+    void Plan::setTranslation(Vec3 translation)
+    {
+        this->_position += translation;
+    }
 }

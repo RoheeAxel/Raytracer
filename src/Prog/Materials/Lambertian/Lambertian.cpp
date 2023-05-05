@@ -23,16 +23,19 @@ namespace Raytracer
         this->_base_color = color;
     }
 
-    Vec3 Lambertian::getColorAt([[maybe_unused]]Vec3 point, Vec3 normal, Ray light, [[maybe_unused]]Vec3 lightColor) {
+    Vec3 Lambertian::getColorAt(HitRecord record, Ray light, [[maybe_unused]]Vec3 lightColor) {
         double intensity;
         Vec3 unit_light;
         if (light.getDirection() == Vec3(0))
             intensity = 1;
         else
-            intensity = -normal.Dot(light.getDirection());
+            intensity = -record.normal.Dot(light.getDirection());
 
         unit_light = lightColor / 255;
         Vec3 color_at_point = _base_color;
+        Raytracer::Dammier dam;
+        color_at_point = dam.getColorAt(record.uv.first, record.uv.second);
+
         return (color_at_point  * intensity * unit_light).Clamp(0, 255);
     }
 

@@ -11,6 +11,7 @@
 #include "IMaterial.hpp"
 #include "Ray.hpp"
 #include "ParsingUtils.hpp"
+#include "Dammier.hpp"
 
 namespace Raytracer
 {
@@ -21,7 +22,7 @@ namespace Raytracer
             Lambertian(const std::string &options);
             ~Lambertian() override = default;
 
-            Vec3 getColorAt(Vec3 point, Vec3 normal, Ray light, Vec3 lightColor) override;
+            Vec3 getColorAt(HitRecord record, Ray light, Vec3 lightColor) override;
             Vec3 getNewRay(HitRecord record, Vec3 light) override;
             double getReflectivity() override;
         private:

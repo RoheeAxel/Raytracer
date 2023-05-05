@@ -33,7 +33,7 @@ namespace Raytracer
         _roughness = roughness;
     }
 
-    Vec3 Plastic::getColorAt([[maybe_unused]]Vec3 point, [[maybe_unused]]Vec3 normal, [[maybe_unused]]Ray light, [[maybe_unused]]Vec3 lightColor) {
+    Vec3 Plastic::getColorAt([[maybe_unused]]HitRecord record, [[maybe_unused]]Ray light, [[maybe_unused]]Vec3 lightColor) {
         // double intensity = normal.Dot(light.getDirection());
         return _base_color;
     }

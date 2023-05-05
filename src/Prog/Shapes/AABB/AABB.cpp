@@ -52,7 +52,13 @@ namespace Raytracer {
         return *this;
     }
 
-    Vec3 AABB::getBot() const {
+    std::pair<double, double> AABB::getUV(Vec3 point)
+    {
+        return std::make_pair(0, 0);
+    }
+
+    Vec3 AABB::getBot() const
+    {
         return this->_bot;
     }
 
@@ -60,4 +66,9 @@ namespace Raytracer {
         return this->_top;
     }
 
+    void AABB::setTranslation(Vec3 translation)
+    {
+        this->_bot += translation;
+        this->_top += translation;
+    }
 }

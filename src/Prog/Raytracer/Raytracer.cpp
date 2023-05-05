@@ -12,6 +12,7 @@
 #include <fstream>
 #include <filesystem>
 #include <chrono>
+#include <algorithm>
 
 namespace Raytracer {
     Raytracer::Raytracer(const std::string &file_path) {

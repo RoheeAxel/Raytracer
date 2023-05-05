@@ -27,6 +27,7 @@ namespace Raytracer {
             void setNormal(const Vec3 &normal);
             void setCenter(const Vec3 &center);
             void setTranslation(Vec3 translation) override;
+            virtual void setRotation(Vec3 rotation, Vec3 center) override;
 
         private:
             Vec3 _position;

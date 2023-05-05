@@ -92,4 +92,12 @@ namespace Raytracer {
         this->_vertice4 = this->_vertice4 + translation;
     }
 
+    void Quad::setRotation(Vec3 rotation, Vec3 center)
+    {
+        Quaternion q(rotation);
+        _vertice1 = q.rotate(_vertice1, center);
+        _vertice2 = q.rotate(_vertice2, center);
+        _vertice3 = q.rotate(_vertice3, center);
+        _vertice4 = q.rotate(_vertice4, center);
+    }
 }

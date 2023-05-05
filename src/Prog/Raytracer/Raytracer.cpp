@@ -108,9 +108,12 @@ void Raytracer::Raytracer::mergeThread(size_t nb_threads)
         for (size_t i = 0; i < WIDTH; i++) {
             index = (i) / (divider);
             pos = (divider * j) + i - (index * divider);
-            myfile.put(_cameras[index].getPixels()[pos].x);
-            myfile.put(_cameras[index].getPixels()[pos].y);
-            myfile.put(_cameras[index].getPixels()[pos].z);
+            int r = _cameras[index].getPixels()[pos].x > 255 ? 255 : _cameras[index].getPixels()[pos].x;
+            int g = _cameras[index].getPixels()[pos].y > 255 ? 255 : _cameras[index].getPixels()[pos].y;
+            int b = _cameras[index].getPixels()[pos].z > 255 ? 255 : _cameras[index].getPixels()[pos].z;
+            myfile.put(r);
+            myfile.put(g);
+            myfile.put(b);
         }
     }
     myfile.close();

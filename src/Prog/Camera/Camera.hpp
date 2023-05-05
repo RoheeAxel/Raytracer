@@ -8,7 +8,7 @@
 #ifndef CAMERA_HPP_
 #define CAMERA_HPP_
 
-#define SAMPLE_PER_PIXEL 10
+#define SAMPLE_PER_PIXEL 1000
 
 #include "Scene.hpp"
 #include "Screen.hpp"

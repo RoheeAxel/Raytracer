@@ -11,6 +11,7 @@
 #include "IMaterial.hpp"
 #include "Ray.hpp"
 #include "ParsingUtils.hpp"
+#include "Dammier.hpp"
 
 namespace Raytracer
 {

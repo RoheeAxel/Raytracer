@@ -28,6 +28,8 @@ include_directories(Materials/Plastic)
 include_directories(Materials/Glass)
 include_directories(Materials/Emitive)
 
+include_directories(Parser)
+
 include_directories(Raytracer)
 
 include_directories(Scene)
@@ -40,8 +42,8 @@ include_directories(Shapes/BVH)
 include_directories(Shapes/Triangle)
 include_directories(Shapes/Quad)
 
-include_directories(ITextures)
-
+include_directories(ITexture)
+include_directories(ITexture/Dammier)
 include_directories(Utils)
 
 file(GLOB_RECURSE SOURCES "*.cpp")

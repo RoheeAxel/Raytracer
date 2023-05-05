@@ -24,8 +24,8 @@
     #include <semaphore>
 
     #define THREADS 10
-    #define HEIGHT 600
-    #define WIDTH 600
+    #define HEIGHT 200
+    #define WIDTH 200
 
 namespace Raytracer {
     class Raytracer {
@@ -36,7 +36,7 @@ namespace Raytracer {
             void render();
         private:
             void renderThread(size_t nb_threads);
-            void mergeThread();
+            void mergeThread(size_t nb_threads);
             std::vector<std::thread> _threads;
             std::vector<Camera> _cameras;
             Scene _scene;

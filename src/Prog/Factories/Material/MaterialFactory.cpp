@@ -24,6 +24,6 @@ namespace Raytracer {
             return std::make_shared<Normal>(options);
         else if (name == "plastic")
             return std::make_shared<Plastic>(options);
-        return nullptr;
+        return AFactory::getFromBuiltin(name, options);
     }
 } // Raytracer

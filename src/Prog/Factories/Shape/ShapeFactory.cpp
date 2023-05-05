@@ -21,7 +21,7 @@ namespace Raytracer {
             return std::make_shared<Sphere>(options);
         else if (name == "triangle")
             return std::make_shared<Triangle>(options);
-        return nullptr;
+        return AFactory::getFromBuiltin(name, options);
     }
 
 } // Raytracer

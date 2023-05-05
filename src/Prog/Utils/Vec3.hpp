@@ -18,10 +18,10 @@ namespace Raytracer
     {
     public:
         Vec3();
-        explicit Vec3(double scalar);
+        Vec3(double scalar);
         Vec3(double x, double y, double z);
         Vec3(const Vec3& other);
-        explicit Vec3(const std::string& str);
+        Vec3(const std::string& str);
         ~Vec3() = default;
 
         Vec3& operator=(const Vec3& other);

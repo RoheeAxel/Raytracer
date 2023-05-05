@@ -35,6 +35,20 @@ namespace Raytracer {
             InvalidPluginException(const std::string &msg) : Exception(msg) {}
             ~InvalidPluginException() override = default;
     };
+
+    namespace Config {
+        class FileNotFoundException : public Exception {
+            public:
+                FileNotFoundException(const std::string &file) : Exception("File " + file + " not found") {}
+                ~FileNotFoundException() override = default;
+        };
+
+        class MissingGroupException : public Exception {
+            public:
+                MissingGroupException(const std::string &group) : Exception("Group " + group + " not found") {}
+                ~MissingGroupException() override = default;
+        };
+    }
 }
 
 #endif //EXCEPTION_HPP_

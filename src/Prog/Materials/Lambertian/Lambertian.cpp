@@ -33,6 +33,9 @@ namespace Raytracer
 
         unit_light = lightColor / 255;
         Vec3 color_at_point = _base_color;
+        Raytracer::Dammier dam;
+        color_at_point = dam.getColorAt(point.x, point.z);
+
         return (color_at_point  * intensity * unit_light).Clamp(0, 255);
     }
 

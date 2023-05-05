@@ -3,7 +3,7 @@ project(raytracer)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_FLAGS "-Wall -Wextra -g -pthread -fdiagnostics-color=always -Ofast")
+set(CMAKE_CXX_FLAGS "-Wall -Wextra -g -lsfml-network -lsfml-system -pthread -fdiagnostics-color=always -Ofast")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 
 include_directories(Camera)
@@ -41,6 +41,8 @@ include_directories(Shapes/AABB)
 include_directories(Shapes/BVH)
 include_directories(Shapes/Triangle)
 include_directories(Shapes/Quad)
+
+include_directories(Network)
 
 include_directories(ITexture)
 include_directories(ITexture/Dammier)

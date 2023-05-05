@@ -22,6 +22,7 @@ namespace Raytracer {
             ShapeFactory();
             ~ShapeFactory() override = default;
 
+            std::shared_ptr<IShape> get(const std::string &name, const std::string &options) override;
         protected:
             std::shared_ptr<IShape> getFromBuiltin(const std::string &name, const std::string &options) override;
     };

@@ -27,7 +27,7 @@ namespace Raytracer {
             std::vector<std::shared_ptr<IShape>> parsePrimitives();
             std::vector<std::shared_ptr<ILight>> parseLights();
             std::string convertGroup(libconfig::Setting &array, bool isGroup = false);
-
+        private:
             libconfig::Config _cfg;
             MaterialFactory _materialFactory;
             LightFactory _lightFactory;

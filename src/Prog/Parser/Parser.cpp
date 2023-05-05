@@ -24,16 +24,16 @@ namespace Raytracer {
 
         libconfig::Setting &primitivesGroup = this->_cfg.lookup("primitives");
         for (int i = 0; i < primitivesGroup.getLength(); i++) {
-            std::string primitiveType = primitivesGroup[i].getName();
-            for (int j = 0; j < primitivesGroup[i].getLength(); i++) {
-                libconfig::Setting &shape = primitivesGroup[i][j];
+            libconfig::Setting &list = primitivesGroup[i];
+            for (int j = 0; j < list.getLength(); j++) {
+                libconfig::Setting &shape = list[j];
 
                 std::shared_ptr<IMaterial> material;
                 if (shape.exists("material")) {
-                    libconfig::Setting &mat = shape["material"];
-                    std::string type = mat["type"];
-                    mat.remove("type");
-                    std::string options = convertGroup(mat);
+                    libconfig::Setting &materialGroup = shape.lookup("material");
+                    std::string type = materialGroup.lookup("type");
+                    materialGroup.remove("type");
+                    std::string options = convertGroup(materialGroup);
                     try {
                         material = this->_materialFactory.get(type, options);
                     } catch (FactoryNotFoundException &e) {
@@ -42,18 +42,18 @@ namespace Raytracer {
                     }
                     shape.remove("material");
                 }
+
                 std::string options = convertGroup(shape);
                 try {
-                    std::shared_ptr<IShape> primitive = this->_shapeFactory.get(primitiveType, options);
-                    primitive->setMaterial(material);
-                    primitives.push_back(primitive);
+                    std::shared_ptr<IShape> prim = this->_shapeFactory.get(list.getName(), options);
+                    prim->setMaterial(material);
+                    primitives.push_back(prim);
                 } catch (FactoryNotFoundException &e) {
                     std::cerr << e.what() << std::endl;
                     continue;
                 }
             }
         }
-
         return primitives;
     }
 
@@ -78,7 +78,6 @@ namespace Raytracer {
                 }
             }
         }
-
         return lights;
     }
 
@@ -102,8 +101,12 @@ namespace Raytracer {
                 ss << this->convertGroup(array[k], true);
                 ss << "}";
             }
-            if (k != array.getLength() - 1)
-                ss << ", ";
+            if (k != array.getLength() - 1) {
+                if (isGroup)
+                    ss << ", ";
+                else
+                    ss << ";";
+            }
         }
         return ss.str();
     }

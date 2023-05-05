@@ -9,19 +9,16 @@
     #define RAYTRACER_H_
     #include "Scene.hpp"
     #include "Camera.hpp"
-    #include "Sphere.hpp"
-    #include "Triangle.hpp"
-    #include "Quad.hpp"
-    #include "Plan.hpp"
-    #include "PointLight.hpp"
-    #include "DirLight.hpp"
-    #include "AmbientLight.hpp"
+    #include "Parser.hpp"
+    #include "SceneBuilder.hpp"
     #include "Vec3.hpp"
+
     #include <thread>
     #include <array>
     #include <list>
     #include <vector>
     #include <semaphore>
+    #include <memory>
 
     #define THREADS 10
     #define HEIGHT 200
@@ -30,16 +27,19 @@
 namespace Raytracer {
     class Raytracer {
         public:
-            Raytracer();
+            Raytracer(const std::string &file_path);
             ~Raytracer() = default;
-            void buildScene();
+
             void render();
+
         private:
             void renderThread(size_t nb_threads);
             void mergeThread(size_t nb_threads);
             std::vector<std::thread> _threads;
             std::vector<Camera> _cameras;
-            Scene _scene;
+
+            //Screen _screen;
+            std::shared_ptr<Scene> _scene;
     };
 }
 

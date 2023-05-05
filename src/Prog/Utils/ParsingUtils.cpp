@@ -5,6 +5,7 @@
 ** ParsingUtils.cpp
 */
 
+#include <iostream>
 #include "ParsingUtils.hpp"
 
 namespace Raytracer {
@@ -29,22 +30,30 @@ namespace Raytracer {
 //            throw Exception("ParsingUtils::getOption: T cannot be converted from string");
 //    }
 
-    double ParsingUtils::getDouble(const std::string &option, const std::string &str) {
+    double ParsingUtils::getDouble(const std::string &str, const std::string &option) {
         size_t optionPos = str.find(option);
         if (optionPos == std::string::npos)
-            throw Exception("ParsingUtils::getOption: option not found");
-        size_t nextCommaPos = str.find(',', optionPos);
+            throw Exception("ParsingUtils::getOption: option " + option + " not found\nDebug: " + str);
+        size_t nextCommaPos = str.find(';', optionPos);
         std::string value = str.substr(optionPos + option.size() + 1, nextCommaPos - optionPos - option.size() - 1);
-        return std::stod(value);
+        try {
+            return std::stod(value);
+        } catch (std::invalid_argument &e) {
+            throw Exception("ParsingUtils::getOption: double for " + option + " cannot be converted from string\nDebug: " + str);
+        }
     }
 
-    Vec3 ParsingUtils::getVec3(const std::string &option, const std::string &str) {
+    Vec3 ParsingUtils::getVec3(const std::string &str, const std::string &option) {
         size_t optionPos = str.find(option);
         if (optionPos == std::string::npos)
-            throw Exception("ParsingUtils::getOption: option not found");
-        size_t nextCommaPos = str.find(',', optionPos);
+            throw Exception("ParsingUtils::getOption: option " + option + " not found\nDebug: " + str);
+        size_t nextCommaPos = str.find(';', optionPos);
         std::string value = str.substr(optionPos + option.size() + 1, nextCommaPos - optionPos - option.size() - 1);
-        return Vec3(value);
+        try {
+            return {value};
+        } catch (std::invalid_argument &e) {
+            throw Exception("ParsingUtils::getOption: vec3 for " + option + " cannot be converted from string\nDebug: " + str);
+        }
     }
 
 } // Raytracer

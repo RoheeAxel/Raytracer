@@ -20,11 +20,9 @@ namespace Raytracer {
             ParsingUtils() = default;
             ~ParsingUtils() = default;
 
-//            template<typename T>
-//            T getOption(const std::string &, const std::string &);
-
             static double getDouble(const std::string &, const std::string &);
             static Vec3 getVec3(const std::string &, const std::string &);
+            static std::string getString(const std::string &, const std::string &);
     };
 
 } // Raytracer

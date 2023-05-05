@@ -74,8 +74,6 @@ void Graphics::MainWindow::run()
             this->_clusterWindow.draw(this->_window, sf::BlendAlpha);
         if (tmp == ButtonType::THREAD)
             this->_threadWindow.draw(this->_window, sf::BlendAlpha);
-        // else if (tmp == ButtonType::SETTINGS)
-        //     this->createSettingsWindow();
         this->_window.display();
     }
 }

@@ -15,7 +15,6 @@ namespace Graphics {
     enum class ButtonType {
         THREAD,
         CLUSTER,
-        SETTINGS,
         LOAD,
         PLAY,
         NONE

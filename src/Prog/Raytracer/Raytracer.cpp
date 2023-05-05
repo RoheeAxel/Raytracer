@@ -20,6 +20,7 @@ namespace Raytracer {
             Parser parser(file_path);
             SceneBuilder builder(parser);
             this->_scene = builder.build();
+            this->_settings = parser.parseSettings();
         } catch (libconfig::ParseException &e) {
             throw Exception("Parsing error: " + std::string(e.what()));
         }
@@ -27,10 +28,10 @@ namespace Raytracer {
 
     void Raytracer::render()
     {
-        size_t nb_threads = THREADS;
+        size_t nb_threads = this->_settings->getThreads();
 
-        for (size_t i = THREADS; i > 0; i--) {
-            if (WIDTH % i == 0 && HEIGHT % i == 0) {
+        for (size_t i = nb_threads; i > 0; i--) {
+            if (this->_settings->getWidth() % i == 0 && this->_settings->getHeight() % i == 0) {
                 nb_threads = i;
                 break;
             }
@@ -46,7 +47,7 @@ namespace Raytracer {
         auto start = std::chrono::high_resolution_clock::now();
         std::cout << "Rendering..." << std::endl;
         for (size_t i = 0; i < nb_threads; i++) {
-            Camera cam(Vec3(0, 0, 0), Vec3(0, 0, 0), Screen(Vec3(value, -1, -1), Vec3(value + (2.0 / nb_threads), 1, -1), std::pair<int, int>(WIDTH / nb_threads, HEIGHT)), i);
+            Camera cam(this->_settings->getPosition(), this->_settings->getRotation(), Screen(Vec3(value, -1, -1), Vec3(value + (2.0 / nb_threads), 1, -1), std::pair<int, int>(this->_settings->getWidth() / nb_threads, this->_settings->getHeight())), i, this->_settings->getSamples());
             _cameras.push_back(cam);
             value = value + (2.0 / nb_threads);
         }
@@ -67,7 +68,7 @@ namespace Raytracer {
         std::ofstream myfile("result.ppm", std::ios::out | std::ios::binary);
         size_t index = 0;
         size_t pos = 0;
-        size_t divider = WIDTH / nb_threads;
+        size_t divider = this->_settings->getWidth() / nb_threads;
         std::vector<std::vector<Vec3>> pixels;
 
         auto start = std::chrono::high_resolution_clock::now();
@@ -75,9 +76,9 @@ namespace Raytracer {
         for (size_t i = 0; i < nb_threads; i++) {
             pixels.push_back(_cameras[i].getPixels());
         }
-        myfile << "P6\n" << WIDTH << " " << HEIGHT << "\n255\n";
-        for (size_t j = 0; j < HEIGHT; j++) {
-            for (size_t i = 0; i < WIDTH; i++) {
+        myfile << "P6\n" << this->_settings->getWidth() << " " << this->_settings->getHeight() << "\n255\n";
+        for (size_t j = 0; j < this->_settings->getHeight(); j++) {
+            for (size_t i = 0; i < this->_settings->getWidth(); i++) {
                 index = (i) / (divider);
                 pos = (divider * j) + i - (index * divider);
                 int r = _cameras[index].getPixels()[pos].x > 255 ? 255 : _cameras[index].getPixels()[pos].x;

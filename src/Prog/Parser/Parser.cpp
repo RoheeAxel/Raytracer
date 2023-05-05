@@ -142,12 +142,12 @@ namespace Raytracer {
             settings->setHeight(200);
         }
         if (cameraGroup.exists("position")) {
-            settings->setPosition(this->convertGroup(cameraGroup.lookup("position")));
+            settings->setPosition(Vec3(this->convertGroup(cameraGroup.lookup("position"), true)));
         } else {
             settings->setPosition(Vec3(0));
         }
         if (cameraGroup.exists("rotation")) {
-            settings->setRotation(this->convertGroup(cameraGroup.lookup("rotation")));
+            settings->setRotation(Vec3(this->convertGroup(cameraGroup.lookup("rotation"), true)));
         } else {
             settings->setRotation(Vec3(0));
         }

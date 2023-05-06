@@ -47,8 +47,13 @@ namespace Raytracer {
         auto start = std::chrono::high_resolution_clock::now();
         std::cout << "Rendering..." << std::endl;
         for (size_t i = 0; i < nb_threads; i++) {
-            Camera cam(this->_settings->getPosition(), this->_settings->getRotation(), Screen(Vec3(value, -1, -1), Vec3(value + (2.0 / nb_threads), 1, -1), std::pair<int, int>(this->_settings->getWidth() / nb_threads, this->_settings->getHeight())), i, this->_settings->getSamples());
-            _cameras.push_back(cam);
+            CameraBuilder builder;
+            builder.setPosition(this->_settings->getPosition());
+            builder.setRotation(this->_settings->getRotation());
+            builder.setScreen(Screen(Vec3(value, -1, -1), Vec3(value + (2.0 / nb_threads), 1, -1), std::pair<int, int>(this->_settings->getWidth() / nb_threads, this->_settings->getHeight())));
+            builder.setId(i);
+            builder.setSamplePerPixel(this->_settings->getSamples());
+            _cameras.push_back(builder.build());
             value = value + (2.0 / nb_threads);
         }
         for (size_t i = 0; i < nb_threads; i++) {
@@ -59,7 +64,7 @@ namespace Raytracer {
         }
         auto end = std::chrono::high_resolution_clock::now();
         auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
-        std::cout << "Time taken for generation: " << duration.count() << " microseconds" << std::endl;
+        std::cout << "Time taken for generation: " << duration.count() / 1000000 << " second(s)" << std::endl;
         std::cout << "Done!" << std::endl;
     }
 
@@ -95,7 +100,7 @@ namespace Raytracer {
         myfile.close();
         auto end = std::chrono::high_resolution_clock::now();
         auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
-        std::cout << "Time taken for merge: " << duration.count() << " microseconds" << std::endl;
+        std::cout << "Time taken for merge: " << duration.count() / 1000000 << " second(s)" << std::endl;
         std::cout << "Done!" << std::endl;
     }
 

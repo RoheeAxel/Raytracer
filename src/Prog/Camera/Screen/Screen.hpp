@@ -14,6 +14,7 @@
 namespace Raytracer {
 class Screen {
     public:
+        Screen() = default;
         Screen(const Raytracer::Vec3 &topLeft, const Raytracer::Vec3 &botRight, std::pair<int, int> res)
         {
             _topLeft = topLeft;

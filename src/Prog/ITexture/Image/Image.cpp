@@ -11,9 +11,13 @@
     #include "stb_image.h"
 
 namespace Raytracer {
+    Image::Image(std::string &path)
+    {
+        _data = stbi_load(path.c_str(), &_size.first, &_size.second, &_channels, STBI_rgb);
+    }
+
     Raytracer::Image::Image()
     {
-        _data = stbi_load("texture/skybox.jpg", &_size.first, &_size.second, &_channels, STBI_rgb);
     }
 
     Raytracer::Image::~Image()

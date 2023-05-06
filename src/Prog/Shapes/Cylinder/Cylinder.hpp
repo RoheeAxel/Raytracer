@@ -2,22 +2,22 @@
 ** EPITECH PROJECT, 2023
 ** B-OOP-400-REN-4-1-raytracer-axel.rohee
 ** File description:
-** Sphere
+** Cylinder
 */
 
-#ifndef SPHERE_HPP_
-#define SPHERE_HPP_
+#ifndef CYLINDER_HPP
+#define CYLINDER_HPP
 
 #include <string>
 #include "ParsingUtils.hpp"
 #include "AShape.hpp"
 
 namespace Raytracer {
-    class Sphere : public AShape{
+    class Cylinder : public AShape{
         public:
-            Sphere(const Vec3 &position, double radius);
-            Sphere(const std::string &options);
-            ~Sphere() override = default;
+            Cylinder(const Vec3 &position, double radius);
+            Cylinder(const std::string &options);
+            ~Cylinder() override = default;
             HitRecord intersection(Ray ray) override;
             AABB getAABB() override;
             std::pair<double, double> getUV(Vec3 point) override;
@@ -27,8 +27,9 @@ namespace Raytracer {
         private:
             Vec3 _position;
             double _radius;
+            Vec3 _direction;
             Vec3 _rotation;
     };
 }
 
-#endif /* !SPHERE_HPP_ */
+#endif /* !CYLINDER_HPP */

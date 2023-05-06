@@ -15,6 +15,7 @@
 #include "Plan.hpp"
 #include "Sphere.hpp"
 #include "Triangle.hpp"
+#include "Cylinder.hpp"
 
 namespace Raytracer {
     class ShapeFactory : public AFactory<IShape> {

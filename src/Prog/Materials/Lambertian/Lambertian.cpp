@@ -19,7 +19,10 @@ namespace Raytracer
     }
 
     Lambertian::Lambertian(const std::string &options) {
-        _tex = std::make_shared<Image>();
+        try {
+            std::string path = ParsingUtils::getString(options, "path");
+            _tex = std::make_shared<Image>(path);
+        } catch (Exception &e) {}
         Vec3 color = ParsingUtils::getVec3(options, "color");
         this->_base_color = color;
     }

@@ -13,7 +13,7 @@
 namespace Raytracer {
     class Image : public ITexture{
         public:
-            Image(const std::string &path);
+            Image(std::string &path);
             Image();
             ~Image();
             Vec3 getColorAt(float x, float y) override;

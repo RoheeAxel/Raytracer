@@ -17,7 +17,7 @@ include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Lights/PointLight)
 include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Materials)
 include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Materials/Lambertian)
 include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Materials/Normal)
-include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Materials/Plastic)
+include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Materials/Reflective)
 
 include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Raytracer)
 

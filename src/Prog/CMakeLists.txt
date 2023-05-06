@@ -24,7 +24,7 @@ include_directories(Lights/AmbientLight)
 include_directories(Materials)
 include_directories(Materials/Lambertian)
 include_directories(Materials/Normal)
-include_directories(Materials/Plastic)
+include_directories(Materials/Reflective)
 include_directories(Materials/Glass)
 include_directories(Materials/Emitive)
 
@@ -41,6 +41,7 @@ include_directories(Shapes/AABB)
 include_directories(Shapes/BVH)
 include_directories(Shapes/Triangle)
 include_directories(Shapes/Quad)
+include_directories(Shapes/Cylinder)
 
 
 include_directories(ITexture)

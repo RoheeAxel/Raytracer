@@ -22,8 +22,8 @@ namespace Raytracer {
             return std::make_shared<Lambertian>(options);
         else if (name == "normal")
             return std::make_shared<Normal>(options);
-        else if (name == "plastic")
-            return std::make_shared<Plastic>(options);
+        else if (name == "reflective")
+            return std::make_shared<Reflective>(options);
         return AFactory::getFromBuiltin(name, options);
     }
 } // Raytracer

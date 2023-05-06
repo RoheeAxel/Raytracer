@@ -76,9 +76,12 @@ namespace Raytracer {
         for (size_t i = 0; i < nb_threads; i++) {
             pixels.push_back(_cameras[i].getPixels());
         }
-        myfile << "P6\n" << this->_settings->getWidth() << " " << this->_settings->getHeight() << "\n255\n";
-        for (size_t j = 0; j < this->_settings->getHeight(); j++) {
-            for (size_t i = 0; i < this->_settings->getWidth(); i++) {
+
+        size_t width = this->_settings->getWidth();
+        size_t height = this->_settings->getHeight();
+        myfile << "P6\n" << width << " " << height << "\n255\n";
+        for (size_t j = 0; j < height; j++) {
+            for (size_t i = 0; i < width; i++) {
                 index = (i) / (divider);
                 pos = (divider * j) + i - (index * divider);
                 int r = _cameras[index].getPixels()[pos].x > 255 ? 255 : _cameras[index].getPixels()[pos].x;

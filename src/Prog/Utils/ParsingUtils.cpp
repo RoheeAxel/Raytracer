@@ -45,4 +45,15 @@ namespace Raytracer {
         return value;
     }
 
+    std::vector<std::string> ParsingUtils::split(const std::string &str, char delim) {
+        std::vector<std::string> elems;
+        std::stringstream ss(str);
+        std::string item;
+
+        while (std::getline(ss, item, delim)) {
+            elems.push_back(item);
+        }
+        return elems;
+    }
+
 } // Raytracer

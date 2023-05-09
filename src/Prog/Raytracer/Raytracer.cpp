@@ -29,6 +29,9 @@ namespace Raytracer {
             this->_output_file_name = file_path.substr(0, pos);
         else
             this->_output_file_name = file_path;
+        size_t pos2 = this->_output_file_name.find_last_of("/");
+        if (pos2 != std::string::npos)
+            this->_output_file_name = this->_output_file_name.substr(pos2 + 1);
         this->_output_file_name += ".ppm";
     }
 

@@ -43,11 +43,12 @@ std::pair<double, double> Raytracer::Cone::getUV(Vec3 point)
 
 void Raytracer::Cone::setTranslation(Vec3 translation)
 {
-    (void)translation;
+    this->_position = this->_position + translation;
 }
 
 void Raytracer::Cone::setRotation(Vec3 rotation, Vec3 center)
 {
-    (void)rotation;
-    (void)center;
+    Quaternion q(rotation);
+    this->_position = q.rotate(this->_position, center);
+    this->_rotation = this->_rotation + rotation;
 }

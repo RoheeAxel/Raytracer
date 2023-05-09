@@ -49,3 +49,7 @@ namespace Raytracer
     }
 
 }
+
+extern "C" Raytracer::Reflective *create(const std::string &options) {
+    return new Raytracer::Reflective(options);
+}

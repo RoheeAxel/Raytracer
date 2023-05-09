@@ -38,6 +38,7 @@ namespace Raytracer {
 
             std::shared_ptr<Settings> _settings;
             std::shared_ptr<Scene> _scene;
+            std::string _output_file_name;
     };
 }
 

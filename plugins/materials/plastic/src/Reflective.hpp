@@ -31,4 +31,7 @@ class Reflective : public IMaterial{
         double _roughness;
 };
 }
+
+extern "C" Raytracer::Reflective *create(const std::string &options);
+
 #endif /* !REFLECTIVE_HPP_ */

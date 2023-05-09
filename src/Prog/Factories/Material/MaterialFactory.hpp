@@ -15,7 +15,6 @@
 #include "Glass.hpp"
 #include "Lambertian.hpp"
 #include "Normal.hpp"
-#include "Reflective.hpp"
 
 namespace Raytracer {
     class MaterialFactory : public AFactory<IMaterial> {

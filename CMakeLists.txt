@@ -9,3 +9,5 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 add_subdirectory(src/Prog)
 #add_subdirectory(src/Viewer)
 #add_subdirectory(src/Graphics)
+
+add_subdirectory(plugins/materials/plastic)

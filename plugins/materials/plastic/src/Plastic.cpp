@@ -49,3 +49,7 @@ namespace Raytracer
     }
 
 }
+
+extern "C" Raytracer::Plastic *create(const std::string &options) {
+    return new Raytracer::Plastic(options);
+}

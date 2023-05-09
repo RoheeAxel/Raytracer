@@ -31,4 +31,6 @@ class Plastic : public IMaterial{
         double _roughness;
 };
 }
+
+extern "C" Raytracer::Plastic *create(const std::string &);
 #endif /* !PLASTIC_HPP_ */

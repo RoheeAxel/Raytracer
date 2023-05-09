@@ -34,7 +34,7 @@ namespace Raytracer {
             std::shared_ptr<T> getFromPlugin(const std::string &name, const std::string &options)
             {
                 LDLoader<T> loader;
-                std::string path = _dirName + "/" + name + EXTENSION;
+                std::string path = "./plugins/" + _dirName + "/" + name + EXTENSION;
 
                 loader.loadLib(path, "create", options);
                 return std::shared_ptr<T>(loader.get());

@@ -24,6 +24,13 @@ namespace Raytracer {
         } catch (libconfig::ParseException &e) {
             throw Exception("Parsing error: " + std::string(e.what()));
         }
+
+        size_t pos = file_path.find(".");
+        if (pos != std::string::npos)
+            this->_output_file_name = file_path.substr(0, pos);
+        else
+            this->_output_file_name = file_path;
+        this->_output_file_name += ".ppm";
     }
 
     void Raytracer::render()
@@ -50,7 +57,8 @@ namespace Raytracer {
             CameraBuilder builder;
             builder.setPosition(this->_settings->getPosition());
             builder.setRotation(this->_settings->getRotation());
-            builder.setScreen(Screen(Vec3(value, -1, -1), Vec3(value + (2.0 / nb_threads), 1, -1), std::pair<int, int>(this->_settings->getWidth() / nb_threads, this->_settings->getHeight())));
+            builder.setScreen(Screen(Vec3(value, -1, -1), Vec3(value + (2.0 / nb_threads), 1, -1),
+                std::pair<int, int>(this->_settings->getWidth() / nb_threads, this->_settings->getHeight())));
             builder.setId(i);
             builder.setSamplePerPixel(this->_settings->getSamples());
             _cameras.push_back(builder.build());
@@ -70,7 +78,7 @@ namespace Raytracer {
 
     void Raytracer::mergeThread(size_t nb_threads)
     {
-        std::ofstream myfile("result.ppm", std::ios::out | std::ios::binary);
+        std::ofstream myfile(this->_output_file_name, std::ios::out | std::ios::binary);
         size_t index = 0;
         size_t pos = 0;
         size_t divider = this->_settings->getWidth() / nb_threads;

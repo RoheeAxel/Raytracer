@@ -14,6 +14,7 @@
 namespace Raytracer {
 class Screen {
     public:
+        Screen() = default;
         Screen(const Raytracer::Vec3 &topLeft, const Raytracer::Vec3 &botRight, std::pair<int, int> res)
         {
             _topLeft = topLeft;
@@ -31,6 +32,8 @@ class Screen {
         std::pair<int, int> getResolution() const { return _resolution; };
         Raytracer::Vec3 getTopLeft() const { return _topLeft; };
         Raytracer::Vec3 getBotRight() const { return _botRight; };
+        void setBotRight(const Raytracer::Vec3 &botRight) { _botRight = botRight; };
+        void setTopLeft(const Raytracer::Vec3 &topLeft) { _topLeft = topLeft; };
     private:
         Raytracer::Vec3 _topLeft;
         Raytracer::Vec3 _botRight;

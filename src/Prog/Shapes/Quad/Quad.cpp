@@ -14,6 +14,14 @@ namespace Raytracer {
     Quad::Quad(const Vec3 &vertice1, const Vec3 &vertice2, const Vec3 &vertice3, const Vec3 &vertice4)
     : _vertice1(vertice1), _vertice2(vertice2), _vertice3(vertice3), _vertice4(vertice4) {}
 
+    Quad::Quad(const std::string &options) {
+        this->_vertice1 = ParsingUtils::getVec3(options, "vertice1");
+        this->_vertice2 = ParsingUtils::getVec3(options, "vertice2");
+        this->_vertice3 = ParsingUtils::getVec3(options, "vertice3");
+        this->_vertice4 = ParsingUtils::getVec3(options, "vertice4");
+
+    }
+
     HitRecord Raytracer::Quad::intersection(Ray r) {
         HitRecord hitRecord;
         hitRecord.hit = false;
@@ -46,6 +54,12 @@ namespace Raytracer {
         C = edge2.Cross(vp2);
         if (N.Dot(C) < 0) return hitRecord;
 
+        Vec3 edge3 = _vertice1 - _vertice4;
+        Vec3 vp3 = P - _vertice4;
+        C = edge3.Cross(vp3);
+        if (N.Dot(C) < 0) return hitRecord;
+
+        hitRecord.uv = getUV(P);
         hitRecord.hit = true;
         hitRecord.distance = t;
         hitRecord.point = P;
@@ -81,6 +95,12 @@ namespace Raytracer {
 
     void Quad::setVertice4(const Vec3 &vertice4) {
         this->_vertice4 = vertice4;
+    }
+
+    std::pair<double, double> Quad::getUV(Vec3 point) {
+        double u = (point - _vertice1).Dot(_vertice2 - _vertice1) / (_vertice2 - _vertice1).Dot(_vertice2 - _vertice1);
+        double v = (point - _vertice1).Dot(_vertice4 - _vertice1) / (_vertice4 - _vertice1).Dot(_vertice4 - _vertice1);
+        return {u, v};
     }
 
     void Quad::setTranslation(Vec3 translation)

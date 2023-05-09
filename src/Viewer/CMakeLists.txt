@@ -29,6 +29,12 @@ include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Scene)
 
 include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Shapes)
 include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Shapes/Sphere)
+include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Shapes/Plan)
+include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Shapes/AABB)
+include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Shapes/BVH)
+include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Shapes/Triangle)
+include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Shapes/Quad)
+include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Shapes/Cylinder)
 
 include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Utils)
 

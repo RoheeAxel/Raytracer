@@ -15,83 +15,79 @@
 #include <algorithm>
 
 namespace Raytracer {
-    Raytracer::Raytracer(const std::string &file_path) {
+    Raytracer::Raytracer()
+    {
+    }
+
+    void Raytracer::run(const std::string &file_path)
+    {
         try {
             Parser parser(file_path);
             SceneBuilder builder(parser);
             this->_scene = builder.build();
-            this->_settings = parser.parseSettings();
         } catch (libconfig::ParseException &e) {
             throw Exception("Parsing error: " + std::string(e.what()));
         }
     }
 
-    void Raytracer::render()
+    sf::Image Raytracer::render()
     {
-        size_t nb_threads = this->_settings->getThreads();
+        size_t nb_threads = THREADS;
 
-        for (size_t i = nb_threads; i > 0; i--) {
-            if (this->_settings->getWidth() % i == 0 && this->_settings->getHeight() % i == 0) {
+        for (size_t i = THREADS; i > 0; i--) {
+            if (WIDTH % i == 0 && HEIGHT % i == 0) {
                 nb_threads = i;
                 break;
             }
         }
         this->renderThread(nb_threads);
-        this->mergeThread(nb_threads);
+        return this->mergeThread(nb_threads);
     }
 
     void Raytracer::renderThread(size_t nb_threads)
     {
         float value = -1;
-
         auto start = std::chrono::high_resolution_clock::now();
         std::cout << "Rendering..." << std::endl;
         for (size_t i = 0; i < nb_threads; i++) {
-            CameraBuilder builder;
-            builder.setPosition(this->_settings->getPosition());
-            builder.setRotation(this->_settings->getRotation());
-            builder.setScreen(Screen(Vec3(value, -1, -1), Vec3(value + (2.0 / nb_threads), 1, -1), std::pair<int, int>(this->_settings->getWidth() / nb_threads, this->_settings->getHeight())));
-            builder.setId(i);
-            builder.setSamplePerPixel(this->_settings->getSamples());
-            _cameras.push_back(builder.build());
+            Screen screen(Vec3(value, -1, -1), Vec3(value + (2.0 / nb_threads), 1, -1), std::pair<int, int>(WIDTH / nb_threads, HEIGHT));
+            Camera cam(Vec3(0, 0, 0), Vec3(0, 0, 0), screen, i);
+            _cameras.push_back(cam);
             value = value + (2.0 / nb_threads);
         }
-        for (size_t i = 0; i < nb_threads; i++) {
+        for (size_t i = 0; i < nb_threads; i++)
             _threads.push_back(std::thread(&Camera::render, &_cameras[i], std::ref(*this->_scene)));
-        }
-        for (size_t i = 0; i < nb_threads; i++) {
+        for (size_t i = 0; i < nb_threads; i++)
             _threads[i].join();
-        }
         auto end = std::chrono::high_resolution_clock::now();
         auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
-        std::cout << "Time taken for generation: " << duration.count() / 1000000 << " second(s)" << std::endl;
+        std::cout << "Time taken for generation: " << duration.count() << " microseconds" << std::endl;
         std::cout << "Done!" << std::endl;
     }
 
-    void Raytracer::mergeThread(size_t nb_threads)
+    sf::Image Raytracer::mergeThread(size_t nb_threads)
     {
         std::ofstream myfile("result.ppm", std::ios::out | std::ios::binary);
         size_t index = 0;
         size_t pos = 0;
-        size_t divider = this->_settings->getWidth() / nb_threads;
+        size_t divider = WIDTH / nb_threads;
         std::vector<std::vector<Vec3>> pixels;
+        sf::Image image;
 
         auto start = std::chrono::high_resolution_clock::now();
         std::cout << "Merging files..." << std::endl;
-        for (size_t i = 0; i < nb_threads; i++) {
+        for (size_t i = 0; i < nb_threads; i++)
             pixels.push_back(_cameras[i].getPixels());
-        }
-
-        size_t width = this->_settings->getWidth();
-        size_t height = this->_settings->getHeight();
-        myfile << "P6\n" << width << " " << height << "\n255\n";
-        for (size_t j = 0; j < height; j++) {
-            for (size_t i = 0; i < width; i++) {
+        myfile << "P6\n" << WIDTH << " " << HEIGHT << "\n255\n";
+        image.create(WIDTH, HEIGHT);
+        for (size_t j = 0; j < HEIGHT; j++) {
+            for (size_t i = 0; i < WIDTH; i++) {
                 index = (i) / (divider);
                 pos = (divider * j) + i - (index * divider);
                 int r = _cameras[index].getPixels()[pos].x > 255 ? 255 : _cameras[index].getPixels()[pos].x;
                 int g = _cameras[index].getPixels()[pos].y > 255 ? 255 : _cameras[index].getPixels()[pos].y;
                 int b = _cameras[index].getPixels()[pos].z > 255 ? 255 : _cameras[index].getPixels()[pos].z;
+                image.setPixel(i, j, sf::Color(r, g, b));
                 myfile.put(r);
                 myfile.put(g);
                 myfile.put(b);
@@ -100,8 +96,8 @@ namespace Raytracer {
         myfile.close();
         auto end = std::chrono::high_resolution_clock::now();
         auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
-        std::cout << "Time taken for merge: " << duration.count() / 1000000 << " second(s)" << std::endl;
+        std::cout << "Time taken for merge: " << duration.count() << " microseconds" << std::endl;
         std::cout << "Done!" << std::endl;
+        return image;
     }
-
 }

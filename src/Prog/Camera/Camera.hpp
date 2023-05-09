@@ -20,7 +20,7 @@ namespace Raytracer {
     class Camera {
         public:
             Camera() = default;
-            Camera(const Vec3& position, const Vec3& rotation, const Screen& screen, size_t id, int _sample_per_pixel = 10);
+            Camera(const Vec3& position, const Vec3& rotation, Screen& screen, size_t id, int _sample_per_pixel = 10);
             ~Camera() = default;
 
             void render(Scene &scene);

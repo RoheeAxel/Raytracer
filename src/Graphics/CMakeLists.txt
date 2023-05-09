@@ -57,6 +57,8 @@ include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Shapes/AABB)
 
 include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Utils)
 
+include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Settings)
+
 include_directories(${CMAKE_SOURCE_DIR}/src/Graphics/Raytracer)
 
 # Find and install Zenity package

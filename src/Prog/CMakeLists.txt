@@ -31,6 +31,8 @@ include_directories(Parser)
 
 include_directories(Raytracer)
 
+include_directories(Settings)
+
 include_directories(Scene)
 
 include_directories(Shapes)

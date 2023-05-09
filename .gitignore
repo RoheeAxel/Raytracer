@@ -4,6 +4,8 @@ build
 
 # Runnable
 raytracer
+graphics
+viewer
 *.so
 *.ppm
 

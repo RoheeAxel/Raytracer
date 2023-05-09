@@ -15,6 +15,8 @@
     #include "Client.hpp"
     #include "Server.hpp"
     #include "Vec3.hpp"
+    #include "Settings.hpp"
+    #include "CameraBuilder.hpp"
 
     #include <thread>
     #include <array>
@@ -22,10 +24,6 @@
     #include <vector>
     #include <semaphore>
     #include <memory>
-
-    #define THREADS 8
-    #define HEIGHT 400
-    #define WIDTH 400
 
 namespace Raytracer {
     class Raytracer {
@@ -46,8 +44,9 @@ namespace Raytracer {
             std::vector<std::thread> _threads;
             std::vector<Camera> _cameras;
 
-            //Screen _screen;
+            std::shared_ptr<Settings> _settings;
             std::shared_ptr<Scene> _scene;
+            std::string _output_file_name;
     };
 }
 

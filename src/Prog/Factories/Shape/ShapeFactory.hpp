@@ -15,6 +15,8 @@
 #include "Plan.hpp"
 #include "Sphere.hpp"
 #include "Triangle.hpp"
+// #include "Cylinder.hpp"
+#include "Quad.hpp"
 
 namespace Raytracer {
     class ShapeFactory : public AFactory<IShape> {
@@ -22,6 +24,7 @@ namespace Raytracer {
             ShapeFactory();
             ~ShapeFactory() override = default;
 
+            std::shared_ptr<IShape> get(const std::string &name, const std::string &options) override;
         protected:
             std::shared_ptr<IShape> getFromBuiltin(const std::string &name, const std::string &options) override;
     };

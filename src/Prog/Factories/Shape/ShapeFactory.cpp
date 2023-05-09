@@ -21,7 +21,25 @@ namespace Raytracer {
             return std::make_shared<Sphere>(options);
         else if (name == "triangle")
             return std::make_shared<Triangle>(options);
+        // else if (name == "cylinder")
+        //     return std::make_shared<Cylinder>(options);
+        else if (name == "quad")
+            return std::make_shared<Quad>(options);
         return AFactory::getFromBuiltin(name, options);
+    }
+
+    std::shared_ptr<IShape> ShapeFactory::get(const std::string &name, const std::string &options) {
+        std::shared_ptr<IShape> shape = AFactory::get(name, options);
+        try {
+            Vec3 translation = ParsingUtils::getVec3(options, "translation");
+            shape->setTranslation(translation);
+        } catch (Exception &e) {}
+        try {
+            Vec3 rotation = ParsingUtils::getVec3(options, "rotation");
+            Vec3 center = ParsingUtils::getVec3(options, "rotation_center");
+            shape->setRotation(rotation, center);
+        } catch (Exception &e) {}
+        return shape;
     }
 
 } // Raytracer

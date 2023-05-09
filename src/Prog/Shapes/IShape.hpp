@@ -11,6 +11,7 @@
 #include <memory>
 #include "Vec3.hpp"
 #include "HitRecord.hpp"
+#include "Quaternion.hpp"
 #include "IMaterial.hpp"
 
 namespace Raytracer {
@@ -25,6 +26,7 @@ class IShape {
         virtual AABB getAABB() = 0;
         virtual std::pair<double, double> getUV(Vec3 point) = 0;
         virtual void setTranslation(Vec3 translation) = 0;
+        virtual void setRotation(Vec3 rotation, Vec3 center) = 0;
     protected:
     private:
 };

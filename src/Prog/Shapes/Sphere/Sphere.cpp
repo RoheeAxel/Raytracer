@@ -61,14 +61,23 @@ namespace Raytracer {
     }
 
     std::pair<double, double> Sphere::getUV(Vec3 point) {
-        double theta = acos(-point.y);
-        double phi = atan2(-point.z, point.x) + M_PI;
+        Quaternion q(_rotation);
+        Vec3 pointRotate;
+        pointRotate = q.rotate(point, _position);
+        double theta = acos(-pointRotate.y);
+        double phi = atan2(-pointRotate.z, pointRotate.x) + M_PI;
         double u = phi / (2 * M_PI);
         double v = theta / M_PI;
-        return {u, v};
+        return {u, 1 - v};
     }
 
     void Sphere::setTranslation(Vec3 translation) {
-        _position = translation;
+        _position = _position + translation;
+    }
+    void Sphere::setRotation(Vec3 rotation, Vec3 center)
+    {
+        Quaternion q(rotation);
+        _position = q.rotate(this->_position, center);
+        _rotation = _rotation + rotation;
     }
 }

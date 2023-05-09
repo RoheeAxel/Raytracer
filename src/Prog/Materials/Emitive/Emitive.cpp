@@ -19,12 +19,19 @@ namespace Raytracer
     }
 
     Emitive::Emitive(const std::string &options) {
+        try {
+            std::string path = ParsingUtils::getString(options, "path");
+            _tex = std::make_shared<Image>(path);
+        } catch (Exception &e) {}
         Vec3 color = ParsingUtils::getVec3(options, "color");
         this->_base_color = color;
     }
 
     Vec3 Emitive::getColorAt([[maybe_unused]]HitRecord record, [[maybe_unused]]Ray light, [[maybe_unused]]Vec3 lightColor) {
-        return _base_color;
+        Vec3 color_at_point = _base_color;
+        if (_tex != nullptr)
+            color_at_point = _tex->getColorAt(record.uv.first, record.uv.second);
+        return color_at_point;
     }
 
     Vec3 Emitive::getNewRay([[maybe_unused]] HitRecord record, [[maybe_unused]] Vec3 light)

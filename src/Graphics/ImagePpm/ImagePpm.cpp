@@ -15,14 +15,14 @@ Viewer::ImagePpm::~ImagePpm()
 {
 }
 
-void Viewer::ImagePpm::run(const std::string filename)
+void Viewer::ImagePpm::run(const std::string filename, sf::RenderWindow &window)
 {
     std::ifstream file(filename, std::ios::binary);
     std::string format;
     int maxColor;
 
     if (!file) {
-        std::cout << "Failed to open file." << std::endl;
+        this->configureRaytracer(window);
         return;
     }
     std::getline(file, format);
@@ -42,6 +42,14 @@ void Viewer::ImagePpm::run(const std::string filename)
     for (int i = 0; i < this->_height; i++)
         for (int j = 0; j < this->_width; j++)
             this->_image.setPixel(j, i, pixelData[i * this->_width + j]);
+    this->_texture.loadFromImage(this->_image);
+    this->_sprite.setTexture(this->_texture);
+}
+
+void Viewer::ImagePpm::configureRaytracer(sf::RenderWindow &window)
+{
+    this->_raytracer.run("config/scene.cfg");
+    this->_image = this->_raytracer.render();
     this->_texture.loadFromImage(this->_image);
     this->_sprite.setTexture(this->_texture);
 }

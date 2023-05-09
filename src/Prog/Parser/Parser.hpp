@@ -17,6 +17,7 @@
 #include "MaterialFactory.hpp"
 #include "ShapeFactory.hpp"
 #include "Exception.hpp"
+#include "Settings.hpp"
 
 namespace Raytracer {
     class Parser {
@@ -27,6 +28,8 @@ namespace Raytracer {
             std::vector<std::shared_ptr<IShape>> parsePrimitives();
             std::vector<std::shared_ptr<ILight>> parseLights();
             std::string convertGroup(libconfig::Setting &array, bool isGroup = false);
+
+            std::shared_ptr<Settings> parseSettings();
         private:
             libconfig::Config _cfg;
             MaterialFactory _materialFactory;

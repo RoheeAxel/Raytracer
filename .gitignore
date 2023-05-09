@@ -1,12 +1,14 @@
-build/
-.vscode/
-*.out
-*.ppm
-bootstrap*
-.ninja*
-build*
-cmake_install.cmake
-CMakeCache.txt
+# Build
+cmake-build-debug
+build
+
+# Runnable
 raytracer
-viewer
 graphics
+viewer
+*.so
+*.ppm
+
+# IDE
+.idea/
+.vscode/

@@ -9,6 +9,7 @@
 #define PARSINGUTILS_HPP_
 
 #include <string>
+#include <sstream>
 #include "Exception.hpp"
 #include "FromString.hpp"
 #include "Vec3.hpp"
@@ -20,11 +21,11 @@ namespace Raytracer {
             ParsingUtils() = default;
             ~ParsingUtils() = default;
 
-//            template<typename T>
-//            T getOption(const std::string &, const std::string &);
-
             static double getDouble(const std::string &, const std::string &);
             static Vec3 getVec3(const std::string &, const std::string &);
+            static std::string getString(const std::string &, const std::string &);
+
+            static std::vector<std::string> split(const std::string &str, char delim);
     };
 
 } // Raytracer

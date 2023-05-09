@@ -11,6 +11,8 @@
 #include "IMaterial.hpp"
 #include "Ray.hpp"
 #include "ParsingUtils.hpp"
+#include "ITexture.hpp"
+#include "Image.hpp"
 
 namespace Raytracer
 {
@@ -26,6 +28,7 @@ class Emitive : public IMaterial {
         double getReflectivity() override;
     private:
         Vec3 _base_color;
+        std::shared_ptr<ITexture> _tex = nullptr;
 };
 }
 #endif /* !EMITIVE_HPP_ */

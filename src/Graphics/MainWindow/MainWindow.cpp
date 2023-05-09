@@ -67,7 +67,8 @@ void Graphics::MainWindow::run()
         for (Button& button : this->_buttons)
             this->_window.draw(button.getSprite());
         if (tmp == ButtonType::PLAY) {
-            this->_imagePpm.run(this->_path);
+            this->_imagePpm.run(this->_path, this->_window);
+            tmp = ButtonType::NONE;
         }
         this->_imagePpm.draw(this->_window);
         if (tmp == ButtonType::CLUSTER)

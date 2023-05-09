@@ -22,10 +22,12 @@ namespace Raytracer {
             AABB getAABB() override;
             std::pair<double, double> getUV(Vec3 point) override;
             void setTranslation(Vec3 translation) override;
+            virtual void setRotation(Vec3 rotation, Vec3 center) override;
 
         private:
             Vec3 _position;
             double _radius;
+            Vec3 _rotation;
     };
 }
 

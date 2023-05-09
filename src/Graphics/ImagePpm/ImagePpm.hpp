@@ -12,13 +12,15 @@
     #include <fstream>
     #include <string>
     #include <iostream>
+    #include "Raytracer.hpp"
 
 namespace Viewer {
     class ImagePpm {
     public:
         ImagePpm();
         ~ImagePpm();
-        void run(const std::string filename);
+        void run(const std::string filename, sf::RenderWindow &window);
+        void configureRaytracer(sf::RenderWindow &window);
         void draw(sf::RenderWindow &window);
 
     private:
@@ -27,6 +29,7 @@ namespace Viewer {
         sf::Image _image;
         sf::Texture _texture;
         sf::Sprite _sprite;
+        Raytracer::Raytracer _raytracer;
     };
 }
 

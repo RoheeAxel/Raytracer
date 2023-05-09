@@ -11,7 +11,7 @@
     #include <SFML/Network.hpp>
     #include "Exception.hpp"
     #include <iostream>
-    #define CLUSTERS 2
+    #define CLUSTERS 1
 
 namespace Raytracer {
 

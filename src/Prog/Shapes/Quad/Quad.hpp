@@ -15,10 +15,13 @@ namespace Raytracer {
     class Quad : public AShape{
         public:
             Quad(const Vec3 &vertice1, const Vec3 &vertice2, const Vec3 &vertice3, const Vec3 &vertice4);
+            Quad(const std::string &options);
+
             ~Quad() override = default;
             HitRecord intersection(Ray ray) override;
             AABB getAABB() override;
-
+            
+            std::pair<double, double> getUV(Vec3 point) override;
             void setPosition(const Vec3 &position);
             void setNormal(const Vec3 &normal);
             void setVertice1(const Vec3 &vertice1);
@@ -26,6 +29,8 @@ namespace Raytracer {
             void setVertice3(const Vec3 &vertice3);
             void setVertice4(const Vec3 &vertice4);
             void setTranslation(Vec3 translation) override;
+            virtual void setRotation(Vec3 rotation, Vec3 center) override;
+
 
         private:
             Vec3 _position;

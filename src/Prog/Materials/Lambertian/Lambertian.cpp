@@ -19,6 +19,10 @@ namespace Raytracer
     }
 
     Lambertian::Lambertian(const std::string &options) {
+        try {
+            std::string path = ParsingUtils::getString(options, "path");
+            _tex = std::make_shared<Image>(path);
+        } catch (Exception &e) {}
         Vec3 color = ParsingUtils::getVec3(options, "color");
         this->_base_color = color;
     }
@@ -33,8 +37,8 @@ namespace Raytracer
 
         unit_light = lightColor / 255;
         Vec3 color_at_point = _base_color;
-        Raytracer::Dammier dam;
-        color_at_point = dam.getColorAt(record.uv.first, record.uv.second);
+        if (_tex != nullptr)
+            color_at_point = _tex->getColorAt(record.uv.first, record.uv.second);
 
         return (color_at_point  * intensity * unit_light).Clamp(0, 255);
     }

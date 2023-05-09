@@ -11,6 +11,9 @@
     #include "Camera.hpp"
     #include "Parser.hpp"
     #include "SceneBuilder.hpp"
+    #include "Network.hpp"
+    #include "Client.hpp"
+    #include "Server.hpp"
     #include "Vec3.hpp"
 
     #include <thread>
@@ -31,7 +34,12 @@ namespace Raytracer {
             ~Raytracer() = default;
 
             void render();
+            void mergeCluster(std::vector<std::string> &pixels, size_t nb_clusters);
+            void create_file(std::string &pixels, std::string &file_path);
 
+            size_t networkMode = NetworkType::CLIENT;
+            std::pair<float, float> _cam_pos = std::pair<float, float>(-1, 1);
+            std::string _pixels = "";
         private:
             void renderThread(size_t nb_threads);
             void mergeThread(size_t nb_threads);

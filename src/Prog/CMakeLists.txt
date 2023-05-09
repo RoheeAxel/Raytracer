@@ -43,6 +43,9 @@ include_directories(Shapes/Triangle)
 include_directories(Shapes/Quad)
 
 include_directories(Network)
+include_directories(Network/Network)
+include_directories(Network/Client)
+include_directories(Network/Server)
 
 include_directories(ITexture)
 include_directories(ITexture/Dammier)

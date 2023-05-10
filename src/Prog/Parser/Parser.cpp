@@ -14,13 +14,21 @@ namespace Raytracer {
         } catch (libconfig::FileIOException &e) {
             throw Config::FileNotFoundException(file);
         }
+
+        if (this->_cfg.exists("scenes")) {
+            this->_ignoreMissing = true;
+        }
     }
 
     std::vector<std::shared_ptr<IShape>> Parser::parsePrimitives() {
         std::vector<std::shared_ptr<IShape>> primitives;
 
-        if (!this->_cfg.exists("primitives"))
-            throw Config::MissingGroupException("primitives");
+        if (!this->_cfg.exists("primitives")) {
+            if (!this->_ignoreMissing)
+                throw Config::MissingGroupException("primitives");
+            else
+                return primitives;
+        }
 
         libconfig::Setting &primitivesGroup = this->_cfg.lookup("primitives");
         for (int i = 0; i < primitivesGroup.getLength(); i++) {
@@ -60,8 +68,12 @@ namespace Raytracer {
     std::vector<std::shared_ptr<ILight>> Parser::parseLights() {
         std::vector<std::shared_ptr<ILight>> lights;
 
-        if (!this->_cfg.exists("lights"))
-            throw Config::MissingGroupException("lights");
+        if (!this->_cfg.exists("lights")) {
+            if (!this->_ignoreMissing)
+                throw Config::MissingGroupException("lights");
+            else
+                return lights;
+        }
 
         libconfig::Setting &lightsGroup = this->_cfg.lookup("lights");
         for (int i = 0; i < lightsGroup.getLength(); i++) {

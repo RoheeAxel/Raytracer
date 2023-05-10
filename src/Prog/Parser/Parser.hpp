@@ -30,11 +30,12 @@ namespace Raytracer {
             std::string convertGroup(libconfig::Setting &array, bool isGroup = false);
 
             std::shared_ptr<Settings> parseSettings();
-        private:
             libconfig::Config _cfg;
+        private:
             MaterialFactory _materialFactory;
             LightFactory _lightFactory;
             ShapeFactory _shapeFactory;
+            bool _ignoreMissing = false;
     };
 } // Raytracer
 

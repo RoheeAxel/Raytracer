@@ -54,8 +54,11 @@ include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Shapes/Triangle)
 include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Shapes/Plan)
 include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Shapes/BVH)
 include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Shapes/AABB)
+include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Shapes/Cone)
 
 include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Utils)
+
+include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Settings)
 
 include_directories(${CMAKE_SOURCE_DIR}/src/Graphics/Raytracer)
 
@@ -86,6 +89,7 @@ file(GLOB_RECURSE SOURCES "${CMAKE_SOURCE_DIR}/src/Graphics/*.cpp"
 add_executable(graphics ${SOURCES})
 
 find_package(SFML REQUIRED COMPONENTS graphics window system)
+target_link_libraries(graphics pthread)
 target_link_libraries(graphics config++)
 target_link_libraries(graphics sfml-graphics sfml-window sfml-system)
 set_target_properties(graphics PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}")

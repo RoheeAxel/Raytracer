@@ -8,35 +8,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 
 # Include directories
 include_directories(${CMAKE_SOURCE_DIR}/src/Graphics)
-
 include_directories(${CMAKE_SOURCE_DIR}/src/Viewer)
-
-include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Camera)
-include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Camera/Screen)
-
-include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Lights)
-include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Lights/DirLight)
-include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Lights/PointLight)
-
-include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Materials)
-include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Materials/Lambertian)
-include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Materials/Normal)
-include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Materials/Reflective)
-
-include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Raytracer)
-
-include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Scene)
-
-include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Shapes)
-include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Shapes/Sphere)
-include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Shapes/Plan)
-include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Shapes/AABB)
-include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Shapes/BVH)
-include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Shapes/Triangle)
-include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Shapes/Quad)
-include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Shapes/Cylinder)
-
-include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Utils)
 
 file(GLOB_RECURSE SOURCES "*.cpp")
 add_executable(viewer ${SOURCES})

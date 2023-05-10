@@ -48,7 +48,7 @@ void Viewer::ImagePpm::run(const std::string filename, sf::RenderWindow &window)
 
 void Viewer::ImagePpm::configureRaytracer(sf::RenderWindow &window)
 {
-    this->_raytracer.run("scene.cfg");
+    this->_raytracer.run("config/scene.cfg");
     this->_image = this->_raytracer.render();
     this->_texture.loadFromImage(this->_image);
     this->_sprite.setTexture(this->_texture);

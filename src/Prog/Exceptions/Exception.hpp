@@ -49,6 +49,31 @@ namespace Raytracer {
                 ~MissingGroupException() override = default;
         };
     }
+
+    class FileCreationException : public Exception {
+        public:
+            FileCreationException(const std::string &file) : Exception("File " + file + " cannot be created") {}
+            ~FileCreationException() override = default;
+    };
+
+    namespace NetworkException {
+        class InvalidPortException : public Exception {
+            public:
+                InvalidPortException(const std::string &port) : Exception("Port " + port + " is invalid") {}
+                ~InvalidPortException() override = default;
+        };
+        class ConnectionFailedException : public Exception {
+            public :
+                ConnectionFailedException(const std::string &ip, int port) : Exception("Connection to " + ip + ":" + std::to_string(port) + " failed") {}
+                ~ConnectionFailedException() override = default;
+        };
+        class SendFailedException : public Exception {
+            public :
+                SendFailedException(const std::string &msg) : Exception("Send of " + msg + " failed") {}
+                ~SendFailedException() override = default;
+        };
+    };
+
 }
 
 #endif //EXCEPTION_HPP_

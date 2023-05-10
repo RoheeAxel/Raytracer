@@ -8,11 +8,7 @@
 #include "CustomRandom.hpp"
 
 namespace Raytracer {
-    CustomRandom::CustomRandom()
-    {
-        std::random_device rd;
-        _gen = std::mt19937(rd());
-    }
+    std::mt19937 CustomRandom::_gen;
 
     int CustomRandom::rand(int min, int max)
     {
@@ -29,5 +25,10 @@ namespace Raytracer {
     double CustomRandom::drand48()
     {
         return rand(0.0, 1.0);
+    }
+
+    void CustomRandom::seed() {
+        std::random_device rd;
+        CustomRandom::_gen = std::mt19937(rd());
     }
 } // Raytracer

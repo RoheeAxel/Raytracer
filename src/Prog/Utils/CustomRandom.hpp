@@ -15,15 +15,17 @@
 namespace Raytracer {
     class CustomRandom {
         public:
-            CustomRandom();
+            CustomRandom() = default;
             ~CustomRandom() = default;
 
             int rand(int min, int max);
             double rand(double min, double max);
 
             double drand48();
+
+            static void seed();
         private:
-            std::mt19937 _gen;
+            static std::mt19937 _gen;
     };
 } // Raytracer
 

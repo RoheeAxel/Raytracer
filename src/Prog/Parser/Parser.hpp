@@ -27,11 +27,13 @@ namespace Raytracer {
 
             std::vector<std::shared_ptr<IShape>> parsePrimitives();
             std::vector<std::shared_ptr<ILight>> parseLights();
+            std::shared_ptr<IMaterial> parseMaterial(libconfig::Setting &shape);
             std::string convertGroup(libconfig::Setting &array, bool isGroup = false);
 
             std::shared_ptr<Settings> parseSettings();
             libconfig::Config _cfg;
         private:
+
             MaterialFactory _materialFactory;
             LightFactory _lightFactory;
             ShapeFactory _shapeFactory;

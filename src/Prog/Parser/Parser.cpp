@@ -36,21 +36,11 @@ namespace Raytracer {
             for (int j = 0; j < list.getLength(); j++) {
                 libconfig::Setting &shape = list[j];
 
-                std::shared_ptr<IMaterial> material;
-                if (shape.exists("material")) {
-                    libconfig::Setting &materialGroup = shape.lookup("material");
-                    std::string type = materialGroup.lookup("type");
-                    materialGroup.remove("type");
-                    std::string options = convertGroup(materialGroup);
-                    try {
-                        material = this->_materialFactory.get(type, options);
-                    } catch (FactoryNotFoundException &e) {
-                        std::cerr << e.what() << std::endl;
-                        continue;
-                    }
-                    shape.remove("material");
+                std::shared_ptr<IMaterial> material = parseMaterial(shape);
+                if (!material) {
+                    std::cerr << "Each primitive must have a material (not the case for primitive #" << j + 1 << ")" << std::endl;
+                    continue;
                 }
-
                 std::string options = convertGroup(shape);
                 try {
                     std::shared_ptr<IShape> prim = this->_shapeFactory.get(list.getName(), options);
@@ -164,6 +154,24 @@ namespace Raytracer {
             settings->setRotation(Vec3(0));
         }
         return settings;
+    }
+
+    std::shared_ptr<IMaterial> Parser::parseMaterial(libconfig::Setting &shape) {
+        if (!shape.exists("material"))
+            return nullptr;
+        std::shared_ptr<IMaterial> material;
+        libconfig::Setting &materialGroup = shape.lookup("material");
+        std::string type = materialGroup.lookup("type");
+        materialGroup.remove("type");
+        std::string options = convertGroup(materialGroup);
+        try {
+            material = this->_materialFactory.get(type, options);
+        } catch (FactoryNotFoundException &e) {
+            std::cerr << e.what() << std::endl;
+            return nullptr;
+        }
+        shape.remove("material");
+        return material;
     }
 
 } // Raytracer

@@ -16,13 +16,15 @@ namespace Raytracer {
     Server::Server(std::string ip, int port) : Network()
     {
         _listener.listen(port);
-        if (_listener.accept(Network::getSocket()) != sf::Socket::Done)
+        this->newSocket();
+        if (_listener.accept(getSockets()[0]) != sf::Socket::Done)
             throw NetworkException::ConnectionFailedException(ip, port);
+        std::cout << "Client connected" << std::endl;
     }
 
     Server::~Server()
     {
-        Network::disconnect();
+        disconnect(0);
         _listener.close();
     }
 
@@ -33,17 +35,17 @@ namespace Raytracer {
 
         if (!myfile.is_open())
             throw FileCreationException("tmpscene.cfg");
-        myfile << receive();
+        myfile << receive(0);
         myfile.close();
-        Network::send("OK");
-        cam_pos = Network::receive();
-        Network::send("OK");
+        Network::send(0, "OK");
+        cam_pos = Network::receive(0);
+        Network::send(0, "OK");
         Raytracer raytracer("tmpscene.cfg");
         raytracer._cam_pos = std::pair<float, float>(std::stof(cam_pos.substr(0, cam_pos.find(" "))), std::stof(cam_pos.substr(cam_pos.find(" ") + 1)));
         raytracer.render();
         std::cout << "Image rendered with a size of " << raytracer._pixels.length() << std::endl;
-        Network::send(raytracer._pixels);
-        if (Network::receive() == "OK")
+        Network::send(0, raytracer._pixels);
+        if (Network::receive(0) == "OK")
             std::cout << "Image sent successfully" << std::endl;
         else
             throw NetworkException::SendFailedException("Image");

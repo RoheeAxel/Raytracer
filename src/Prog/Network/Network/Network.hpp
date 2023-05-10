@@ -11,7 +11,10 @@
     #include <SFML/Network.hpp>
     #include "Exception.hpp"
     #include <iostream>
-    #define CLUSTERS 1
+    #include <map>
+    #include <memory>
+    #include <list>
+    #define CLUSTERS 4
 
 namespace Raytracer {
 
@@ -25,19 +28,20 @@ namespace Raytracer {
         public:
             Network();
             ~Network();
-            void send(std::string data);
-            std::string receive();
-            void connect(std::string ip, int port);
-            void disconnect();
-            void setBlocking(bool blocking);
+            void send(size_t id, std::string data);
+            std::string receive(size_t id);
+            void connect(size_t id, std::string ip, int port);
+            void disconnect(size_t id);
+            void setBlocking(size_t id, bool blocking);
 
-            sf::TcpSocket &getSocket();
+            void newSocket();
+            std::array<sf::TcpSocket, CLUSTERS> &getSockets();
 
         protected:
         private:
-            sf::TcpSocket _socket;
-            sf::Packet _packet;
-            std::string _data;
+            std::array<sf::TcpSocket, CLUSTERS> _sockets;
+            std::array<sf::Packet, CLUSTERS> _packets;
+            std::vector<std::string> _datas;
     };
 };
 

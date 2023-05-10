@@ -17,7 +17,7 @@ namespace Raytracer
 {
     class Client : public Network {
         public:
-            Client(std::string ip, int port, std::string filename);
+            Client(std::vector<std::string> ips, std::vector<int> ports, std::string filename);
             ~Client();
             void run();
 

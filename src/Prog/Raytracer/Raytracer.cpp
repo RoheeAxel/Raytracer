@@ -138,4 +138,9 @@ namespace Raytracer {
         myfile << pixels;
         myfile.close();
     }
+
+    std::string Raytracer::getOutpoutFilename() const
+    {
+        return this->_output_file_name;
+    }
 }

@@ -6,6 +6,9 @@
 */
 
 #include "Raytracer.hpp"
+#include "Exception.hpp"
+#include <iostream>
+#include <fstream>
 
 int create_server(char **av)
 {
@@ -16,10 +19,20 @@ int create_server(char **av)
 
 int create_client(char **av)
 {
-    std::string ip = av[3];
+    std::ifstream inFile;
+    std::string line;
+    std::vector<std::string> ips;
+    std::vector<int> ports;
 
-    Raytracer::Client client(ip, std::stoi(av[4]), av[1]);
-    std::cout << "Client connected to " << ip << ":" << av[4] << std::endl;
+    inFile.open(av[3]);
+    if (!inFile)
+        return 84;
+    while (getline(inFile, line)) {
+        ips.push_back(line.substr(0, line.find(":")));
+        ports.push_back(std::stoi(line.substr(line.find(":") + 1)));
+    }
+    inFile.close();
+    Raytracer::Client client(ips, ports, av[1]);
     client.run();
     return 0;
 }
@@ -28,7 +41,7 @@ int main(int ac, char **av)
 {
     if (ac == 3 && std::string(av[1]) == "server")
         return create_server(av);
-    if (ac == 5 && std::string(av[2]) == "client")
+    if (ac == 4 && std::string(av[2]) == "client")
         return create_client(av);
     if (ac != 2) {
         std::cerr << "Usage: ./raytracer [scene file]" << std::endl;

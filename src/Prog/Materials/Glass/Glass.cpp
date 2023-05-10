@@ -43,7 +43,7 @@ namespace Raytracer
         r0 = r0*r0;
         double reflect_prob = r0 + (1-r0)*pow((1 - cos_theta),5);
 
-        if (cannot_refract || reflect_prob > drand48()) {
+        if (cannot_refract || reflect_prob > _random.drand48()) {
             Scattered = refract(unit_direction, record.normal, refraction_ratio);
         } else {
             Scattered = light - record.normal * 2 * record.normal.Dot(light);

@@ -62,15 +62,23 @@ namespace Raytracer {
                 InvalidPortException(const std::string &port) : Exception("Port " + port + " is invalid") {}
                 ~InvalidPortException() override = default;
         };
+
         class ConnectionFailedException : public Exception {
             public :
                 ConnectionFailedException(const std::string &ip, int port) : Exception("Connection to " + ip + ":" + std::to_string(port) + " failed") {}
                 ~ConnectionFailedException() override = default;
         };
+
         class SendFailedException : public Exception {
             public :
                 SendFailedException(const std::string &msg) : Exception("Send of " + msg + " failed") {}
                 ~SendFailedException() override = default;
+        };
+
+        class InvalidClusterException : public Exception {
+            public :
+                InvalidClusterException() : Exception("Cluster is invalid") {}
+                ~InvalidClusterException() override = default;
         };
     };
 

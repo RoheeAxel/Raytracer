@@ -25,6 +25,7 @@ namespace Raytracer
             double getReflectivity() override;
         private:
             double refractionIndex = 1.5;
+            CustomRandom _random;
 };
 }
 #endif /* !GLASS_HPP_ */

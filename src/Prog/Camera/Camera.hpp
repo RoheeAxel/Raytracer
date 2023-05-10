@@ -15,6 +15,7 @@
 #include <string>
 #include <array>
 #include <list>
+#include "CustomRandom.hpp"
 
 namespace Raytracer {
     class Camera {
@@ -37,6 +38,7 @@ namespace Raytracer {
             Screen _screen = Screen(Vec3(-1, -1, 1), Vec3(1, 1, 1), std::pair<int, int>(200, 200));
             std::vector<Vec3> _pixels;
             size_t _id;
+            CustomRandom _rand;
     };
 }
 

@@ -15,6 +15,7 @@
 
 namespace Raytracer {
     Raytracer::Raytracer(const std::string &file_path) {
+        CustomRandom::seed();
         try {
             Parser parser(file_path);
             SceneBuilder builder(parser);
@@ -137,5 +138,10 @@ namespace Raytracer {
         myfile << "P6\n" << this->_settings->getWidth() << " " << this->_settings->getHeight() << "\n255\n";
         myfile << pixels;
         myfile.close();
+    }
+
+    std::string Raytracer::getOutpoutFilename() const
+    {
+        return this->_output_file_name;
     }
 }

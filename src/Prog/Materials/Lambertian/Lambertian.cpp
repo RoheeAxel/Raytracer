@@ -44,7 +44,7 @@ namespace Raytracer
     }
 
     Vec3 Lambertian::getNewRay(HitRecord record, [[maybe_unused]]Vec3 light) {
-        Vec3 p = Vec3(drand48() * 2 - 1, drand48() * 2 - 1, drand48() * 2 - 1);
+        Vec3 p = Vec3(_random.drand48() * 2 - 1, _random.drand48() * 2 - 1, _random.drand48() * 2 - 1);
         Vec3 inSphere = (record.normal + p).Normalize();
 
         if (inSphere.Dot(record.normal) > 0.0)

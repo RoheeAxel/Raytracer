@@ -30,6 +30,7 @@ namespace Raytracer
         private:
             Vec3 _base_color;
             std::shared_ptr<ITexture> _tex = nullptr;
+            CustomRandom _random;
 };
 }
 #endif /* !LAMBERTIAN_HPP_ */

@@ -11,47 +11,52 @@ namespace Raytracer {
 
     Network::Network()
     {
-        std::cout << "Network created" << std::endl;
     }
 
     Network::~Network()
     {
     }
 
-    void Network::send(std::string data)
+    void Network::send(size_t id, std::string data)
     {
-        _packet.clear();
-        _packet << data;
-        _socket.send(_packet);
+        _datas[id] = data;
+        _packets[id].clear();
+        _packets[id] << _datas[id];
+        _sockets[id].send(_packets[id]);
     }
 
-    std::string Network::receive()
+    std::string Network::receive(size_t id)
     {
-        _packet.clear();
-        _socket.receive(_packet);
-        _packet >> _data;
-        return _data;
+        _packets[id].clear();
+        _sockets[id].receive(_packets[id]);
+        _packets[id] >> _datas[id];
+        return _datas[id];
     }
 
-    void Network::connect(std::string ip, int port)
+    void Network::connect(size_t id, std::string ip, int port)
     {
-        _socket.setBlocking(true);
-        if (_socket.connect(ip, port) != sf::Socket::Done)
+        if (_sockets[id].connect(ip, port) != sf::Socket::Done)
             throw NetworkException::ConnectionFailedException(ip, port);
     }
 
-    void Network::disconnect()
+    void Network::disconnect(size_t id)
     {
-        _socket.disconnect();
+        _sockets[id].disconnect();
     }
 
-    void Network::setBlocking(bool blocking)
+    void Network::setBlocking(size_t id, bool blocking)
     {
-        _socket.setBlocking(blocking);
+        _sockets[id].setBlocking(blocking);
     }
 
-    sf::TcpSocket &Network::getSocket()
+    void Network::newSocket()
     {
-        return this->_socket;
+        std::string data = "";
+        _datas.push_back(data);
+    }
+
+    std::array<sf::TcpSocket, CLUSTERS> &Network::getSockets()
+    {
+        return _sockets;
     }
 };

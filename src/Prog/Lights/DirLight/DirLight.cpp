@@ -24,8 +24,6 @@ namespace Raytracer
         _dir = dir;
         _color = color;
         _intensity = intensity;
-        std::cout << "Hi there" << std::endl;
-
     }
 
     Vec3 Raytracer::DirLight::illuminate(Raytracer::Vec3 point, Raytracer::Scene &scene) {

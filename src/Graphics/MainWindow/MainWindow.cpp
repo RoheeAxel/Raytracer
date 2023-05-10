@@ -57,6 +57,14 @@ void Graphics::MainWindow::run()
                         std::system("zenity --file-selection > path.txt");
                         this->fillPathPpm();
                         std::system("rm path.txt");
+                        this->_imagePpm.run(this->_path, this->_window);
+                        tmp = ButtonType::NONE;
+                    } else if (tmp == ButtonType::PLAY) {
+                        std::system("zenity --file-selection > path.txt");
+                        this->fillPathPpm();
+                        std::system("rm path.txt");
+                        this->_imagePpm.configureRaytracer(this->_window, this->_path);
+                        tmp = ButtonType::NONE;
                     } else if (tmp != ButtonType::NONE)
                         break;
                 }
@@ -66,11 +74,7 @@ void Graphics::MainWindow::run()
         this->_window.draw(this->_rectangle);
         for (Button& button : this->_buttons)
             this->_window.draw(button.getSprite());
-        if (tmp == ButtonType::PLAY) {
-            this->_imagePpm.run(this->_path, this->_window);
-            tmp = ButtonType::NONE;
-        }
-        this->_imagePpm.draw(this->_window);
+        this->_imagePpm.draw(this->_window, this->_path);
         if (tmp == ButtonType::CLUSTER)
             this->_clusterWindow.draw(this->_window, sf::BlendAlpha);
         if (tmp == ButtonType::THREAD)

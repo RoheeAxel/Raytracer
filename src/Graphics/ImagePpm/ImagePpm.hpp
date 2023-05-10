@@ -20,8 +20,8 @@ namespace Viewer {
         ImagePpm();
         ~ImagePpm();
         void run(const std::string filename, sf::RenderWindow &window);
-        void configureRaytracer(sf::RenderWindow &window);
-        void draw(sf::RenderWindow &window);
+        void configureRaytracer(sf::RenderWindow &window, std::string file);
+        void draw(sf::RenderWindow &window, std::string path);
 
     private:
         int _width;

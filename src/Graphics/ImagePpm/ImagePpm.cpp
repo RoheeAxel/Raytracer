@@ -22,9 +22,10 @@ void Viewer::ImagePpm::run(const std::string filename, sf::RenderWindow &window)
     int maxColor;
 
     if (!file) {
-        this->configureRaytracer(window);
+        this->configureRaytracer(window, filename);
         return;
     }
+    std::cout << "Loading image: " << filename << std::endl;
     std::getline(file, format);
     file >> this->_width >> this->_height >> maxColor;
     file.get();
@@ -46,16 +47,17 @@ void Viewer::ImagePpm::run(const std::string filename, sf::RenderWindow &window)
     this->_sprite.setTexture(this->_texture);
 }
 
-void Viewer::ImagePpm::configureRaytracer(sf::RenderWindow &window)
+void Viewer::ImagePpm::configureRaytracer(sf::RenderWindow &window, std::string file)
 {
-    this->_raytracer.run("config/scene.cfg");
-    this->_image = this->_raytracer.render();
-    this->_texture.loadFromImage(this->_image);
-    this->_sprite.setTexture(this->_texture);
+    this->_raytracer.run(file);
+    this->_raytracer.render();
+    this->run(this->_raytracer.getOutpoutFilename(), window);
 }
 
-void Viewer::ImagePpm::draw(sf::RenderWindow &window)
+void Viewer::ImagePpm::draw(sf::RenderWindow &window, std::string path)
 {
+    if (path == "")
+        return;
     sf::Vector2u windowSize = window.getSize();
     sf::Vector2u imageSize = this->_texture.getSize();
     float x = (windowSize.x - imageSize.x) / 2.0f;

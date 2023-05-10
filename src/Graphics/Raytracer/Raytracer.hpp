@@ -7,14 +7,16 @@
 
 #ifndef RAYTRACER_H_
     #define RAYTRACER_H_
-
-    #include <SFML/Graphics.hpp>
-
     #include "Scene.hpp"
     #include "Camera.hpp"
     #include "Parser.hpp"
     #include "SceneBuilder.hpp"
+    #include "Network.hpp"
+    #include "Client.hpp"
+    #include "Server.hpp"
     #include "Vec3.hpp"
+    #include "Settings.hpp"
+    #include "CameraBuilder.hpp"
 
     #include <thread>
     #include <array>
@@ -23,10 +25,6 @@
     #include <semaphore>
     #include <memory>
 
-    #define THREADS 8
-    #define HEIGHT 400
-    #define WIDTH 400
-
 namespace Raytracer {
     class Raytracer {
         public:
@@ -34,17 +32,25 @@ namespace Raytracer {
             ~Raytracer() = default;
 
             void run(const std::string &file_path);
+            void render();
+            void mergeCluster(std::vector<std::string> &pixels, size_t nb_clusters);
+            void create_file(std::string &pixels, std::string &file_path);
 
-            sf::Image render();
+            std::string getOutpoutFilename() const;
+            std::shared_ptr<Settings> getSettings() const;
 
+            size_t networkMode = NetworkType::CLIENT;
+            std::pair<float, float> _cam_pos = std::pair<float, float>(-1, 1);
+            std::string _pixels = "";
         private:
             void renderThread(size_t nb_threads);
-            sf::Image mergeThread(size_t nb_threads);
+            void mergeThread(size_t nb_threads);
             std::vector<std::thread> _threads;
             std::vector<Camera> _cameras;
 
-            //Screen _screen;
+            std::shared_ptr<Settings> _settings;
             std::shared_ptr<Scene> _scene;
+            std::string _output_file_name;
     };
 }
 

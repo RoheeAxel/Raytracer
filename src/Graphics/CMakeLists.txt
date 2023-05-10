@@ -42,6 +42,9 @@ include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Materials/Glass)
 include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Materials/Emitive)
 
 include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Network)
+include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Network/Client)
+include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Network/Server)
+include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Network/Network)
 
 include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Parser)
 
@@ -55,6 +58,8 @@ include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Shapes/Plan)
 include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Shapes/BVH)
 include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Shapes/AABB)
 include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Shapes/Cone)
+include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Shapes/Cylinder)
+include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Shapes/OBJ)
 
 include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Utils)
 

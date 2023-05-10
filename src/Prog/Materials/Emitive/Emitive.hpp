@@ -28,6 +28,7 @@ class Emitive : public IMaterial {
         double getReflectivity() override;
     private:
         Vec3 _base_color;
+        double _intensity;
         std::shared_ptr<ITexture> _tex = nullptr;
 };
 }

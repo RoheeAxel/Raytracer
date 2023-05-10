@@ -15,6 +15,7 @@
 
 namespace Raytracer {
     Raytracer::Raytracer(const std::string &file_path) {
+        CustomRandom::seed();
         try {
             Parser parser(file_path);
             SceneBuilder builder(parser);

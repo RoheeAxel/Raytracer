@@ -25,6 +25,8 @@ namespace Raytracer {
         //     return std::make_shared<Cylinder>(options);
         else if (name == "quad")
             return std::make_shared<Quad>(options);
+        else if (name == "obj")
+            return std::make_shared<OBJ>(options);
         return AFactory::getFromBuiltin(name, options);
     }
 

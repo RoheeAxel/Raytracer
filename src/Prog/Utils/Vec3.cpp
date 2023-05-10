@@ -188,8 +188,9 @@ namespace Raytracer
     }
 
     Vec3 Vec3::random() {
+        CustomRandom random;
         while (true) {
-            Vec3 p = (Vec3(drand48(), drand48(), drand48()) * 2) - Vec3(1, 1, 1);
+            Vec3 p = (Vec3(random.drand48(), random.drand48(), random.drand48()) * 2) - Vec3(1, 1, 1);
             if (p.Length() >= 1) continue;
             return p;
         }

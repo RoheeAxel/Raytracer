@@ -19,11 +19,13 @@ namespace Raytracer
             Glass(const std::string &options);
             ~Glass() override = default;
 
+            Vec3 refract(Vec3 uv, Vec3 n, double etai_over_etat);
             Vec3 getColorAt(HitRecord record, Ray light, Vec3 lightColor) override;
             Vec3 getNewRay(HitRecord record, Vec3 light) override;
             double getReflectivity() override;
         private:
             double refractionIndex = 1.5;
+            CustomRandom _random;
 };
 }
 #endif /* !GLASS_HPP_ */

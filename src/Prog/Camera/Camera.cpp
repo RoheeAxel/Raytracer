@@ -50,8 +50,8 @@ namespace Raytracer {
 
         for (int k = 0; k < _sample_per_pixel; k++) {
             Vec3 dir (
-                _screen.getTopLeft().x + (i + rand() / (RAND_MAX + 1.0)) * screenDiagonal.x / _screen.getResolution().first,
-                _screen.getTopLeft().y + (j + rand() / (RAND_MAX + 1.0)) * screenDiagonal.y / _screen.getResolution().second,
+                _screen.getTopLeft().x + (i + _rand.rand(0, RAND_MAX) / (RAND_MAX + 1.0)) * screenDiagonal.x / _screen.getResolution().first,
+                _screen.getTopLeft().y + (j + _rand.rand(0, RAND_MAX) / (RAND_MAX + 1.0)) * screenDiagonal.y / _screen.getResolution().second,
                 _screen.getTopLeft().z
             );
             Ray ray(_position, dir);

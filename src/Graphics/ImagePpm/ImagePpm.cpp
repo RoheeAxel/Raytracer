@@ -25,7 +25,6 @@ void Viewer::ImagePpm::run(const std::string filename, sf::RenderWindow &window,
         this->configureRaytracer(window, filename, nbThreads);
         return;
     }
-    std::cout << "Loading image: " << filename << std::endl;
     std::getline(file, format);
     file >> this->_width >> this->_height >> maxColor;
     file.get();

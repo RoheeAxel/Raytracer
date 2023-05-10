@@ -14,7 +14,7 @@
     #include <map>
     #include <memory>
     #include <list>
-    #define CLUSTERS 4
+    #define CLUSTERS 1
 
 namespace Raytracer {
 

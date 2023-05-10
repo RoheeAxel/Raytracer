@@ -32,7 +32,7 @@ namespace Raytracer {
             ~Raytracer() = default;
 
             void run(const std::string &file_path);
-            void render();
+            void render(std::string nbThread);
             void mergeCluster(std::vector<std::string> &pixels, size_t nb_clusters);
             void create_file(std::string &pixels, std::string &file_path);
 

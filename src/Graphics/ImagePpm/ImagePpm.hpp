@@ -19,8 +19,8 @@ namespace Viewer {
     public:
         ImagePpm();
         ~ImagePpm();
-        void run(const std::string filename, sf::RenderWindow &window);
-        void configureRaytracer(sf::RenderWindow &window, std::string file);
+        void run(const std::string filename, sf::RenderWindow &window, std::string nbThreads);
+        void configureRaytracer(sf::RenderWindow &window, std::string file, std::string nbThread);
         void draw(sf::RenderWindow &window, std::string path);
 
     private:

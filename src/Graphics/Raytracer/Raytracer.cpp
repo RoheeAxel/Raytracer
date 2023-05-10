@@ -47,10 +47,11 @@ namespace Raytracer {
         return this->_settings;
     }
 
-    void Raytracer::render()
+    void Raytracer::render(std::string nbThread)
     {
         size_t nb_threads = this->_settings->getThreads();
-
+        if (nbThread != "")
+            nb_threads = std::atoi(nbThread.c_str());
         for (size_t i = nb_threads; i > 0; i--) {
             if (this->_settings->getWidth() % i == 0 && this->_settings->getHeight() % i == 0) {
                 nb_threads = i;
@@ -59,9 +60,8 @@ namespace Raytracer {
         }
         this->renderThread(nb_threads);
         this->mergeThread(nb_threads);
-        if (this->networkMode == NetworkType::CLIENT && CLUSTERS < 2) {
+        if (this->networkMode == NetworkType::CLIENT && CLUSTERS < 2)
             this->create_file(this->_pixels, this->_output_file_name);
-        }
     }
 
     void Raytracer::renderThread(size_t nb_threads)
@@ -82,12 +82,10 @@ namespace Raytracer {
             _cameras.push_back(builder.build());
             value = value + (divider / nb_threads);
         }
-        for (size_t i = 0; i < nb_threads; i++) {
+        for (size_t i = 0; i < nb_threads; i++)
             _threads.push_back(std::thread(&Camera::render, &_cameras[i], std::ref(*this->_scene)));
-        }
-        for (size_t i = 0; i < nb_threads; i++) {
+        for (size_t i = 0; i < nb_threads; i++)
             _threads[i].join();
-        }
         auto end = std::chrono::high_resolution_clock::now();
         auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
         std::cout << "Time taken for generation: " << duration.count() / 1000000 << " second(s)" << std::endl;
@@ -102,9 +100,8 @@ namespace Raytracer {
         size_t divider = this->_settings->getWidth() / nb_threads / CLUSTERS;
         std::vector<std::vector<Vec3>> pixels;
 
-        for (size_t i = 0; i < nb_threads; i++) {
+        for (size_t i = 0; i < nb_threads; i++)
             pixels.push_back(_cameras[i].getPixels());
-        }
         for (int j = 0; j < this->_settings->getHeight(); j++) {
             for (int i = 0; i < (this->_settings->getWidth() / CLUSTERS); i++) {
                 index = (i) / (divider);

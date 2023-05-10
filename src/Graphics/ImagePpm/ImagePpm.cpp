@@ -15,14 +15,14 @@ Viewer::ImagePpm::~ImagePpm()
 {
 }
 
-void Viewer::ImagePpm::run(const std::string filename, sf::RenderWindow &window)
+void Viewer::ImagePpm::run(const std::string filename, sf::RenderWindow &window, std::string nbThreads)
 {
     std::ifstream file(filename, std::ios::binary);
     std::string format;
     int maxColor;
 
     if (!file) {
-        this->configureRaytracer(window, filename);
+        this->configureRaytracer(window, filename, nbThreads);
         return;
     }
     std::cout << "Loading image: " << filename << std::endl;
@@ -47,11 +47,11 @@ void Viewer::ImagePpm::run(const std::string filename, sf::RenderWindow &window)
     this->_sprite.setTexture(this->_texture);
 }
 
-void Viewer::ImagePpm::configureRaytracer(sf::RenderWindow &window, std::string file)
+void Viewer::ImagePpm::configureRaytracer(sf::RenderWindow &window, std::string file, std::string nbThreads)
 {
     this->_raytracer.run(file);
-    this->_raytracer.render();
-    this->run(this->_raytracer.getOutpoutFilename(), window);
+    this->_raytracer.render(nbThreads);
+    this->run(this->_raytracer.getOutpoutFilename(), window, nbThreads);
 }
 
 void Viewer::ImagePpm::draw(sf::RenderWindow &window, std::string path)

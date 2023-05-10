@@ -21,6 +21,7 @@ Graphics::MainWindow::MainWindow(sf::Vector2f size, std::string title)
     this->_font.loadFromFile("assets/font.ttf");
     this->_clusterWindow.setFont(this->_font);
     this->_threadWindow.setFont(this->_font);
+
 }
 
 Graphics::MainWindow::~MainWindow()
@@ -34,7 +35,7 @@ void Graphics::MainWindow::addButton(Button button)
 
 void Graphics::MainWindow::run()
 {
-    Graphics::ButtonType tmp;
+    Graphics::ButtonType tmp = ButtonType::NONE;
 
     this->_rectangle.setSize(sf::Vector2f(this->_size.x, this->_buttons[0].getSprite().getGlobalBounds().height + 10));
     while (this->_window.isOpen()) {
@@ -57,13 +58,13 @@ void Graphics::MainWindow::run()
                         std::system("zenity --file-selection > path.txt");
                         this->fillPathPpm();
                         std::system("rm path.txt");
-                        this->_imagePpm.run(this->_path, this->_window);
+                        this->_imagePpm.run(this->_path, this->_window, this->_threadWindow.getValue());
                         tmp = ButtonType::NONE;
                     } else if (tmp == ButtonType::PLAY) {
                         std::system("zenity --file-selection > path.txt");
                         this->fillPathPpm();
                         std::system("rm path.txt");
-                        this->_imagePpm.configureRaytracer(this->_window, this->_path);
+                        this->_imagePpm.configureRaytracer(this->_window, this->_path, this->_threadWindow.getValue());
                         tmp = ButtonType::NONE;
                     } else if (tmp != ButtonType::NONE)
                         break;

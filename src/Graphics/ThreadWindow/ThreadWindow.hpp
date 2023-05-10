@@ -21,6 +21,7 @@ namespace Graphics {
             bool getInputClose();
             void setInputClose(bool close);
             void setFont(sf::Font font);
+            std::string getValue();
 
         private:
             sf::Text _title;

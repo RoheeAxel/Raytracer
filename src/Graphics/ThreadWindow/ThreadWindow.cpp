@@ -75,3 +75,8 @@ void Graphics::ThreadWindow::setFont(sf::Font font)
 {
     this->_font = font;
 }
+
+std::string Graphics::ThreadWindow::getValue()
+{
+    return this->_input[0].getText();
+}

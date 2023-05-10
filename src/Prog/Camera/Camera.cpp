@@ -14,15 +14,19 @@ namespace Raytracer {
     Camera::Camera(const Vec3& position, const Vec3& rotation, Screen& screen, size_t id, int sample_per_pixel)
     {
         _position = position;
+        _rotation = _rotation + rotation;
+
 
         Vec3 screenBot = screen.getBotRight();
         Vec3 screenTop = screen.getTopLeft();
 
-        Quaternion q(rotation);
+        std::cout << "Rotation" << _position.x << " " << _position.y << " " << _position.z << std::endl;
+        Quaternion q(_rotation);
+        std::cout << "First : " <<  screen.getTopLeft().x << " " << screen.getTopLeft().y << " " << screen.getTopLeft().z << std::endl;
         screen.setBotRight(q.rotate(screenBot, _position));
         screen.setTopLeft(q.rotate(screenTop, _position));
+        std::cout << "Second : " <<  screen.getTopLeft().x << " " << screen.getTopLeft().y << " " << screen.getTopLeft().z << std::endl << std::endl;
 
-        _rotation = _rotation + rotation;
 
         _screen = screen;
         _id = id;

@@ -27,7 +27,7 @@ namespace Raytracer
         this->_base_color = color;
     }
 
-    Vec3 Lambertian::getColorAt(HitRecord record, Ray light, [[maybe_unused]]Vec3 lightColor) {
+    Vec3 Lambertian::getColorAt(HitRecord record, Ray light, Vec3 lightColor) {
         double intensity;
         Vec3 unit_light;
         if (light.getDirection() == Vec3(0))

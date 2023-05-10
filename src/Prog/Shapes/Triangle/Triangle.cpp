@@ -28,6 +28,7 @@ namespace Raytracer {
         Vec3 v0v1 = _vertice2 - _vertice1;
         Vec3 v0v2 = _vertice3 - _vertice1;
         Vec3 N = v0v1.Cross(v0v2); // N
+
         float NdotRayDirection = N.Dot(r.getDirection());
         if (fabs(NdotRayDirection) < kEpsilon)
             return hitRecord;
@@ -55,7 +56,7 @@ namespace Raytracer {
         hitRecord.hit = true;
         hitRecord.distance = t;
         hitRecord.point = P;
-        hitRecord.normal = _normal;
+        hitRecord.normal = N;
         hitRecord.material = this->getMaterial();
         hitRecord.uv = this->getUV(P);
         return hitRecord;

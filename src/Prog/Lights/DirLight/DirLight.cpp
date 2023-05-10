@@ -7,6 +7,7 @@
 
 #include "DirLight.hpp"
 #include <iostream>
+#define EPSILON -0.00001
 
 namespace Raytracer
 {
@@ -23,6 +24,8 @@ namespace Raytracer
         _dir = dir;
         _color = color;
         _intensity = intensity;
+        std::cout << "Hi there" << std::endl;
+
     }
 
     Vec3 Raytracer::DirLight::illuminate(Raytracer::Vec3 point, Raytracer::Scene &scene) {
@@ -32,11 +35,11 @@ namespace Raytracer
             hit = shape->intersection(ray);
             if (!hit.hit)
                 continue;
-            if (hit.point != point) {
+            if ((hit.distance - (point - _position).Length()) < EPSILON) {
                 return {0,0,0};
             }
         }
-        return {255,255,255};
+        return {255,0,0};
     }
 
     Raytracer::Ray Raytracer::DirLight::getRayToLight([[maybe_unused]]Raytracer::Vec3 point) {

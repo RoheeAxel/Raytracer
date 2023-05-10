@@ -11,6 +11,7 @@
 #include <cmath>
 #include <fstream>
 #include "Lambertian.hpp"
+#include "Glass.hpp"
 
 namespace Raytracer {
     OBJ::OBJ() {}
@@ -19,7 +20,7 @@ namespace Raytracer {
         _path = ParsingUtils::getString(options, "path");
         _position = ParsingUtils::getVec3(options, "position");
         _rotation = ParsingUtils::getVec3(options, "rotation");
-        _material = std::make_shared<Lambertian>(Vec3(255, 120, 120));
+        _material = std::make_shared<Glass>();
         load();
     }
 

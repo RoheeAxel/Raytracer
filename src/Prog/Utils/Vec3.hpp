@@ -11,6 +11,7 @@
 #include <vector>
 #include "FromString.hpp"
 #include "Exception.hpp"
+#include "CustomRandom.hpp"
 
 namespace Raytracer
 {

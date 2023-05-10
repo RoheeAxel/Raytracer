@@ -15,6 +15,7 @@
 #include "Plan.hpp"
 #include "Sphere.hpp"
 #include "Triangle.hpp"
+#include "OBJ.hpp"
 // #include "Cylinder.hpp"
 #include "Quad.hpp"
 

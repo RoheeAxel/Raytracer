@@ -24,14 +24,16 @@ namespace Raytracer
             _tex = std::make_shared<Image>(path);
         } catch (Exception &e) {}
         Vec3 color = ParsingUtils::getVec3(options, "color");
+        double intensity = ParsingUtils::getDouble(options, "intensity");
         this->_base_color = color;
+        this->_intensity = intensity;
     }
 
     Vec3 Emitive::getColorAt([[maybe_unused]]HitRecord record, [[maybe_unused]]Ray light, [[maybe_unused]]Vec3 lightColor) {
         Vec3 color_at_point = _base_color;
         if (_tex != nullptr)
             color_at_point = _tex->getColorAt(record.uv.first, record.uv.second);
-        return color_at_point;
+        return color_at_point * _intensity;
     }
 
     Vec3 Emitive::getNewRay([[maybe_unused]] HitRecord record, [[maybe_unused]] Vec3 light)

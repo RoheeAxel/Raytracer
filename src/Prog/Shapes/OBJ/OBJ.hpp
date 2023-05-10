@@ -9,6 +9,8 @@
 #define OBJ_HPP_
 
 #include "AShape.hpp"
+#include "Triangle.hpp"
+#include "Quad.hpp"
 
 namespace Raytracer {
     class AABB;
@@ -16,11 +18,11 @@ namespace Raytracer {
         public:
             OBJ();
             OBJ(const std::string &options);
-
+            void load();
             ~OBJ() override = default;
             HitRecord intersection(Ray ray) override;
             AABB getAABB() override;
-            
+
             std::pair<double, double> getUV(Vec3 point) override;
             void setPosition(const Vec3 &position);
             void setTranslation(Vec3 translation) override;
@@ -29,7 +31,9 @@ namespace Raytracer {
 
         private:
             Vec3 _position;
+            Vec3 _rotation;
             std::string _path;
+            std::vector<std::shared_ptr<IShape>> _faces;
 };
 }
 

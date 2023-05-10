@@ -41,7 +41,7 @@ include_directories(Shapes/BVH)
 include_directories(Shapes/Triangle)
 include_directories(Shapes/Quad)
 include_directories(Shapes/Cylinder)
-# include_directories(Shapes/OBJ)
+include_directories(Shapes/OBJ)
 
 include_directories(ITexture)
 include_directories(ITexture/Dammier)

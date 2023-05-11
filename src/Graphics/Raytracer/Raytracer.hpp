@@ -7,6 +7,9 @@
 
 #ifndef RAYTRACER_H_
     #define RAYTRACER_H_
+
+    #include <SFML/Graphics.hpp>
+
     #include "Scene.hpp"
     #include "Camera.hpp"
     #include "Parser.hpp"

@@ -27,10 +27,10 @@ namespace Raytracer {
             SceneBuilder builder(parser);
             this->_scene = builder.build();
             this->_settings = parser.parseSettings();
+            this->_settings->setClusters(1);
         } catch (libconfig::ParseException &e) {
             throw Exception("Parsing error: " + std::string(e.what()));
         }
-
         size_t pos = file_path.find(".");
         if (pos != std::string::npos)
             this->_output_file_name = file_path.substr(0, pos);
@@ -60,7 +60,7 @@ namespace Raytracer {
         }
         this->renderThread(nb_threads);
         this->mergeThread(nb_threads);
-        if (this->networkMode == NetworkType::CLIENT && CLUSTERS < 2)
+        if (this->networkMode == NetworkType::CLIENT && this->_settings->getClusters() < 2)
             this->create_file(this->_pixels, this->_output_file_name);
     }
 
@@ -68,7 +68,7 @@ namespace Raytracer {
     {
         float value = _cam_pos.first;
         float divider = _cam_pos.second - _cam_pos.first;
-        std::pair<int, int> screenSize((this->_settings->getWidth() / nb_threads / CLUSTERS), this->_settings->getHeight());
+        std::pair<int, int> screenSize((this->_settings->getWidth() / nb_threads / this->_settings->getClusters()), this->_settings->getHeight());
 
         auto start = std::chrono::high_resolution_clock::now();
         std::cout << "Rendering..." << std::endl;
@@ -82,10 +82,12 @@ namespace Raytracer {
             _cameras.push_back(builder.build());
             value = value + (divider / nb_threads);
         }
-        for (size_t i = 0; i < nb_threads; i++)
+        for (size_t i = 0; i < nb_threads; i++) {
             _threads.push_back(std::thread(&Camera::render, &_cameras[i], std::ref(*this->_scene)));
-        for (size_t i = 0; i < nb_threads; i++)
+        }
+        for (size_t i = 0; i < nb_threads; i++) {
             _threads[i].join();
+        }
         auto end = std::chrono::high_resolution_clock::now();
         auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
         std::cout << "Time taken for generation: " << duration.count() / 1000000 << " second(s)" << std::endl;
@@ -97,14 +99,17 @@ namespace Raytracer {
         std::ofstream myfile(this->_output_file_name, std::ios::out | std::ios::binary);
         size_t index = 0;
         size_t pos = 0;
-        size_t divider = this->_settings->getWidth() / nb_threads / CLUSTERS;
+        size_t divider = this->_settings->getWidth() / nb_threads / this->_settings->getClusters();
         std::vector<std::vector<Vec3>> pixels;
 
-        for (size_t i = 0; i < nb_threads; i++)
+        for (size_t i = 0; i < nb_threads; i++) {
             pixels.push_back(_cameras[i].getPixels());
+        }
         for (int j = 0; j < this->_settings->getHeight(); j++) {
-            for (int i = 0; i < (this->_settings->getWidth() / CLUSTERS); i++) {
+            for (int i = 0; i < (this->_settings->getWidth() / this->_settings->getClusters()); i++) {
                 index = (i) / (divider);
+                if (index >= nb_threads)
+                    index = nb_threads - 1;
                 pos = (divider * j) + i - (index * divider);
                 char r = _cameras[index].getPixels()[pos].x > 255 ? 255 : _cameras[index].getPixels()[pos].x;
                 char g = _cameras[index].getPixels()[pos].y > 255 ? 255 : _cameras[index].getPixels()[pos].y;

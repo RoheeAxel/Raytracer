@@ -10,18 +10,9 @@
 namespace Raytracer {
     SceneBuilder::SceneBuilder(Parser &parser) : _parser(parser) {}
 
-    std::shared_ptr<Scene> SceneBuilder::build()
-    {
-        auto scene = std::make_shared<Scene>();
-
-        for (auto &shape : _parser.parsePrimitives())
-            scene->addShape(shape);
-
-        for (auto &light : _parser.parseLights())
-            scene->addLight(light);
-
-        if (_parser._cfg.exists("scenes")) {
-            libconfig::Setting &scenesGroup = _parser._cfg.lookup("scenes");
+    void SceneBuilder::sceneInScene(std::shared_ptr<Scene> scene, Parser &parser) {
+        if (parser._cfg.exists("scenes")) {
+            libconfig::Setting &scenesGroup = parser._cfg.lookup("scenes");
             for (int i = 0; i < scenesGroup.getLength(); i++) {
                 std::string name = scenesGroup[i];
                 try {
@@ -32,12 +23,25 @@ namespace Raytracer {
 
                     for (auto &light : tmp.parseLights())
                         scene->addLight(light);
+                    sceneInScene(scene, tmp);
                 } catch (Exception &e) {
                     std::cerr << "Invalid scene " << name << ": " << e.what() << std::endl;
                 }
             }
         }
+    }
 
+    std::shared_ptr<Scene> SceneBuilder::build()
+    {
+        auto scene = std::make_shared<Scene>();
+
+        for (auto &shape : _parser.parsePrimitives())
+            scene->addShape(shape);
+
+        for (auto &light : _parser.parseLights())
+            scene->addLight(light);
+
+        sceneInScene(scene, _parser);
         return scene;
     }
 } // Raytracer

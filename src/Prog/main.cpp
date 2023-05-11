@@ -24,24 +24,16 @@ int create_client(char **av)
     std::vector<std::string> ips;
     std::vector<int> ports;
 
-    inFile.open(av[3]);
-    if (!inFile)
-        return 84;
-    while (getline(inFile, line)) {
-        ips.push_back(line.substr(0, line.find(":")));
-        ports.push_back(std::stoi(line.substr(line.find(":") + 1)));
-    }
-    inFile.close();
-    Raytracer::Client client(ips, ports, av[1]);
+    Raytracer::Client client(av[1]);
     client.run();
     return 0;
 }
 
 int main(int ac, char **av)
 {
-    if (ac == 3 && std::string(av[1]) == "server")
+    if (ac == 3 && std::string(av[1]) == "worker")
         return create_server(av);
-    if (ac == 4 && std::string(av[2]) == "client")
+    if (ac == 3 && std::string(av[2]) == "main")
         return create_client(av);
     if (ac != 2) {
         std::cerr << "Usage: ./raytracer [scene file]" << std::endl;

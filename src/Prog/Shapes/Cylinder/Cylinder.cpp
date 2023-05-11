@@ -17,65 +17,50 @@ namespace Raytracer {
         this->_position = ParsingUtils::getVec3(options, "position");
         this->_direction = ParsingUtils::getVec3(options, "direction");
         this->_radius = ParsingUtils::getDouble(options, "radius");
+        this->_rotation = ParsingUtils::getVec3(options, "rotation");
     }
 
     HitRecord Raytracer::Cylinder::intersection(Ray r) {
-    //     HitRecord hitRecord;d
-    //     hitRecord.hit = false;
-    //    // transform the ray into the local space of the cylinder
-    //     Vec3 local_origin = r.getOrigin() - _position;
-    //     Vec3 local_direction = r.getDirection();
+        HitRecord hitRecord;
+        hitRecord.hit = false;
 
-    //     // rotate the ray direction and origin
-    //     Quaternion q = Quaternion::fromTwoVectors(Vec3(0, 1, 0), _direction);
-    //     local_origin = q * local_origin;
-    //     local_direction = q * local_direction;
+        Vec3 newPos = _position * -1;
+        Quaternion q(_rotation);
+        Vec3 newDir = q.rotate(r.getDirection(), _position);
+        
+        float a = newDir.x * newDir.x + newDir.z * newDir.z;
+        float b = 2.0 * (newPos.x * newDir.x + newPos.z * newDir.z);
+        float c = newPos.x * newPos.x + newPos.z * newPos.z - _radius * _radius;
+        float discriminant = b * b - 4.0 * a * c;
 
-    //     float a = local_direction.x * local_direction.x + local_direction.z * local_direction.z;
-    //     float b = 2.0f * (local_origin.x * local_direction.x + local_origin.z * local_direction.z);
-    //     float c = local_origin.x * local_origin.x + local_origin.z * local_origin.z - _radius * _radius;
-    //     float discriminant = b * b - 4.0f * a * c;
 
-    //     if (discriminant < 0.0f) {
-    //         return false;
-    //     }
+        if (discriminant < 0.0) return hitRecord;
 
-    //     float sqrt_d = sqrt(discriminant);
-    //     double t1 = (-b - sqrt_d) / (2.0f * a);
-    //     double t2 = (-b + sqrt_d) / (2.0f * a);
+        float sqrt_d = sqrt(discriminant);
+        hitRecord.hit = true;
+        double t1 = (-b - sqrt_d) / (2.0*a);
+        double t2 = (-b + sqrt_d) / (2.0*a);
+        if (t1 < 0 && t2 < 0) {
+            hitRecord.hit = false;
+            return hitRecord;
+        }
+        if (t1 < 0)
+            hitRecord.distance = t2;
+        else if (t2 < 0)
+            hitRecord.distance = t1;
+        else
+            hitRecord.distance = t1 < t2 ? t1 : t2;
 
-    //     if (t1 < t_min && t2 < t_min) {
-    //         return false;
-    //     }
-
-    //     double hit_t;
-    //     Vec3 hit_point;
-    //     Vec3 hit_normal;
-
-    //     if (t1 >= t_min && t1 <= t_max) {
-    //         hit_t = t1;
-    //         hit_point = local_origin + hit_t * local_direction;
-    //         hit_normal = Vec3(hit_point.x, 0.0f, hit_point.z).normalize();
-    //     } else if (t2 >= t_min && t2 <= t_max) {
-    //         hit_t = t2;
-    //         hit_point = local_origin + hit_t * local_direction;
-    //         hit_normal = Vec3(hit_point.x, 0.0f, hit_point.z).normalize();
-    //     } else {
-    //         return false;
-    //     }
-
-    //     // rotate the hit point and normal back to world space
-    //     hit_point = q.conjugate() * hit_point + _position;
-    //     hit_normal = q.conjugate() * hit_normal;
-
-    //     // set the hit record
-    //     hitRecord.hit = true;
-    //     hitRecord.distance = hit_t;
-    //     hitRecord.point = hit_point;
-    //     hitRecord.normal = hit_normal;
-    //     hitRecord.material = _material;
-
-    //     return true;
+        hitRecord.point = r.getOrigin() + newDir * hitRecord.distance;
+        hitRecord.distance = (hitRecord.point - r.getOrigin()).Length();
+        hitRecord.material = this->getMaterial();
+        Vec3 c_to_p = hitRecord.point - _position;
+        Vec3 u = _direction.Cross(c_to_p.Cross(_direction));
+        Vec3 out_normal = (c_to_p - u) / _radius;
+        hitRecord.set_face_normal(r, out_normal);
+        hitRecord.normal = out_normal;
+        hitRecord.uv = this->getUV(out_normal);
+        return hitRecord;
     }
 
     AABB Cylinder::getAABB() {

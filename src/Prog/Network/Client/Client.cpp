@@ -71,6 +71,9 @@ namespace Raytracer {
             else
                 throw NetworkException::SendFailedException("Scene");
         }
+        Raytracer raytracer(_filename);
+        raytracer._cam_pos = std::pair<float, float>(value, value + (divider / CLUSTERS));
+        value = value + (divider / CLUSTERS);
         for (size_t i = 0; i < CLUSTERS - 1; i++) {
             std::string cam_str = std::to_string(value) + " " +std::to_string(value + (divider / CLUSTERS));
             send(i, cam_str);
@@ -80,8 +83,6 @@ namespace Raytracer {
                 throw NetworkException::SendFailedException("Camera position");
             value = value + (divider / CLUSTERS);
         }
-        Raytracer raytracer(_filename);
-        raytracer._cam_pos = std::pair<float, float>(-1, 0);
         raytracer.render();
         for (size_t i = 0; i < CLUSTERS - 1; i++) {
             test = receive(i);

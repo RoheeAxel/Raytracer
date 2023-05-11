@@ -13,6 +13,7 @@ include_directories(${CMAKE_SOURCE_DIR}/src/Graphics/ImagePpm)
 include_directories(${CMAKE_SOURCE_DIR}/src/Graphics/Input)
 include_directories(${CMAKE_SOURCE_DIR}/src/Graphics/MainWindow)
 include_directories(${CMAKE_SOURCE_DIR}/src/Graphics/ThreadWindow)
+include_directories(${CMAKE_SOURCE_DIR}/src/Graphics/Download)
 
 include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Camera)
 include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Camera/Screen)

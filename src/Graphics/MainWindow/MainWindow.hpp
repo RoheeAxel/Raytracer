@@ -15,6 +15,7 @@
     #include "ImagePpm.hpp"
     #include "Input.hpp"
     #include "ClusterWindow.hpp"
+    #include "Download.hpp"
     #include "ThreadWindow.hpp"
 
 namespace Graphics {
@@ -24,6 +25,7 @@ namespace Graphics {
         ~MainWindow();
         void addButton(Button button);
         void run();
+        Graphics::ButtonType event(Graphics::ButtonType tmp);
         void fillPathPpm();
         void createThreadWindow();
         void createClusterWindow();
@@ -40,6 +42,7 @@ namespace Graphics {
         ClusterWindow _clusterWindow;
         Viewer::ImagePpm _imagePpm;
         ThreadWindow _threadWindow;
+        Download _downloadWindow;
     };
 }
 

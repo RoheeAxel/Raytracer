@@ -11,13 +11,14 @@
     #include <iostream>
     #include <SFML/Network.hpp>
     #include <string>
+    #include "ClientParser.hpp"
     #include "Network.hpp"
 
 namespace Raytracer
 {
     class Client : public Network {
         public:
-            Client(std::vector<std::string> ips, std::vector<int> ports, std::string filename);
+            Client(std::string filename);
             ~Client();
             void run();
 

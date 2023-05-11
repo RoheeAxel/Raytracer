@@ -29,6 +29,8 @@ Graphics::ButtonType Graphics::Button::handleClick(sf::Vector2f clickPos)
                 return ButtonType::LOAD;
             case ButtonType::PLAY:
                 return ButtonType::PLAY;
+            case ButtonType::DOWNLOAD:
+                return ButtonType::DOWNLOAD;
             default:
                 return ButtonType::NONE;
         }

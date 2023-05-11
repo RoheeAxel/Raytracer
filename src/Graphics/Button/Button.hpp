@@ -17,6 +17,7 @@ namespace Graphics {
         CLUSTER,
         LOAD,
         PLAY,
+        DOWNLOAD,
         NONE
     };
 

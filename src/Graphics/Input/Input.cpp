@@ -156,3 +156,9 @@ void Graphics::Input::setFocus(bool focus)
         }
     }
 }
+
+void Graphics::Input::setValue(std::string value)
+{
+    this->_inputText = value;
+    updateInputDisplay();
+}

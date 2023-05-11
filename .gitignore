@@ -9,6 +9,14 @@ viewer
 *.so
 *.ppm
 
+# Image
+*.png
+*.jpg
+*.jpeg
+*.bmp
+*.ppm
+*.tga
+
 # IDE
 .idea/
 .vscode/

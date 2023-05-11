@@ -18,6 +18,7 @@ namespace Raytracer {
             SceneBuilder(Parser &parser);
             ~SceneBuilder() = default;
 
+            void sceneInScene(std::shared_ptr<Scene> scene, Parser &parser);
             std::shared_ptr<Scene> build();
         private:
             Parser &_parser;

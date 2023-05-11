@@ -37,7 +37,7 @@ namespace Raytracer
                 return {0,0,0};
             }
         }
-        return {255,0,0};
+        return _color * _intensity;
     }
 
     Raytracer::Ray Raytracer::DirLight::getRayToLight([[maybe_unused]]Raytracer::Vec3 point) {

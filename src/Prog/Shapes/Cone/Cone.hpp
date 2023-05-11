@@ -30,6 +30,7 @@ namespace Raytracer {
             double _radius;
             Vec3 _direction;
             Vec3 _rotation;
+            double _angle;
     };
 }
 

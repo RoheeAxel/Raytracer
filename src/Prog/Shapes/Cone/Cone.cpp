@@ -22,50 +22,50 @@ Raytracer::Cone::Cone(const std::string &options)
     this->_direction = ParsingUtils::getVec3(options, "direction");
     this->_radius = ParsingUtils::getDouble(options, "radius");
     this->_rotation = ParsingUtils::getVec3(options, "rotation");
+    this->_angle = ParsingUtils::getDouble(options, "angle");
 }
 
-Raytracer::HitRecord Raytracer::Cone::intersection(Ray ray) {
+Raytracer::HitRecord Raytracer::Cone::intersection(Ray r) {
     HitRecord hitRecord;
-    Vec3 oc = ray.getOrigin() - _position;
-    double cos2_a = pow(cos(_radius), 2);
-    double sin2_a = 1 - cos2_a;
-    double a = pow(ray.getDirection().x, 2) * sin2_a + pow(ray.getDirection().y, 2) * sin2_a - pow(ray.getDirection().z, 2) * cos2_a;
-    double b = 2 * oc.x * sin2_a * ray.getDirection().x + 2 * oc.y * sin2_a * ray.getDirection().y - 2 * oc.z * cos2_a * ray.getDirection().z;
-    double c = pow(oc.x, 2) * sin2_a + pow(oc.y, 2) * sin2_a - pow(oc.z, 2) * cos2_a;
-    double discriminant = b * b - 4 * a * c;
-    double t1, t2;
+        hitRecord.hit = false;
 
-    if (discriminant < 0) {
-        hitRecord.hit = false;
+        Vec3 newPos = _position * -1;
+        Quaternion q(_rotation);
+        Vec3 newDir = q.rotate(r.getDirection(), _position);
+
+        float a = newDir.x * newDir.x + newDir.z * newDir.z - newDir.y * newDir.y * tan(_angle) * tan(_angle);
+        float b = 2.0 * (newPos.x * newDir.x + newPos.z * newDir.z - newPos.y * newDir.y * tan(_angle) * tan(_angle));
+        float c = newPos.x * newPos.x + newPos.z * newPos.z - newPos.y * newPos.y * tan(_angle) * tan(_angle);
+        float discriminant = b * b - 4.0 * a * c;
+
+
+        if (discriminant < 0.0) return hitRecord;
+
+        float sqrt_d = sqrt(discriminant);
+        hitRecord.hit = true;
+        double t1 = (-b - sqrt_d) / (2.0*a);
+        double t2 = (-b + sqrt_d) / (2.0*a);
+        if (t1 < 0 && t2 < 0) {
+            hitRecord.hit = false;
+            return hitRecord;
+        }
+        if (t1 < 0)
+            hitRecord.distance = t2;
+        else if (t2 < 0)
+            hitRecord.distance = t1;
+        else
+            hitRecord.distance = t1 < t2 ? t1 : t2;
+
+        hitRecord.point = r.getOrigin() + newDir * hitRecord.distance;
+        hitRecord.distance = (hitRecord.point - r.getOrigin()).Length();
+        hitRecord.material = this->getMaterial();
+        Vec3 c_to_p = hitRecord.point - _position;
+        Vec3 u = _direction.Cross(c_to_p.Cross(_direction));
+        Vec3 out_normal = (c_to_p - u) / _radius;
+        hitRecord.set_face_normal(r, out_normal);
+        hitRecord.normal = out_normal;
+        hitRecord.uv = this->getUV(out_normal);
         return hitRecord;
-    }
-    t1 = (-b - sqrt(discriminant)) / (2 * a);
-    t2 = (-b + sqrt(discriminant)) / (2 * a);
-    if (t1 < 0 && t2 < 0) {
-        hitRecord.hit = false;
-        return hitRecord;
-    }
-    double t = t1 < t2 ? t1 : t2;
-    Vec3 point = ray.getOrigin() + ray.getDirection() * t;
-    if (point.z < _position.z) {
-        double tz = (_position.z - ray.getOrigin().z) / ray.getDirection().z;
-        Vec3 pointz = ray.getOrigin() + ray.getDirection() * tz;
-        double dx = point.x - pointz.x;
-        double dy = point.y - pointz.y;
-        double dz = point.z - pointz.z;
-        double d = sqrt(dx*dx + dy*dy + dz*dz);
-        double cos_a = sqrt(1 - sin2_a);
-        double h = d / cos_a;
-        point = ray.getOrigin() + ray.getDirection() * (tz + h / ray.getDirection().Length());
-    }
-    hitRecord.hit = true;
-    hitRecord.distance = (point - ray.getOrigin()).Length();
-    hitRecord.point = point;
-    hitRecord.material = this->getMaterial();
-    Vec3 out_normal = Vec3(point.x - _position.x, point.y - _position.y, _radius / cos(_radius));
-    hitRecord.set_face_normal(ray, out_normal);
-    hitRecord.uv = this->getUV(point);
-    return hitRecord;
 }
 
 Raytracer::AABB Raytracer::Cone::getAABB()

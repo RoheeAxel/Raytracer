@@ -33,7 +33,6 @@ namespace Raytracer {
         float c = newPos.x * newPos.x + newPos.z * newPos.z - _radius * _radius;
         float discriminant = b * b - 4.0 * a * c;
 
-
         if (discriminant < 0.0) return hitRecord;
 
         float sqrt_d = sqrt(discriminant);

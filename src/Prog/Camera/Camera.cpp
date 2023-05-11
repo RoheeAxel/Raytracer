@@ -20,12 +20,11 @@ namespace Raytracer {
         Vec3 screenBot = screen.getBotRight();
         Vec3 screenTop = screen.getTopLeft();
 
-        std::cout << "Rotation" << _position.x << " " << _position.y << " " << _position.z << std::endl;
-        Quaternion q(_rotation);
-        std::cout << "First : " <<  screen.getTopLeft().x << " " << screen.getTopLeft().y << " " << screen.getTopLeft().z << std::endl;
-        screen.setBotRight(q.rotate(screenBot, _position));
-        screen.setTopLeft(q.rotate(screenTop, _position));
-        std::cout << "Second : " <<  screen.getTopLeft().x << " " << screen.getTopLeft().y << " " << screen.getTopLeft().z << std::endl << std::endl;
+        // Quaternion q(_rotation);
+
+        // screen.setBotRight(q.rotate(screenBot, _position));
+        // screen.setTopLeft(q.rotate(screenTop, _position));
+
 
 
         _screen = screen;
@@ -58,6 +57,8 @@ namespace Raytracer {
                 _screen.getTopLeft().y + (j + _rand.rand(0, RAND_MAX) / (RAND_MAX + 1.0)) * screenDiagonal.y / _screen.getResolution().second,
                 _screen.getTopLeft().z
             );
+            Quaternion q(_rotation);
+            dir = q.rotate(dir, _position);
             Ray ray(_position, dir);
             Vec3 color = scene.throwRay(ray, 0);
             finalColor += color;

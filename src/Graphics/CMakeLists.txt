@@ -13,6 +13,7 @@ include_directories(${CMAKE_SOURCE_DIR}/src/Graphics/ImagePpm)
 include_directories(${CMAKE_SOURCE_DIR}/src/Graphics/Input)
 include_directories(${CMAKE_SOURCE_DIR}/src/Graphics/MainWindow)
 include_directories(${CMAKE_SOURCE_DIR}/src/Graphics/ThreadWindow)
+include_directories(${CMAKE_SOURCE_DIR}/src/Graphics/Download)
 
 include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Camera)
 include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Camera/Screen)
@@ -66,19 +67,6 @@ include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Utils)
 include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Settings)
 
 include_directories(${CMAKE_SOURCE_DIR}/src/Graphics/Raytracer)
-
-# Find and install Zenity package
-if(UNIX)
-    if(EXISTS "/etc/lsb-release")
-        execute_process(COMMAND grep "DISTRIB_ID" "/etc/lsb-release" OUTPUT_VARIABLE LSB_RELEASE_ID)
-        string(REGEX REPLACE "DISTRIB_ID=([^\n]+)\n" "\\1" LSB_RELEASE_ID "${LSB_RELEASE_ID}")
-        if("${LSB_RELEASE_ID}" STREQUAL "Ubuntu")
-            execute_process(COMMAND apt-get install zenity)
-        elseif(EXISTS "/etc/fedora-release")
-            execute_process(COMMAND dnf install zenity)
-        endif()
-    endif()
-endif()
 
 file(GLOB_RECURSE SOURCES "${CMAKE_SOURCE_DIR}/src/Graphics/*.cpp"
     "${CMAKE_SOURCE_DIR}/src/Prog/Camera/*.cpp"

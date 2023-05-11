@@ -9,6 +9,7 @@ add_library(reflective SHARED
         src/Reflective.cpp
         ${PROJECT_SOURCE_DIR}/src/Prog/Utils/Vec3.cpp
         ${PROJECT_SOURCE_DIR}/src/Prog/Utils/ParsingUtils.cpp
+        ${PROJECT_SOURCE_DIR}/src/Prog/Utils/CustomRandom.cpp
         )
 
 set_target_properties(reflective PROPERTIES PREFIX "")

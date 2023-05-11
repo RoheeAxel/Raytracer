@@ -11,7 +11,8 @@
 Graphics::MainWindow::MainWindow(sf::Vector2f size, std::string title)
     : _window(sf::VideoMode(size.x, size.y), title), _buttons(), _imageSprite(), _size(size),
     _font(), _clusterWindow(sf::Vector2f((1920 / 2) - (400 / 2), (1080 / 2) - 150), sf::Vector2f(400, 270), this->_font),
-    _imagePpm(), _threadWindow(sf::Vector2f((1920 / 2) - (400 / 2), (1080 / 2) - 150), sf::Vector2f(400, 150), this->_font)
+    _imagePpm(), _threadWindow(sf::Vector2f((1920 / 2) - (400 / 2), (1080 / 2) - 150), sf::Vector2f(400, 150), this->_font),
+    _downloadWindow(sf::Vector2f((1920 / 2) - (400 / 2), (1080 / 2) - 150), sf::Vector2f(400, 225), this->_font)
 {
     this->_imageSprite.setPosition(0, 50);
     this->_window.setFramerateLimit(60);
@@ -21,7 +22,7 @@ Graphics::MainWindow::MainWindow(sf::Vector2f size, std::string title)
     this->_font.loadFromFile("assets/font.ttf");
     this->_clusterWindow.setFont(this->_font);
     this->_threadWindow.setFont(this->_font);
-
+    this->_downloadWindow.setFont(this->_font);
 }
 
 Graphics::MainWindow::~MainWindow()
@@ -39,46 +40,7 @@ void Graphics::MainWindow::run()
 
     this->_rectangle.setSize(sf::Vector2f(this->_size.x, this->_buttons[0].getSprite().getGlobalBounds().height + 10));
     while (this->_window.isOpen()) {
-        sf::Event event;
-        while (this->_window.pollEvent(event)) {
-            if (event.type == sf::Event::Closed)
-                this->_window.close();
-            if (this->_clusterWindow.getInputClose() == true || this->_threadWindow.getInputClose() == true) {
-                tmp = ButtonType::NONE;
-                this->_clusterWindow.setInputClose(false);
-                this->_threadWindow.setInputClose(false);
-            } if (tmp == ButtonType::CLUSTER && this->_clusterWindow.getInputClose() == false)
-                this->_clusterWindow.handleEvent(event);
-            else if (tmp == ButtonType::THREAD && this->_threadWindow.getInputClose() == false)
-                this->_threadWindow.handleEvent(event);
-            else if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
-                for (Button& button : this->_buttons) {
-                    tmp = button.handleClick(sf::Vector2f(event.mouseButton.x, event.mouseButton.y));
-                    if (tmp == ButtonType::LOAD) {
-                        try {
-                            std::system("zenity --file-selection --file-filter=*.ppm > path.txt");
-                            this->fillPathPpm();
-                            std::system("rm path.txt");
-                            this->_imagePpm.run(this->_path, this->_window, this->_threadWindow.getValue());
-                            tmp = ButtonType::NONE;
-                        } catch (const std::exception& e) {
-                            std::cerr << e.what() << std::endl;
-                        }
-                    } else if (tmp == ButtonType::PLAY) {
-                        try {
-                            std::system("zenity --file-selection --file-filter=*.cfg > path.txt");
-                            this->fillPathPpm();
-                            std::system("rm path.txt");
-                            this->_imagePpm.configureRaytracer(this->_window, this->_path, this->_threadWindow.getValue());
-                            tmp = ButtonType::NONE;
-                        } catch (const std::exception& e) {
-                            std::cerr << e.what() << std::endl;
-                        }
-                    } else if (tmp != ButtonType::NONE)
-                        break;
-                }
-            }
-        }
+        tmp = this->event(tmp);
         this->_window.clear(sf::Color(152, 152, 152));
         this->_window.draw(this->_rectangle);
         for (Button& button : this->_buttons)
@@ -88,8 +50,67 @@ void Graphics::MainWindow::run()
             this->_clusterWindow.draw(this->_window, sf::BlendAlpha);
         if (tmp == ButtonType::THREAD)
             this->_threadWindow.draw(this->_window, sf::BlendAlpha);
+        if (tmp == ButtonType::DOWNLOAD)
+            this->_downloadWindow.draw(this->_window, sf::BlendAlpha);
         this->_window.display();
     }
+}
+
+Graphics::ButtonType Graphics::MainWindow::event(Graphics::ButtonType tmp)
+{
+    sf::Event event;
+    bool isPressed = false;
+
+    while (this->_window.pollEvent(event)) {
+        if (event.type == sf::Event::Closed)
+            this->_window.close();
+        if (this->_clusterWindow.getInputClose() == true || this->_threadWindow.getInputClose() == true || this->_downloadWindow.getInputClose() == true) {
+            tmp = ButtonType::NONE;
+            this->_clusterWindow.setInputClose(false);
+            this->_threadWindow.setInputClose(false);
+            this->_downloadWindow.setInputClose(false);
+        } if (tmp == ButtonType::CLUSTER && this->_clusterWindow.getInputClose() == false)
+            this->_clusterWindow.handleEvent(event);
+        else if (tmp == ButtonType::THREAD && this->_threadWindow.getInputClose() == false)
+            this->_threadWindow.handleEvent(event);
+        else if (tmp == ButtonType::DOWNLOAD && this->_downloadWindow.getInputClose() == false) {
+            isPressed = this->_downloadWindow.handleEvent(event);
+            if (isPressed == true) {
+                this->_imagePpm.downloadImage(this->_downloadWindow.getValue(), this->_downloadWindow.getExtension());
+                this->_downloadWindow.reset();
+                tmp = ButtonType::NONE;
+                isPressed = false;
+            }
+        }
+        else if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
+            for (Button& button : this->_buttons) {
+                tmp = button.handleClick(sf::Vector2f(event.mouseButton.x, event.mouseButton.y));
+                if (tmp == ButtonType::LOAD) {
+                    try {
+                        std::system("zenity --file-selection --file-filter=*.ppm > path.txt");
+                        this->fillPathPpm();
+                        std::system("rm path.txt");
+                        this->_imagePpm.run(this->_path, this->_window, this->_threadWindow.getValue());
+                        tmp = ButtonType::NONE;
+                    } catch (const std::exception& e) {
+                        std::cerr << e.what() << std::endl;
+                    }
+                } else if (tmp == ButtonType::PLAY) {
+                    try {
+                        std::system("zenity --file-selection --file-filter=*.cfg > path.txt");
+                        this->fillPathPpm();
+                        std::system("rm path.txt");
+                        this->_imagePpm.configureRaytracer(this->_window, this->_path, this->_threadWindow.getValue());
+                        tmp = ButtonType::NONE;
+                    } catch (const std::exception& e) {
+                        std::cerr << e.what() << std::endl;
+                    }
+                } else if (tmp != ButtonType::NONE)
+                    break;
+            }
+        }
+    }
+    return tmp;
 }
 
 void Graphics::MainWindow::fillPathPpm()

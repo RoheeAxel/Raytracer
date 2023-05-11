@@ -27,6 +27,7 @@ namespace Graphics {
             sf::Vector2f getSize() const;
             bool hasFocus() const;
             void setFocus(bool focus);
+            void setValue(std::string value);
 
         private:
             sf::RectangleShape _rect;

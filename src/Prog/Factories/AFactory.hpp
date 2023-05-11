@@ -37,7 +37,10 @@ namespace Raytracer {
                 std::string path = "./plugins/" + _dirName + "/" + name + EXTENSION;
 
                 loader.loadLib(path, "create", options);
-                return std::shared_ptr<T>(loader.get());
+                std::shared_ptr<T> t(loader.get(), [&]([[maybe_unused]] T *ptr) {
+                    loader.closeLib();
+                });
+                return t;
             }
 
             virtual std::shared_ptr<T> getFromBuiltin([[maybe_unused]]const std::string &name, [[maybe_unused]]const std::string &options)

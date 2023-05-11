@@ -31,7 +31,7 @@ namespace Raytracer {
         std::string value = str.substr(optionPos + option.size() + 1, nextCommaPos - optionPos - option.size() - 1);
         try {
             return {value};
-        } catch (std::invalid_argument &e) {
+        } catch (Exception &e) {
             throw Exception("ParsingUtils::getOption: vec3 for " + option + " cannot be converted from string\nDebug: " + str);
         }
     }

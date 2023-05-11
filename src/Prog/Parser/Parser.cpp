@@ -153,6 +153,11 @@ namespace Raytracer {
         } else {
             settings->setRotation(Vec3(0));
         }
+        if (cameraGroup.exists("fov")) {
+            settings->setFov(cameraGroup.lookup("fov"));
+        } else {
+            settings->setFov(90);
+        }
         return settings;
     }
 

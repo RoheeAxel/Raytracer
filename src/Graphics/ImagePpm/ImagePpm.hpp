@@ -22,6 +22,7 @@ namespace Viewer {
         void run(const std::string filename, sf::RenderWindow &window, std::string nbThreads);
         void configureRaytracer(sf::RenderWindow &window, std::string file, std::string nbThread);
         void draw(sf::RenderWindow &window, std::string path);
+        void downloadImage(std::string nameFile, std::string extension);
 
     private:
         int _width;

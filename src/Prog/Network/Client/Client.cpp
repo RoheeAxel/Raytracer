@@ -14,9 +14,20 @@
 
 namespace Raytracer {
 
-    Client::Client(std::vector<std::string> ips, std::vector<int> ports, std::string filename)
+    Client::Client(std::string filename)
     {
-        if (ips.size() != ports.size())
+        std::vector<std::string> ips;
+        std::vector<int> ports;
+        try {
+            ClientParser parser;
+            ips = parser.getIps();
+            ports = parser.getPorts();
+        } catch (Config::FileNotFoundException &e) {
+            std::cerr << "File cluster.cfg not found ! Failed to load cluster." << std::endl;
+            throw NetworkException::InvalidClusterException();
+        }
+
+        if (ips.size() != ports.size() || ips.empty() || ports.empty())
             throw NetworkException::InvalidClusterException();
         for (size_t i = 0; i < ips.size(); i++) {
             this->newSocket();

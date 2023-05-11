@@ -16,7 +16,7 @@
 #include "Sphere.hpp"
 #include "Triangle.hpp"
 #include "OBJ.hpp"
-// #include "Cylinder.hpp"
+#include "Cylinder.hpp"
 #include "Quad.hpp"
 
 namespace Raytracer {

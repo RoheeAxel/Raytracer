@@ -21,6 +21,7 @@ namespace Raytracer {
             void setHeight(int height) { _height = height; };
             void setPosition(Vec3 position) { _position = position; };
             void setRotation(Vec3 rotation) { _rotation = rotation; };
+            void setFov(int fov) { _fov = fov; };
             void setThreads(int threads) { _threads = threads; };
             void setSamples(int samples) { _samples = samples; };
             void setClusters(int clusters) { _clusters = clusters; };
@@ -29,6 +30,7 @@ namespace Raytracer {
             int getHeight() const { return _height; };
             Vec3 getPosition() const { return _position; };
             Vec3 getRotation() const { return _rotation; };
+            int getFov() const { return _fov; };
             int getThreads() const { return _threads; };
             int getSamples() const { return _samples; };
             int getClusters() const { return _clusters; };
@@ -37,6 +39,7 @@ namespace Raytracer {
             int _height;
             Vec3 _position;
             Vec3 _rotation;
+            int _fov;
 
             int _threads;
             int _samples;

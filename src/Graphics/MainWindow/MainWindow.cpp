@@ -55,17 +55,25 @@ void Graphics::MainWindow::run()
                 for (Button& button : this->_buttons) {
                     tmp = button.handleClick(sf::Vector2f(event.mouseButton.x, event.mouseButton.y));
                     if (tmp == ButtonType::LOAD) {
-                        std::system("zenity --file-selection > path.txt");
-                        this->fillPathPpm();
-                        std::system("rm path.txt");
-                        this->_imagePpm.run(this->_path, this->_window, this->_threadWindow.getValue());
-                        tmp = ButtonType::NONE;
+                        try {
+                            std::system("zenity --file-selection --file-filter=*.ppm > path.txt");
+                            this->fillPathPpm();
+                            std::system("rm path.txt");
+                            this->_imagePpm.run(this->_path, this->_window, this->_threadWindow.getValue());
+                            tmp = ButtonType::NONE;
+                        } catch (const std::exception& e) {
+                            std::cerr << e.what() << std::endl;
+                        }
                     } else if (tmp == ButtonType::PLAY) {
-                        std::system("zenity --file-selection > path.txt");
-                        this->fillPathPpm();
-                        std::system("rm path.txt");
-                        this->_imagePpm.configureRaytracer(this->_window, this->_path, this->_threadWindow.getValue());
-                        tmp = ButtonType::NONE;
+                        try {
+                            std::system("zenity --file-selection --file-filter=*.cfg > path.txt");
+                            this->fillPathPpm();
+                            std::system("rm path.txt");
+                            this->_imagePpm.configureRaytracer(this->_window, this->_path, this->_threadWindow.getValue());
+                            tmp = ButtonType::NONE;
+                        } catch (const std::exception& e) {
+                            std::cerr << e.what() << std::endl;
+                        }
                     } else if (tmp != ButtonType::NONE)
                         break;
                 }

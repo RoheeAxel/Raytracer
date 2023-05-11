@@ -30,7 +30,6 @@ namespace Raytracer {
         } catch (libconfig::ParseException &e) {
             throw Exception("Parsing error: " + std::string(e.what()));
         }
-
         size_t pos = file_path.find(".");
         if (pos != std::string::npos)
             this->_output_file_name = file_path.substr(0, pos);
@@ -105,6 +104,8 @@ namespace Raytracer {
         for (int j = 0; j < this->_settings->getHeight(); j++) {
             for (int i = 0; i < (this->_settings->getWidth() / CLUSTERS); i++) {
                 index = (i) / (divider);
+                if (index >= nb_threads)
+                    index = nb_threads - 1;
                 pos = (divider * j) + i - (index * divider);
                 char r = _cameras[index].getPixels()[pos].x > 255 ? 255 : _cameras[index].getPixels()[pos].x;
                 char g = _cameras[index].getPixels()[pos].y > 255 ? 255 : _cameras[index].getPixels()[pos].y;

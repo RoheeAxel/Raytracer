@@ -9,6 +9,8 @@
 
 Viewer::ImagePpm::ImagePpm()
 {
+    this->_image.create(0, 0);
+    // this->_raytracer = Raytracer::Raytracer();
 }
 
 Viewer::ImagePpm::~ImagePpm()
@@ -17,6 +19,7 @@ Viewer::ImagePpm::~ImagePpm()
 
 void Viewer::ImagePpm::run(const std::string filename, sf::RenderWindow &window, std::string nbThreads)
 {
+    std::cout << "START" << std::endl;
     std::ifstream file(filename, std::ios::binary);
     std::string format;
     int maxColor;
@@ -29,6 +32,7 @@ void Viewer::ImagePpm::run(const std::string filename, sf::RenderWindow &window,
     file >> this->_width >> this->_height >> maxColor;
     file.get();
     this->_image.create(this->_width, this->_height);
+    std::cout << "Creating image..." << std::endl;
     std::vector<sf::Color> pixelData(this->_width * this->_height);
     for (int i = 0; i < this->_height; i++) {
         for (int j = 0; j < this->_width; j++) {
@@ -44,10 +48,12 @@ void Viewer::ImagePpm::run(const std::string filename, sf::RenderWindow &window,
             this->_image.setPixel(j, i, pixelData[i * this->_width + j]);
     this->_texture.loadFromImage(this->_image);
     this->_sprite.setTexture(this->_texture);
+    std::cout << "END" << std::endl;
 }
 
 void Viewer::ImagePpm::configureRaytracer(sf::RenderWindow &window, std::string file, std::string nbThreads)
 {
+    this->_raytracer.~Raytracer();
     this->_raytracer.run(file);
     this->_raytracer.render(nbThreads);
     this->run(this->_raytracer.getOutpoutFilename(), window, nbThreads);

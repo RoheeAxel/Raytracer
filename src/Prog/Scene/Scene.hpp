@@ -21,14 +21,17 @@ namespace Raytracer {
 
             void addLight(std::shared_ptr<ILight> light);
             void addShape(std::shared_ptr<IShape> shape);
+            void setMaxDepth(int max_depth);
 
             std::vector<std::shared_ptr<ILight>> &getLights();
             std::vector<std::shared_ptr<IShape>> &getShapes();
+            int getMaxDepth() const;
 
             Vec3 throwRay(Ray ray, int depth);
         private:
             std::vector<std::shared_ptr<ILight>> _lights;
             std::vector<std::shared_ptr<IShape>> _shapes;
+            int _max_depth;
     };
 }
 

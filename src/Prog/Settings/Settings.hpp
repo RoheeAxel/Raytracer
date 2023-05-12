@@ -24,6 +24,7 @@ namespace Raytracer {
             void setFov(int fov) { _fov = fov; };
             void setThreads(int threads) { _threads = threads; };
             void setSamples(int samples) { _samples = samples; };
+            void setMaxDepth(int max_depth) { _max_depth = max_depth; };
             void setClusters(int clusters) { _clusters = clusters; };
 
             int getWidth() const { return _width; };
@@ -33,6 +34,7 @@ namespace Raytracer {
             int getFov() const { return _fov; };
             int getThreads() const { return _threads; };
             int getSamples() const { return _samples; };
+            int getMaxDepth() const { return _max_depth; };
             int getClusters() const { return _clusters; };
         private:
             int _width;
@@ -43,6 +45,7 @@ namespace Raytracer {
 
             int _threads;
             int _samples;
+            int _max_depth;
             int _clusters;
     };
 

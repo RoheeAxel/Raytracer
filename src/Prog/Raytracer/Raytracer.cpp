@@ -19,10 +19,12 @@ namespace Raytracer {
         CustomRandom::seed();
         try {
             Parser parser(file_path);
-            SceneBuilder builder(parser);
-            this->_scene = builder.build();
             this->_settings = parser.parseSettings();
             this->_settings->setClusters(ClientParser::getNbClusters());
+
+            SceneBuilder builder(parser);
+            builder.setMaxDepth(this->_settings->getMaxDepth());
+            this->_scene = builder.build();
         } catch (libconfig::ParseException &e) {
             throw Exception("Parsing error: " + std::string(e.what()));
         }

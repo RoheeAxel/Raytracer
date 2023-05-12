@@ -6,8 +6,6 @@
 */
 
 #include "Scene.hpp"
-#include <iostream>
-#include <cmath>
 
 namespace Raytracer {
 
@@ -27,7 +25,7 @@ namespace Raytracer {
                     hit.light = light->illuminate(hit.point, *this);
                     Ray light_dir = light->getRayToLight(hit.point);
                     current_color = hit.material->getColorAt(hit, light_dir, hit.light);
-                    if (depth < 8) {
+                    if (depth < this->getMaxDepth()) {
                         Ray new_ray = Ray(hit.point, hit.material->getNewRay(hit, ray.getDirection()));
                         if (new_ray.getDirection() != Vec3(0, 0, 0)) {
                             current_color = (current_color / 255) * throwRay(new_ray, depth + 1);
@@ -51,12 +49,20 @@ namespace Raytracer {
         this->_shapes.push_back(shape);
     }
 
+    void Scene::setMaxDepth(int max_depth) {
+        this->_max_depth = max_depth;
+    }
+
     std::vector<std::shared_ptr<ILight>> &Scene::getLights() {
         return this->_lights;
     }
 
     std::vector<std::shared_ptr<IShape>> &Scene::getShapes() {
         return this->_shapes;
+    }
+
+    int Scene::getMaxDepth() const {
+        return this->_max_depth;
     }
 
 }

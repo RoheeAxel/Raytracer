@@ -132,6 +132,12 @@ namespace Raytracer {
             settings->setSamples(10);
         }
 
+        if (settingsGroup.exists("max_depth")) {
+            settings->setMaxDepth(settingsGroup.lookup("max_depth"));
+        } else {
+            settings->setMaxDepth(8);
+        }
+
         if (!this->_cfg.exists("camera"))
             throw Config::MissingGroupException("camera");
 

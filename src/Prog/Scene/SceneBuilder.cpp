@@ -41,6 +41,8 @@ namespace Raytracer {
         for (auto &light : _parser.parseLights())
             scene->addLight(light);
 
+        scene->setMaxDepth(_max_depth);
+
         sceneInScene(scene, _parser);
         return scene;
     }

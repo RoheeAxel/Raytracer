@@ -12,8 +12,13 @@
 
 int create_server(char **av)
 {
-    Raytracer::Server server(av[1], std::stoi(av[2]));
-    server.run();
+    try {
+        Raytracer::Server server(av[1], std::stoi(av[2]));
+        server.run();
+    } catch (Raytracer::Exception &e) {
+        std::cerr << "Unexcepted error! " << e.what() << std::endl;
+        return 84;
+    }
     return 0;
 }
 
@@ -24,8 +29,13 @@ int create_client(char **av)
     std::vector<std::string> ips;
     std::vector<int> ports;
 
-    Raytracer::Client client(av[1]);
-    client.run();
+    try {
+        Raytracer::Client client(av[1]);
+        client.run();
+    } catch (Raytracer::Exception &e) {
+        std::cerr << "Unexcepted error! " << e.what() << std::endl;
+        return 84;
+    }
     return 0;
 }
 

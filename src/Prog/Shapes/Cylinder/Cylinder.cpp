@@ -27,7 +27,7 @@ namespace Raytracer {
         Vec3 newPos = _position * -1;
         Quaternion q(_rotation);
         Vec3 newDir = q.rotate(r.getDirection(), _position);
-        
+
         float a = newDir.x * newDir.x + newDir.z * newDir.z;
         float b = 2.0 * (newPos.x * newDir.x + newPos.z * newDir.z);
         float c = newPos.x * newPos.x + newPos.z * newPos.z - _radius * _radius;
@@ -50,12 +50,11 @@ namespace Raytracer {
         else
             hitRecord.distance = t1 < t2 ? t1 : t2;
 
-        hitRecord.point = r.getOrigin() + newDir * hitRecord.distance;
-        hitRecord.distance = (hitRecord.point - r.getOrigin()).Length();
+        hitRecord.point = r.getOrigin() + r.getDirection() * hitRecord.distance;
         hitRecord.material = this->getMaterial();
         Vec3 c_to_p = hitRecord.point - _position;
         Vec3 u = _direction.Cross(c_to_p.Cross(_direction));
-        Vec3 out_normal = (c_to_p - u) / _radius;
+        Vec3 out_normal = (c_to_p) / _radius;
         hitRecord.set_face_normal(r, out_normal);
         hitRecord.normal = out_normal;
         hitRecord.uv = this->getUV(out_normal);

@@ -39,6 +39,8 @@ namespace Raytracer {
             std::vector<Vec3> _pixels;
             size_t _id;
             CustomRandom _rand;
+            double _longueur;
+            double _angle;
     };
 }
 

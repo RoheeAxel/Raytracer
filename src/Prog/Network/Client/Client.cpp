@@ -25,6 +25,9 @@ namespace Raytracer {
         } catch (Config::FileNotFoundException &e) {
             std::cerr << "File cluster.cfg not found ! Failed to load cluster." << std::endl;
             throw NetworkException::InvalidClusterException();
+        } catch (libconfig::ParseException &e) {
+            std::cerr << "Parsing error: " << e.what() << std::endl;
+            throw NetworkException::InvalidClusterException();
         }
 
         if (ips.size() != ports.size() || ips.empty() || ports.empty())

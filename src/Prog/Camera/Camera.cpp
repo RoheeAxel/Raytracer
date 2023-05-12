@@ -16,20 +16,15 @@ namespace Raytracer {
         _position = position;
         _rotation = _rotation + rotation;
 
-
-        Vec3 screenBot = screen.getBotRight();
-        Vec3 screenTop = screen.getTopLeft();
-
-        // Quaternion q(_rotation);
-
-        // screen.setBotRight(q.rotate(screenBot, _position));
-        // screen.setTopLeft(q.rotate(screenTop, _position));
-
-
-
         _screen = screen;
         _id = id;
         _sample_per_pixel = sample_per_pixel;
+        _angle = 90;
+        double angle_rad = _angle * M_PI / 180;
+
+        _longueur = (1 / sin(angle_rad / 2) / (Vec3(-1,1,-1) - _position).Length());
+        std::cout << (screen.getTopLeft() - _position).Length() << std::endl;
+        std::cout << "Longueur: " << _longueur << std::endl;
     }
 
     void Camera::render(Scene &scene)
@@ -55,7 +50,7 @@ namespace Raytracer {
             Vec3 dir (
                 _screen.getTopLeft().x + (i + _rand.rand(0, RAND_MAX) / (RAND_MAX + 1.0)) * screenDiagonal.x / _screen.getResolution().first,
                 _screen.getTopLeft().y + (j + _rand.rand(0, RAND_MAX) / (RAND_MAX + 1.0)) * screenDiagonal.y / _screen.getResolution().second,
-                _screen.getTopLeft().z
+                _screen.getTopLeft().z * _longueur
             );
             Quaternion q(_rotation);
             dir = q.rotate(dir, _position);

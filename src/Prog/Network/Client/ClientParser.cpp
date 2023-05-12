@@ -8,10 +8,14 @@
 #include "ClientParser.hpp"
 
 namespace Raytracer {
-    int ClientParser::_nb_clusters = 1;
+    std::size_t ClientParser::_nb_clusters = 1;
 
-    int ClientParser::getNbClusters() {
+    std::size_t ClientParser::getNbClusters() {
         return _nb_clusters;
+    }
+
+    void ClientParser::setNbClusters(std::size_t nbClusters) {
+        _nb_clusters = nbClusters;
     }
 
     ClientParser::ClientParser() {

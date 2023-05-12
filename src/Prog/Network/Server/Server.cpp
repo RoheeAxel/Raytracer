@@ -8,6 +8,7 @@
 #include "Server.hpp"
 #include "Scene.hpp"
 #include <fstream>
+#include "ClientParser.hpp"
 #include "Client.hpp"
 #include "Raytracer.hpp"
 
@@ -40,10 +41,19 @@ namespace Raytracer {
         Network::send(0, "OK");
         cam_pos = Network::receive(0);
         Network::send(0, "OK");
+        try {
+            std::size_t nbClusters = std::stoul(Network::receive(0));
+            ClientParser::setNbClusters(nbClusters);
+        } catch (std::invalid_argument &e) {
+            throw NetworkException::InvalidClusterException();
+        }
+        Network::send(0, "OK");
         Raytracer raytracer("tmpscene.cfg");
+        raytracer.networkMode = NetworkType::SERVER;
         raytracer._cam_pos = std::pair<float, float>(std::stof(cam_pos.substr(0, cam_pos.find(" "))), std::stof(cam_pos.substr(cam_pos.find(" ") + 1)));
         raytracer.render();
         std::cout << "Image rendered with a size of " << raytracer._pixels.length() << std::endl;
+
         Network::send(0, raytracer._pixels);
         if (Network::receive(0) == "OK")
             std::cout << "Image sent successfully" << std::endl;

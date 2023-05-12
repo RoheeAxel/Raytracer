@@ -64,7 +64,7 @@ namespace Raytracer {
         }
         inFile.close();
         std::cout << "Scene loaded" << std::endl;
-        for (size_t i = 0; i < CLUSTERS - 1; i++) {
+        for (size_t i = 0; i < ClientParser::getNbClusters() - 1; i++) {
             send(i, fullfile);
             if (receive(i) == "OK")
                 std::cout << "Scene sent successfully" << std::endl;
@@ -72,28 +72,35 @@ namespace Raytracer {
                 throw NetworkException::SendFailedException("Scene");
         }
         Raytracer raytracer(_filename);
-        raytracer._cam_pos = std::pair<float, float>(value, value + (divider / CLUSTERS));
-        value = value + (divider / CLUSTERS);
-        for (size_t i = 0; i < CLUSTERS - 1; i++) {
-            std::string cam_str = std::to_string(value) + " " +std::to_string(value + (divider / CLUSTERS));
+        raytracer._cam_pos = std::pair<float, float>(value, value + (divider / ClientParser::getNbClusters()));
+        value = value + (divider / ClientParser::getNbClusters());
+        for (size_t i = 0; i < ClientParser::getNbClusters() - 1; i++) {
+            std::string cam_str = std::to_string(value) + " " +std::to_string(value + (divider / ClientParser::getNbClusters()));
             send(i, cam_str);
             if (receive(i) == "OK")
                 std::cout << "Camera position sent successfully" << std::endl;
             else
                 throw NetworkException::SendFailedException("Camera position");
-            value = value + (divider / CLUSTERS);
+            value = value + (divider / ClientParser::getNbClusters());
+        }
+        for (size_t i = 0; i < ClientParser::getNbClusters() - 1; i++) {
+            send(i, std::to_string(ClientParser::getNbClusters()));
+            if (receive(i) == "OK")
+                std::cout << "Clusters numbers sent successfully" << std::endl;
+            else
+                throw NetworkException::SendFailedException("NB CLUSTER");
         }
         raytracer.render();
-        for (size_t i = 0; i < CLUSTERS - 1; i++) {
+        for (size_t i = 0; i < ClientParser::getNbClusters() - 1; i++) {
             test = receive(i);
             send(i, "OK");
             tmp.push_back(test);
         }
         _mypixels.push_back(raytracer._pixels);
-        for (size_t i = 0; i < CLUSTERS - 1; i++) {
+        for (size_t i = 0; i < ClientParser::getNbClusters() - 1; i++) {
             _mypixels.push_back(tmp[i]);
         }
-        raytracer.mergeCluster(_mypixels, CLUSTERS);
+        raytracer.mergeCluster(_mypixels, ClientParser::getNbClusters());
         outfile = raytracer.getOutpoutFilename();
         raytracer.create_file(raytracer._pixels, outfile);
     }

@@ -24,13 +24,14 @@ namespace Raytracer {
             std::vector<std::string> getIps();
             std::vector<int> getPorts();
 
-            static int getNbClusters();
+            static std::size_t getNbClusters();
+            static void setNbClusters(std::size_t nbClusters);
         private:
             libconfig::Config _cfg;
             std::vector<std::string> _ips;
             std::vector<int> _ports;
 
-            static int _nb_clusters;
+            static std::size_t _nb_clusters;
 
             void parse();
     };

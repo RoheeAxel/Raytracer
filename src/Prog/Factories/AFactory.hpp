@@ -21,8 +21,8 @@ namespace Raytracer {
         public:
             AFactory() = default;
             ~AFactory() {
-                for (auto &loader : _loaders)
-                    loader.closeLib();
+//                for (auto &loader : _loaders)
+//                    loader.closeLib();
             }
 
             std::shared_ptr<T> get(const std::string &name, const std::string &options) override

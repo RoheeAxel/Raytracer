@@ -43,16 +43,19 @@ public:
      * @param path Path to the library
      * @param entryPoint Name of the entry point
      */
-    void loadLib(const std::string &path, const std::string &entryPoint, const std::string &options)
+    void loadLib(const std::string &path)
     {
         this->_handle = dlopen(path.c_str(), RTLD_LAZY);
         if (!this->_handle)
             throw Raytracer::InvalidPluginException("Failed to load plugin " + path + ": " + dlerror());
+    }
 
-        void *entry = dlsym(this->_handle, entryPoint.c_str());
+    T *getSymbol(const std::string &symbol, const std::string &options)
+    {
+        void *entry = dlsym(this->_handle, symbol.c_str());
         if (!entry)
-            throw Raytracer::InvalidPluginException("Failed to load plugin " + path + ": " + dlerror());
-        this->_instance = reinterpret_cast<T *(*)(const std::string &)> (entry)(options);
+            throw Raytracer::InvalidPluginException("Failed to load plugin: " + std::string(dlerror()));
+        return reinterpret_cast<T *(*)(const std::string &)> (entry)(options);
     }
 
     /**
@@ -60,20 +63,9 @@ public:
      */
     void closeLib()
     {
-        if (this->_instance)
-            delete this->_instance;
-        this->_instance = nullptr;
         if (this->_handle)
             dlclose(this->_handle);
         this->_handle = nullptr;
-    }
-
-    /**
-     * @brief Get the instance of the library
-     * @return
-     */
-    T *get() {
-        return this->_instance;
     }
 
 private:

@@ -11,6 +11,7 @@
 #include <typeindex>
 #include <typeinfo>
 #include <unordered_map>
+#include <vector>
 #include "IFactory.hpp"
 #include "LDLoader.hpp"
 
@@ -19,7 +20,10 @@ namespace Raytracer {
     class AFactory : public IFactory<T> {
         public:
             AFactory() = default;
-            ~AFactory() override = default;
+            ~AFactory() {
+                for (auto &loader : _loaders)
+                    loader.closeLib();
+            }
 
             std::shared_ptr<T> get(const std::string &name, const std::string &options) override
             {
@@ -36,10 +40,9 @@ namespace Raytracer {
                 LDLoader<T> loader;
                 std::string path = "./plugins/" + _dirName + "/" + name + EXTENSION;
 
-                loader.loadLib(path, "create", options);
-                std::shared_ptr<T> t(loader.get(), [&]([[maybe_unused]] T *ptr) {
-                    loader.closeLib();
-                });
+                loader.loadLib(path);
+                std::shared_ptr<T> t(loader.getSymbol("create", options));
+                _loaders.push_back(loader);
                 return t;
             }
 
@@ -49,6 +52,9 @@ namespace Raytracer {
             }
 
             std::string _dirName;
+
+        private:
+            std::vector<LDLoader<T>> _loaders;
     };
 
 } // Raytracer

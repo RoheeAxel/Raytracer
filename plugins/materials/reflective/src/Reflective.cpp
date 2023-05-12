@@ -33,9 +33,13 @@ namespace Raytracer
         _roughness = roughness;
     }
 
-    Vec3 Reflective::getColorAt([[maybe_unused]]HitRecord record, [[maybe_unused]]Ray light, [[maybe_unused]]Vec3 lightColor) {
-        // double intensity = normal.Dot(light.getDirection());
-        return _base_color;
+    Vec3 Reflective::getColorAt(HitRecord record, Ray light, [[maybe_unused]]Vec3 lightColor) {
+        double intensity;
+        if (light.getDirection() == Vec3(0))
+            intensity = 1;
+        else
+            intensity = -record.normal.Dot(light.getDirection());
+        return (_base_color * intensity).Clamp(0, 255);;
     }
 
     Vec3 Reflective::getNewRay(HitRecord record, Vec3 light) {

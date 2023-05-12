@@ -7,6 +7,7 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/plugins/materials)
 
 add_library(reflective SHARED
         src/Reflective.cpp
+        ${PROJECT_SOURCE_DIR}/src/Prog/Utils/Ray.cpp
         ${PROJECT_SOURCE_DIR}/src/Prog/Utils/Vec3.cpp
         ${PROJECT_SOURCE_DIR}/src/Prog/Utils/ParsingUtils.cpp
         ${PROJECT_SOURCE_DIR}/src/Prog/Utils/CustomRandom.cpp

@@ -45,7 +45,6 @@ namespace Raytracer
 
         if (cannot_refract || reflect_prob > _random.drand48()) {
             Scattered = light - record.normal * 2 * record.normal.Dot(light);
-
         } else {
             Scattered = refract(unit_direction, record.normal, refraction_ratio);
         }

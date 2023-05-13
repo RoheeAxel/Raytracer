@@ -49,7 +49,7 @@ namespace Raytracer
     }
 
     double Reflective::getReflectivity() {
-        return _reflectivity;
+        return 1;
     }
 
 }

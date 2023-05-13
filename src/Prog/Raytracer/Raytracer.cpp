@@ -72,6 +72,7 @@ namespace Raytracer {
             builder.setScreen(Screen(Vec3(value, -1, -1), Vec3(value + (divider / nb_threads), 1, -1), screenSize));
             builder.setId(i);
             builder.setSamplePerPixel(this->_settings->getSamples());
+            builder.setFov(this->_settings->getFov());
             _cameras.push_back(builder.build());
             value = value + (divider / nb_threads);
         }

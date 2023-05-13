@@ -57,6 +57,7 @@ namespace Raytracer {
         Vec3 out_normal = (c_to_p) / _radius;
         hitRecord.set_face_normal(r, out_normal);
         hitRecord.normal = out_normal;
+        hitRecord.normal = q.rotate(hitRecord.normal, _position);
         hitRecord.uv = this->getUV(out_normal);
         return hitRecord;
     }

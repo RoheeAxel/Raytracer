@@ -60,11 +60,13 @@ Raytracer::HitRecord Raytracer::Cone::intersection(Ray r) {
         hitRecord.distance = (hitRecord.point - r.getOrigin()).Length();
         hitRecord.material = this->getMaterial();
         Vec3 c_to_p = hitRecord.point - _position;
-        Vec3 u = _direction.Cross(c_to_p.Cross(_direction));
-        Vec3 out_normal = (c_to_p - u) / _radius;
-        hitRecord.set_face_normal(r, out_normal);
-        hitRecord.normal = out_normal;
-        hitRecord.uv = this->getUV(out_normal);
+        double slope = 1.0 / std::tan(_angle);
+        Vec3 projection = c_to_p - _direction * (c_to_p.Dot(_direction));
+        double h = projection.Length() * slope;
+        Vec3 normal = (c_to_p - _direction * h).Normalize();
+        hitRecord.set_face_normal(r, normal);
+        hitRecord.normal = normal;
+        hitRecord.uv = this->getUV(normal);
         return hitRecord;
 }
 

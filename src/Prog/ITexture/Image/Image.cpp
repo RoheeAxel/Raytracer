@@ -14,6 +14,9 @@ namespace Raytracer {
     Image::Image(std::string &path)
     {
         _data = stbi_load(path.c_str(), &_size.first, &_size.second, &_channels, STBI_rgb);
+        if (_data == nullptr) {
+            std::cerr << "Error loading image: " << path << std::endl;
+        }
     }
 
     Raytracer::Image::Image()

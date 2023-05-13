@@ -31,6 +31,17 @@ namespace Raytracer
 
         auto roughness = ParsingUtils::getDouble(options, "roughness");
         _roughness = roughness;
+
+        try {
+            std::string path = ParsingUtils::getString(options, "path");
+            _tex = std::make_shared<Image>(path);
+        } catch (Exception &e) {}
+        try {
+            std::string path = ParsingUtils::getString(options, "normal_map");
+            _normalMap = std::make_shared<Image>(path);
+            double intensity = ParsingUtils::getDouble(options, "normal_intensity");
+            _normalIntensity = intensity;
+        } catch (Exception &e) {}
     }
 
     Vec3 Reflective::getColorAt(HitRecord record, Ray light, [[maybe_unused]]Vec3 lightColor) {
@@ -39,11 +50,20 @@ namespace Raytracer
             intensity = 1;
         else
             intensity = -record.normal.Dot(light.getDirection());
-        return (_base_color * intensity).Clamp(0, 255);;
+
+        Vec3 color_at_point = _base_color;
+        if (_tex != nullptr)
+            color_at_point = _tex->getColorAt(record.uv.first, record.uv.second);
+        return (color_at_point * intensity).Clamp(0, 255);
     }
 
     Vec3 Reflective::getNewRay(HitRecord record, Vec3 light) {
-        Vec3 scatterdLight = light - record.normal * 2 * record.normal.Dot(light);
+        Vec3 normalAtPoint = record.normal;
+        if (_normalMap != nullptr) {
+            normalAtPoint = (record.normal + _normalMap->getColorAt(record.uv.first, record.uv.second) * _normalIntensity).Normalize();
+        }
+
+        Vec3 scatterdLight = light - normalAtPoint * 2 * record.normal.Dot(light);
         scatterdLight = scatterdLight + Vec3(0).random() * _roughness;
         return scatterdLight;
     }

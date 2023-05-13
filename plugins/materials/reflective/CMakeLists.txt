@@ -11,6 +11,7 @@ add_library(reflective SHARED
         ${PROJECT_SOURCE_DIR}/src/Prog/Utils/Vec3.cpp
         ${PROJECT_SOURCE_DIR}/src/Prog/Utils/ParsingUtils.cpp
         ${PROJECT_SOURCE_DIR}/src/Prog/Utils/CustomRandom.cpp
+        ${PROJECT_SOURCE_DIR}/src/Prog/ITexture/Image/Image.cpp
         )
 
 set_target_properties(reflective PROPERTIES PREFIX "")
@@ -18,4 +19,7 @@ set_target_properties(reflective PROPERTIES PREFIX "")
 target_include_directories(reflective PRIVATE ${CMAKE_SOURCE_DIR}/src
         ${PROJECT_SOURCE_DIR}/src/Prog/Materials
         ${PROJECT_SOURCE_DIR}/src/Prog/Utils
-        ${PROJECT_SOURCE_DIR}/src/Prog/Exceptions)
+        ${PROJECT_SOURCE_DIR}/src/Prog/Exceptions
+        ${PROJECT_SOURCE_DIR}/src/Prog/ITexture
+        ${PROJECT_SOURCE_DIR}/src/Prog/ITexture/Image)
+

@@ -11,6 +11,8 @@
 #include "IMaterial.hpp"
 #include "Ray.hpp"
 #include "ParsingUtils.hpp"
+#include "ITexture.hpp"
+#include "Image.hpp"
 
 namespace Raytracer
 {
@@ -29,6 +31,9 @@ class Reflective : public IMaterial{
         Vec3 _base_color;
         double _reflectivity;
         double _roughness;
+        std::shared_ptr<ITexture> _tex = nullptr;
+        std::shared_ptr<ITexture> _normalMap = nullptr;
+        double _normalIntensity = 0.1;
 };
 }
 

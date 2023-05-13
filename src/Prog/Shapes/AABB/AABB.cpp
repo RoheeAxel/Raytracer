@@ -29,8 +29,10 @@ namespace Raytracer {
                         (_top[a] - r.getOrigin()[a]) / r.getDirection()[a]);
             t_min = fmax(t1, t_min);
             t_max = fmin(t2, t_max);
-            if (t_max <= t_min)
+            if (t_max <= t_min) {
                 hit.hit = false;
+                return hit;
+            }
         }
         hit.hit = true;
         return hit;

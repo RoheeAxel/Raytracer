@@ -61,11 +61,16 @@ namespace Raytracer {
                 }
             }
         }
+        createAABB();
     }
 
     HitRecord Raytracer::OBJ::intersection(Ray r) {
         HitRecord hitRecord;
         hitRecord.hit = false;
+        HitRecord isHit = getAABB().intersection(r);
+        if (!isHit.hit) {
+            return hitRecord;
+        }
         for (std::size_t i = 0; i < _faces.size(); i++) {
             HitRecord hit = _faces[i]->intersection(r);
             if (hit.hit && (!hitRecord.hit || hit.distance < hitRecord.distance)) {
@@ -75,8 +80,28 @@ namespace Raytracer {
         return hitRecord;
     }
 
-    AABB OBJ::getAABB() {
-    return {Vec3(-1000000, -1000000, -1000000), Vec3(1000000, 1000000, 1000000)};
+    AABB OBJ::getAABB()
+    {
+        return AABB(_aabbBot, _aabbTop);
+    }
+
+    void OBJ::createAABB() {
+
+        if (_faces.empty()) {
+            return;
+        }
+        Vec3 minPoint = _faces[0]->getAABB().getBot();
+        Vec3 maxPoint = _faces[0]->getAABB().getTop();
+
+        for (const auto& face : _faces) {
+            Vec3 triMin = face->getAABB().getBot();
+            Vec3 triMax = face->getAABB().getTop();
+            minPoint = Vec3(std::min(minPoint.x, triMin.x), std::min(minPoint.y, triMin.y), std::min(minPoint.z, triMin.z));
+            maxPoint = Vec3(std::max(maxPoint.x, triMax.x), std::max(maxPoint.y, triMax.y), std::max(maxPoint.z, triMax.z));
+        }
+
+        _aabbBot = minPoint;
+        _aabbTop = maxPoint;
     }
 
     void OBJ::setPosition(const Vec3 &position)

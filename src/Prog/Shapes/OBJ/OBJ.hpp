@@ -22,6 +22,7 @@ namespace Raytracer {
             ~OBJ() override = default;
             HitRecord intersection(Ray ray) override;
             AABB getAABB() override;
+            void createAABB();
 
             std::pair<double, double> getUV(Vec3 point) override;
             void setPosition(const Vec3 &position);
@@ -31,6 +32,8 @@ namespace Raytracer {
 
 
         private:
+            Vec3 _aabbBot;
+            Vec3 _aabbTop;
             Vec3 _position;
             Vec3 _rotation;
             Vec3 _scale;

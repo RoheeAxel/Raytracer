@@ -62,8 +62,27 @@ namespace Raytracer {
         return hitRecord;
     }
 
-    AABB Triangle::getAABB() {
-    return {Vec3(-1000000, -1000000, -1000000), Vec3(1000000, 1000000, 1000000)};
+    AABB Triangle::getAABB()
+    {
+        Vec3 min;
+        Vec3 max;
+        // Calculate the minimum and maximum x, y, and z coordinates of the triangle vertices
+        min.x = std::min(_vertice1.x, _vertice2.x);
+        min.y = std::min(_vertice1.y, _vertice2.y);
+        min.z = std::min(_vertice1.z, _vertice2.z);
+        min.x = std::min(min.x, _vertice3.x);
+        min.y = std::min(min.y, _vertice3.y);
+        min.z = std::min(min.z, _vertice3.z);
+
+        max.x = std::max(_vertice1.x, _vertice2.x);
+        max.y = std::max(_vertice1.y, _vertice2.y);
+        max.z = std::max(_vertice1.z, _vertice2.z);
+        max.x = std::max(max.x, _vertice3.x);
+        max.y = std::max(max.y, _vertice3.y);
+        max.z = std::max(max.z, _vertice3.z);
+
+        AABB box(min, max);
+        return box;
     }
 
     std::pair<double, double> Triangle::getUV(Vec3 point)

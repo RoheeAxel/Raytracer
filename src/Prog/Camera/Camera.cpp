@@ -23,7 +23,7 @@ namespace Raytracer {
         _angle = angle;
         double angle_rad = _angle * M_PI / 180;
 
-        _longueur = (1 / sin(angle_rad / 2) / (Vec3(-1,1,-1) - _position).Length());
+        _longueur = (1 / std::sin(angle_rad / 2) / (Vec3(-1,1,-1) - _position).Length());
     }
 
     void Camera::render(Scene &scene)

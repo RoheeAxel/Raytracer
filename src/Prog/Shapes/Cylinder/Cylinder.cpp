@@ -71,8 +71,8 @@ namespace Raytracer {
         Quaternion q(_rotation);
         Vec3 pointRotate;
         pointRotate = q.rotate(point, _position);
-        double theta = acos(-pointRotate.y);
-        double phi = atan2(-pointRotate.z, pointRotate.x) + M_PI;
+        double theta = std::acos(-pointRotate.y);
+        double phi = std::atan2(-pointRotate.z, pointRotate.x) + M_PI;
         double u = phi / (2 * M_PI);
         double v = theta / M_PI;
         return {u, 1 - v};

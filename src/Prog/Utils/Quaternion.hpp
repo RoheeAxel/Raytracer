@@ -21,12 +21,12 @@ public:
     Quaternion(Vec3 euler)
     {
         Vec3 eulerInRadian = euler * M_PI / 180;
-        double cy = cos(eulerInRadian.z/2);
-        double sy = sin(eulerInRadian.z/2);
-        double cp = cos(eulerInRadian.y/2);
-        double sp = sin(eulerInRadian.y/2);
-        double cr = cos(eulerInRadian.x/2);
-        double sr = sin(eulerInRadian.x/2);
+        double cy = std::cos(eulerInRadian.z/2);
+        double sy = std::sin(eulerInRadian.z/2);
+        double cp = std::cos(eulerInRadian.y/2);
+        double sp = std::sin(eulerInRadian.y/2);
+        double cr = std::cos(eulerInRadian.x/2);
+        double sr = std::sin(eulerInRadian.x/2);
 
         w = cr*cp*cy + sr*sp*sy;
         x = sr*cp*cy - cr*sp*sy;

@@ -33,9 +33,9 @@ Raytracer::HitRecord Raytracer::Cone::intersection(Ray r) {
         Quaternion q(_rotation);
         Vec3 newDir = q.rotate(r.getDirection(), _position);
 
-        float a = newDir.x * newDir.x + newDir.z * newDir.z - newDir.y * newDir.y * tan(_angle) * tan(_angle);
-        float b = 2.0 * (newPos.x * newDir.x + newPos.z * newDir.z - newPos.y * newDir.y * tan(_angle) * tan(_angle));
-        float c = newPos.x * newPos.x + newPos.z * newPos.z - newPos.y * newPos.y * tan(_angle) * tan(_angle);
+        float a = newDir.x * newDir.x + newDir.z * newDir.z - newDir.y * newDir.y * std::tan(_angle) * std::tan(_angle);
+        float b = 2.0 * (newPos.x * newDir.x + newPos.z * newDir.z - newPos.y * newDir.y * std::tan(_angle) * std::tan(_angle));
+        float c = newPos.x * newPos.x + newPos.z * newPos.z - newPos.y * newPos.y * std::tan(_angle) * std::tan(_angle);
         float discriminant = b * b - 4.0 * a * c;
 
 
@@ -76,8 +76,8 @@ Raytracer::AABB Raytracer::Cone::getAABB()
 
 std::pair<double, double> Raytracer::Cone::getUV(Vec3 point)
 {
-    double phi = atan2(point.x, point.y);
-    double theta = acos(point.z / _radius);
+    double phi = std::atan2(point.x, point.y);
+    double theta = std::acos(point.z / _radius);
     double u = 1 - (phi + M_PI) / (2 * M_PI);
     double v = (theta + M_PI / 2) / M_PI;
     return std::make_pair(u, v);

@@ -95,6 +95,7 @@ namespace Raytracer {
         size_t pos = 0;
         size_t divider = this->_settings->getWidth() / nb_threads / this->_settings->getClusters();
         std::vector<std::vector<Vec3>> pixels;
+        char r, g, b;
 
         for (size_t i = 0; i < nb_threads; i++) {
             pixels.push_back(_cameras[i].getPixels());
@@ -105,9 +106,18 @@ namespace Raytracer {
                 if (index >= nb_threads)
                     index = nb_threads - 1;
                 pos = (divider * j) + i - (index * divider);
-                char r = _cameras[index].getPixels()[pos].x > 255 ? 255 : _cameras[index].getPixels()[pos].x;
-                char g = _cameras[index].getPixels()[pos].y > 255 ? 255 : _cameras[index].getPixels()[pos].y;
-                char b = _cameras[index].getPixels()[pos].z > 255 ? 255 : _cameras[index].getPixels()[pos].z;
+                if (_cameras[index].getPixels()[pos].x > 255)
+                    r = 255;
+                else
+                    r = _cameras[index].getPixels()[pos].x;
+                if (_cameras[index].getPixels()[pos].y > 255)
+                    g = 255;
+                else
+                    g = _cameras[index].getPixels()[pos].y;
+                if (_cameras[index].getPixels()[pos].z > 255)
+                    b = 255;
+                else
+                    b = _cameras[index].getPixels()[pos].z;
                 std::string rgb = std::string(1, r) + std::string(1, g) + std::string(1, b);
                 _pixels.append(rgb);
             }

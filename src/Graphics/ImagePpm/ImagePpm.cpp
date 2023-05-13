@@ -59,11 +59,6 @@ void Viewer::ImagePpm::draw(sf::RenderWindow &window, std::string path)
 {
     if (path == "")
         return;
-    sf::Vector2u windowSize = window.getSize();
-    sf::Vector2u imageSize = this->_texture.getSize();
-    float x = (windowSize.x - imageSize.x) / 2.0f;
-    float y = (windowSize.y - imageSize.y) / 2.0f;
-    this->_sprite.setPosition(x, y);
     window.draw(this->_sprite);
 }
 

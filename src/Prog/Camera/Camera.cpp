@@ -22,7 +22,7 @@ namespace Raytracer {
         _angle = 90;
         double angle_rad = _angle * M_PI / 180;
 
-        _longueur = (1 / sin(angle_rad / 2) / (Vec3(-1,1,-1) - _position).Length());
+        _longueur = (1 / std::sin(angle_rad / 2) / (Vec3(-1,1,-1) - _position).Length());
         std::cout << (screen.getTopLeft() - _position).Length() << std::endl;
         std::cout << "Longueur: " << _longueur << std::endl;
     }

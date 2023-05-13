@@ -80,4 +80,9 @@ namespace Raytracer {
         _position = q.rotate(this->_position, center);
         _rotation = _rotation + rotation;
     }
+
+    void Sphere::setScale(Vec3 scale)
+    {
+        _radius = _radius * scale.x;
+    }
 }

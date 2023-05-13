@@ -41,4 +41,9 @@ namespace Raytracer {
         _left->setRotation(rotation, center);
         _right->setRotation(rotation, center);
     }
+    void BVH::setScale(Vec3 scale)
+    {
+        _left->setScale(scale);
+        _right->setScale(scale);
+    }
 }

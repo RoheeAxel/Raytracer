@@ -120,4 +120,11 @@ namespace Raytracer {
         _vertice3 = q.rotate(_vertice3, center);
         _vertice4 = q.rotate(_vertice4, center);
     }
+    void Quad::setScale(Vec3 scale)
+    {
+        _vertice1 = _vertice1 * scale;
+        _vertice2 = _vertice2 * scale;
+        _vertice3 = _vertice3 * scale;
+        _vertice4 = _vertice4 * scale;
+    }
 }

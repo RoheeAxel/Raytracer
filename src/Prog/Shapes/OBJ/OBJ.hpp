@@ -26,12 +26,14 @@ namespace Raytracer {
             std::pair<double, double> getUV(Vec3 point) override;
             void setPosition(const Vec3 &position);
             void setTranslation(Vec3 translation) override;
-            virtual void setRotation(Vec3 rotation, Vec3 center) override;
+            void setRotation(Vec3 rotation, Vec3 center) override;
+            void setScale(Vec3 scale) override;
 
 
         private:
             Vec3 _position;
             Vec3 _rotation;
+            Vec3 _scale;
             std::string _path;
             std::vector<std::shared_ptr<IShape>> _faces;
 };

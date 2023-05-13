@@ -27,6 +27,7 @@ class IShape {
         virtual std::pair<double, double> getUV(Vec3 point) = 0;
         virtual void setTranslation(Vec3 translation) = 0;
         virtual void setRotation(Vec3 rotation, Vec3 center) = 0;
+        virtual void setScale(Vec3 scale) = 0;
     protected:
     private:
 };

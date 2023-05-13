@@ -79,4 +79,9 @@ namespace Raytracer {
         _bot = q.rotate(this->_bot, center);
         _top = q.rotate(this->_top, center);
     }
+    void AABB::setScale(Vec3 scale)
+    {
+        this->_bot *= scale;
+        this->_top *= scale;
+    }
 }

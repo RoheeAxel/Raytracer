@@ -60,7 +60,7 @@ namespace Raytracer
     Vec3 Reflective::getNewRay(HitRecord record, Vec3 light) {
         Vec3 normalAtPoint = record.normal;
         if (_normalMap != nullptr) {
-            normalAtPoint = (record.normal + _normalMap->getColorAt(record.uv.first, record.uv.second) * _normalIntensity).Normalize();
+            normalAtPoint = (record.normal + (_normalMap->getColorAt(record.uv.first, record.uv.second) / 255 * 2 - 1) * _normalIntensity).Normalize();
         }
 
         Vec3 scatterdLight = light - normalAtPoint * 2 * record.normal.Dot(light);

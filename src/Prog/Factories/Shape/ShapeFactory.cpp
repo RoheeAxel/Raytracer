@@ -43,6 +43,10 @@ namespace Raytracer {
             Vec3 center = ParsingUtils::getVec3(options, "rotation_center");
             shape->setRotation(rotation, center);
         } catch (Exception &e) {}
+        try {
+            Vec3 scale = ParsingUtils::getVec3(options, "scale");
+            shape->setScale(scale);
+        } catch (Exception &e) {}
         return shape;
     }
 

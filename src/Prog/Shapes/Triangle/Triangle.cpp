@@ -97,4 +97,10 @@ namespace Raytracer {
         _vertice3 = q.rotate(this->_vertice3, center);
 
     }
+    void Triangle::setScale(Vec3 scale)
+    {
+        _vertice1 = _vertice1 * scale;
+        _vertice2 = _vertice2 * scale;
+        _vertice3 = _vertice3 * scale;
+    }
 }

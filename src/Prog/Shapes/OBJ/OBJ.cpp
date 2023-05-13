@@ -20,7 +20,8 @@ namespace Raytracer {
         _path = ParsingUtils::getString(options, "path");
         _position = ParsingUtils::getVec3(options, "position");
         _rotation = ParsingUtils::getVec3(options, "rotation");
-        _material = std::make_shared<Glass>();
+        _scale = ParsingUtils::getVec3(options, "scale");
+        _material = std::make_shared<Lambertian>(Vec3(255, 0, 255));
         load();
     }
 
@@ -43,7 +44,8 @@ namespace Raytracer {
                     for (std::size_t i = 1; i < split.size(); i++) {
                         vertex.push_back(ParsingUtils::split(split[i], '/')[0]);
                     }
-                    _faces.push_back(std::make_shared<Triangle>(vertices[std::stoi(vertex[0]) - 1], vertices[std::stoi(vertex[1]) - 1], vertices[std::stoi(vertex[2]) - 1]));
+
+                    _faces.push_back(std::make_shared<Triangle>(vertices[std::stoi(vertex[0]) - 1] * _scale, vertices[std::stoi(vertex[1]) - 1] * _scale, vertices[std::stoi(vertex[2]) - 1] * _scale));
                     _faces[_faces.size() - 1]->setTranslation(_position);
                     _faces[_faces.size() - 1]->setRotation(_rotation, _position);
                     _faces[_faces.size() - 1]->setMaterial(this->getMaterial());
@@ -52,7 +54,7 @@ namespace Raytracer {
                     for (std::size_t i = 1; i < split.size(); i++) {
                         vertex.push_back(ParsingUtils::split(split[i], '/')[0]);
                     }
-                    _faces.push_back(std::make_shared<Quad>(vertices[std::stoi(vertex[0]) - 1], vertices[std::stoi(vertex[1]) - 1], vertices[std::stoi(vertex[2]) - 1], vertices[std::stoi(vertex[3]) - 1]));
+                    _faces.push_back(std::make_shared<Quad>(vertices[std::stoi(vertex[0]) - 1] * _scale, vertices[std::stoi(vertex[1]) - 1] * _scale, vertices[std::stoi(vertex[2]) - 1] * _scale, vertices[std::stoi(vertex[3]) - 1] * _scale));
                     _faces[_faces.size() - 1]->setTranslation(_position);
                     _faces[_faces.size() - 1]->setRotation(_rotation, _position);
                     _faces[_faces.size() - 1]->setMaterial(this->getMaterial());
@@ -90,6 +92,9 @@ namespace Raytracer {
     }
 
     void OBJ::setRotation(Vec3 rotation, Vec3 center)
+    {
+    }
+    void OBJ::setScale(Vec3 scale)
     {
     }
 }

@@ -88,4 +88,8 @@ namespace Raytracer {
         _position = q.rotate(this->_position, center);
         _rotation = _rotation + rotation;
     }
+    void Cylinder::setScale(Vec3 scale)
+    {
+        _radius = _radius * scale.x;
+    }
 }

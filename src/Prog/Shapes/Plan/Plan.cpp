@@ -81,4 +81,7 @@ namespace Raytracer {
         _position = q.rotate(_position, center);
         _normal = q.rotate(_normal, center);
     }
+    void Plan::setScale([[maybe_unused]]Vec3 scale)
+    {
+    }
 }

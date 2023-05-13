@@ -96,3 +96,8 @@ void Raytracer::Cone::setRotation(Vec3 rotation, Vec3 center)
     this->_position = q.rotate(this->_position, center);
     this->_rotation = this->_rotation + rotation;
 }
+
+void Raytracer::Cone::setScale(Vec3 scale)
+{
+    this->_radius = this->_radius * scale.x;
+}

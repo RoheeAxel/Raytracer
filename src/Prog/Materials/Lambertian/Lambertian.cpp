@@ -39,7 +39,6 @@ namespace Raytracer
         Vec3 color_at_point = _base_color;
         if (_tex != nullptr)
             color_at_point = _tex->getColorAt(record.uv.first, record.uv.second);
-
         return (color_at_point  * intensity * unit_light).Clamp(0, 255);
     }
 
@@ -54,6 +53,6 @@ namespace Raytracer
     }
 
     double Lambertian::getReflectivity() {
-        return 0.5;
+        return 0.2;
     }
 }

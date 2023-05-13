@@ -57,6 +57,7 @@ namespace Raytracer {
         Vec3 out_normal = (c_to_p) / _radius;
         hitRecord.set_face_normal(r, out_normal);
         hitRecord.normal = out_normal;
+        hitRecord.normal = q.rotate(hitRecord.normal, _position);
         hitRecord.uv = this->getUV(out_normal);
         return hitRecord;
     }
@@ -71,8 +72,8 @@ namespace Raytracer {
         Quaternion q(_rotation);
         Vec3 pointRotate;
         pointRotate = q.rotate(point, _position);
-        double theta = acos(-pointRotate.y);
-        double phi = atan2(-pointRotate.z, pointRotate.x) + M_PI;
+        double theta = std::acos(-pointRotate.y);
+        double phi = std::atan2(-pointRotate.z, pointRotate.x) + M_PI;
         double u = phi / (2 * M_PI);
         double v = theta / M_PI;
         return {u, 1 - v};

@@ -38,8 +38,14 @@ namespace Raytracer {
         return *this;
     }
 
+    CameraBuilder &CameraBuilder::setFov(int fov)
+    {
+        _fov = fov;
+        return *this;
+    }
+
     Camera CameraBuilder::build()
     {
-        return Camera(_position, _rotation, _screen, _id, _sample_per_pixel);
+        return Camera(_position, _rotation, _screen, _id, _sample_per_pixel, _fov);
     }
 } // Raytracer

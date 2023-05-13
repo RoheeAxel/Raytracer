@@ -28,7 +28,11 @@ namespace Raytracer {
                     if (depth < this->getMaxDepth()) {
                         Ray new_ray = Ray(hit.point, hit.material->getNewRay(hit, ray.getDirection()));
                         if (new_ray.getDirection() != Vec3(0, 0, 0)) {
-                            current_color = (current_color / 255) * throwRay(new_ray, depth + 1);
+                            if (hit.material->getReflectivity() != 1)
+                                current_color = current_color * (1 - hit.material->getReflectivity()) +  throwRay(new_ray, depth + 1) * hit.material->getReflectivity();
+                            else {
+                                current_color = (current_color / 255) * throwRay(new_ray, depth + 1);
+                            }
                         }
                     }
                     final_color = current_color;

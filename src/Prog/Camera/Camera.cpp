@@ -11,7 +11,7 @@
 
 namespace Raytracer {
 
-    Camera::Camera(const Vec3& position, const Vec3& rotation, Screen& screen, size_t id, int sample_per_pixel)
+    Camera::Camera(const Vec3& position, const Vec3& rotation, Screen& screen, size_t id, int sample_per_pixel, int angle)
     {
         _position = position;
         _rotation = _rotation + rotation;
@@ -19,12 +19,11 @@ namespace Raytracer {
         _screen = screen;
         _id = id;
         _sample_per_pixel = sample_per_pixel;
-        _angle = 90;
+        std::cout << "Angle: " << angle << std::endl;
+        _angle = angle;
         double angle_rad = _angle * M_PI / 180;
 
-        _longueur = (1 / sin(angle_rad / 2) / (Vec3(-1,1,-1) - _position).Length());
-        std::cout << (screen.getTopLeft() - _position).Length() << std::endl;
-        std::cout << "Longueur: " << _longueur << std::endl;
+        _longueur = (1 / std::sin(angle_rad / 2) / (Vec3(-1,1,-1) - _position).Length());
     }
 
     void Camera::render(Scene &scene)

@@ -23,6 +23,7 @@ namespace Raytracer {
             CameraBuilder &setScreen(const Screen &screen);
             CameraBuilder &setId(size_t id);
             CameraBuilder &setSamplePerPixel(int sample_per_pixel);
+            CameraBuilder &setFov(int fov);
             Camera build();
         private:
             Vec3 _position;
@@ -30,6 +31,7 @@ namespace Raytracer {
             Screen _screen;
             size_t _id;
             int _sample_per_pixel;
+            int _fov;
     };
 
 } // Raytracer

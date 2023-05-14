@@ -19,7 +19,6 @@ namespace Raytracer {
         _screen = screen;
         _id = id;
         _sample_per_pixel = sample_per_pixel;
-        std::cout << "Angle: " << angle << std::endl;
         _angle = angle;
         double angle_rad = _angle * M_PI / 180;
 

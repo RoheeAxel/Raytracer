@@ -36,7 +36,9 @@ public:
         this->_handle = nullptr;
         this->_instance = nullptr;
     };
-    ~LDLoader() = default;
+    ~LDLoader() {
+        this->closeLib();
+    };
 
     /**
      * @brief Load a library and get the entry point

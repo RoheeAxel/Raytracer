@@ -10,6 +10,7 @@
 
 #include "ILight.hpp"
 #include "IShape.hpp"
+#include "GarbageCollector.hpp"
 #include <memory>
 #include <vector>
 
@@ -17,7 +18,11 @@ namespace Raytracer {
     class Scene {
         public:
             Scene() = default;
-            ~Scene() = default;
+            ~Scene() {
+                _lights.clear();
+                _shapes.clear();
+                GarbageCollector::clear();
+            };
 
             void addLight(std::shared_ptr<ILight> light);
             void addShape(std::shared_ptr<IShape> shape);

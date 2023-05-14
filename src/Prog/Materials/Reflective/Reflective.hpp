@@ -37,6 +37,4 @@ class Reflective : public IMaterial{
 };
 }
 
-extern "C" Raytracer::Reflective *create(const std::string &options);
-
 #endif /* !REFLECTIVE_HPP_ */

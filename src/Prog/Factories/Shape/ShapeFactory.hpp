@@ -17,8 +17,6 @@
 #include "Triangle.hpp"
 #include "OBJ.hpp"
 #include "Cylinder.hpp"
-#include "lCylinder.hpp"
-#include "lCone.hpp"
 #include "Cone.hpp"
 #include "Quad.hpp"
 

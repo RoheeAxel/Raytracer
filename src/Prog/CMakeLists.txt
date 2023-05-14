@@ -26,6 +26,7 @@ include_directories(Materials/Lambertian)
 include_directories(Materials/Normal)
 include_directories(Materials/Glass)
 include_directories(Materials/Emitive)
+include_directories(Materials/Reflective)
 
 include_directories(Parser)
 
@@ -45,8 +46,8 @@ include_directories(Shapes/Quad)
 include_directories(Shapes/Cylinder)
 include_directories(Shapes/OBJ)
 include_directories(Shapes/Cone)
-include_directories(Shapes/lCylinder)
-include_directories(Shapes/lCone)
+include_directories(../../plugins/shapes/lCylinder)
+include_directories(../../plugins/shapes/lCone)
 
 
 include_directories(Network)

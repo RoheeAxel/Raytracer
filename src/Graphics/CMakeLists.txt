@@ -61,6 +61,8 @@ include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Shapes/AABB)
 include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Shapes/Cone)
 include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Shapes/Cylinder)
 include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Shapes/OBJ)
+include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Shapes/lCone)
+include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Shapes/lCylinder)
 
 include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Utils)
 

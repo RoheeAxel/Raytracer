@@ -7,9 +7,11 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/plugins/shapes)
 
 add_library(lcone SHARED
         src/lCone.cpp
+        ${PROJECT_SOURCE_DIR}/src/Prog/Utils/Ray.cpp
         ${PROJECT_SOURCE_DIR}/src/Prog/Utils/Vec3.cpp
         ${PROJECT_SOURCE_DIR}/src/Prog/Utils/ParsingUtils.cpp
         ${PROJECT_SOURCE_DIR}/src/Prog/Utils/CustomRandom.cpp
+        ${PROJECT_SOURCE_DIR}/src/Prog/Shapes/AShape.cpp
         )
 
 set_target_properties(lcone PROPERTIES PREFIX "")

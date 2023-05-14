@@ -11,6 +11,7 @@
 #include <cmath>
 #include <fstream>
 #include "Lambertian.hpp"
+#include "Emitive.hpp"
 #include "Glass.hpp"
 
 namespace Raytracer {

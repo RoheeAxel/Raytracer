@@ -11,11 +11,13 @@
 namespace Raytracer
 {
     Emitive::Emitive() {
-    _base_color = Vec3(500, 500, 500);
+        _base_color = Vec3(255, 255, 255);
+        _intensity = 2;
     }
 
-    Emitive::Emitive(const Vec3 &color) {
+    Emitive::Emitive(const Vec3 &color, double intensity) {
         _base_color = color;
+        _intensity = intensity;
     }
 
     Emitive::Emitive(const std::string &options) {

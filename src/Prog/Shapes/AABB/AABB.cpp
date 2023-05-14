@@ -55,7 +55,7 @@ namespace Raytracer {
         return *this;
     }
 
-    std::pair<double, double> AABB::getUV(Vec3 point)
+    std::pair<double, double> AABB::getUV([[maybe_unused]]Vec3 point)
     {
         return std::make_pair(0, 0);
     }

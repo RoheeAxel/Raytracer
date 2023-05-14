@@ -24,7 +24,7 @@ namespace Raytracer
         _intensity = intensity;
     }
 
-    Vec3 Raytracer::DirLight::illuminate(Raytracer::Vec3 point, Raytracer::Scene &scene) {
+    Vec3 Raytracer::DirLight::illuminate(Raytracer::Vec3 point, [[maybe_unused]]Raytracer::Scene &scene) {
         Raytracer::Ray ray = getRayToLight(point);
         Raytracer::HitRecord hit;
         return _color * _intensity;

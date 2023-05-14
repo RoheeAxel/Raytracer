@@ -110,17 +110,18 @@ namespace Raytracer {
         this->_position = position;
     }
 
-    std::pair<double, double> OBJ::getUV(Vec3 point) {
+    std::pair<double, double> OBJ::getUV([[maybe_unused]]Vec3 point) {
+        return std::make_pair(0, 0);
     }
 
-    void OBJ::setTranslation(Vec3 translation)
+    void OBJ::setTranslation([[maybe_unused]]Vec3 translation)
     {
     }
 
-    void OBJ::setRotation(Vec3 rotation, Vec3 center)
+    void OBJ::setRotation([[maybe_unused]]Vec3 rotation, [[maybe_unused]]Vec3 center)
     {
     }
-    void OBJ::setScale(Vec3 scale)
+    void OBJ::setScale([[maybe_unused]]Vec3 scale)
     {
     }
 }

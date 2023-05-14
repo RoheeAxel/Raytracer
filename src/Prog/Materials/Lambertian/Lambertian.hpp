@@ -9,6 +9,7 @@
 #define LAMBERTIAN_HPP_
 
 #include "IMaterial.hpp"
+#include "Dammier.hpp"
 #include "Ray.hpp"
 #include "ParsingUtils.hpp"
 #include "ITexture.hpp"

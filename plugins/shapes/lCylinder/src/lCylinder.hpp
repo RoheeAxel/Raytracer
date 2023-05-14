@@ -35,4 +35,6 @@ namespace Raytracer {
     };
 }
 
+extern "C" Raytracer::LCylinder *create(const std::string &options);
+
 #endif /* !LLCylinder_HPP */

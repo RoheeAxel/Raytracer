@@ -114,3 +114,7 @@ namespace Raytracer {
         _height = _height * scale.y;
     }
 }
+
+extern "C" Raytracer::LCylinder *create(const std::string &options) {
+    return new Raytracer::LCylinder(options);
+}

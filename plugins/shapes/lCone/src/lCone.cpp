@@ -117,3 +117,7 @@ namespace Raytracer {
         _height = _height * scale.y;
     }
 }
+
+extern "C" Raytracer::lCone *create(const std::string &options) {
+    return new Raytracer::lCone(options);
+}

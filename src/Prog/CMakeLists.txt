@@ -45,6 +45,9 @@ include_directories(Shapes/Quad)
 include_directories(Shapes/Cylinder)
 include_directories(Shapes/OBJ)
 include_directories(Shapes/Cone)
+include_directories(Shapes/lCylinder)
+include_directories(Shapes/lCone)
+
 
 include_directories(Network)
 include_directories(Network/Network)

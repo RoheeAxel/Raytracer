@@ -27,47 +27,47 @@ Raytracer::Cone::Cone(const std::string &options)
 
 Raytracer::HitRecord Raytracer::Cone::intersection(Ray r) {
     HitRecord hitRecord;
+    hitRecord.hit = false;
+
+    Vec3 newPos = _position * -1;
+    Quaternion q(_rotation);
+    Vec3 newDir = q.rotate(r.getDirection(), _position);
+
+    float a = newDir.x * newDir.x + newDir.z * newDir.z - newDir.y * newDir.y * std::tan(_angle) * std::tan(_angle);
+    float b = 2.0 * (newPos.x * newDir.x + newPos.z * newDir.z - newPos.y * newDir.y * std::tan(_angle) * std::tan(_angle));
+    float c = newPos.x * newPos.x + newPos.z * newPos.z - newPos.y * newPos.y * std::tan(_angle) * std::tan(_angle);
+    float discriminant = b * b - 4.0 * a * c;
+
+
+    if (discriminant < 0.0) return hitRecord;
+
+    float sqrt_d = sqrt(discriminant);
+    hitRecord.hit = true;
+    double t1 = (-b - sqrt_d) / (2.0*a);
+    double t2 = (-b + sqrt_d) / (2.0*a);
+    if (t1 < 0 && t2 < 0) {
         hitRecord.hit = false;
-
-        Vec3 newPos = _position * -1;
-        Quaternion q(_rotation);
-        Vec3 newDir = q.rotate(r.getDirection(), _position);
-
-        float a = newDir.x * newDir.x + newDir.z * newDir.z - newDir.y * newDir.y * std::tan(_angle) * std::tan(_angle);
-        float b = 2.0 * (newPos.x * newDir.x + newPos.z * newDir.z - newPos.y * newDir.y * std::tan(_angle) * std::tan(_angle));
-        float c = newPos.x * newPos.x + newPos.z * newPos.z - newPos.y * newPos.y * std::tan(_angle) * std::tan(_angle);
-        float discriminant = b * b - 4.0 * a * c;
-
-
-        if (discriminant < 0.0) return hitRecord;
-
-        float sqrt_d = sqrt(discriminant);
-        hitRecord.hit = true;
-        double t1 = (-b - sqrt_d) / (2.0*a);
-        double t2 = (-b + sqrt_d) / (2.0*a);
-        if (t1 < 0 && t2 < 0) {
-            hitRecord.hit = false;
-            return hitRecord;
-        }
-        if (t1 < 0)
-            hitRecord.distance = t2;
-        else if (t2 < 0)
-            hitRecord.distance = t1;
-        else
-            hitRecord.distance = t1 < t2 ? t1 : t2;
-
-        hitRecord.point = r.getOrigin() + newDir * hitRecord.distance;
-        hitRecord.distance = (hitRecord.point - r.getOrigin()).Length();
-        hitRecord.material = this->getMaterial();
-        Vec3 c_to_p = hitRecord.point - _position;
-        double slope = 1.0 / std::tan(_angle);
-        Vec3 projection = c_to_p - _direction * (c_to_p.Dot(_direction));
-        double h = projection.Length() * slope;
-        Vec3 normal = (c_to_p - _direction * h).Normalize();
-        hitRecord.set_face_normal(r, normal);
-        hitRecord.normal = normal;
-        hitRecord.uv = this->getUV(normal);
         return hitRecord;
+    }
+    if (t1 < 0)
+        hitRecord.distance = t2;
+    else if (t2 < 0)
+        hitRecord.distance = t1;
+    else
+        hitRecord.distance = t1 < t2 ? t1 : t2;
+
+    hitRecord.point = r.getOrigin() + newDir * hitRecord.distance;
+    hitRecord.distance = (hitRecord.point - r.getOrigin()).Length();
+    hitRecord.material = this->getMaterial();
+    Vec3 c_to_p = hitRecord.point - _position;
+    double slope = 1.0 / std::tan(_angle);
+    Vec3 projection = c_to_p - _direction * (c_to_p.Dot(_direction));
+    double h = projection.Length() * slope;
+    Vec3 normal = (c_to_p - _direction * h).Normalize();
+    hitRecord.set_face_normal(r, normal);
+    hitRecord.normal = normal;
+    hitRecord.uv = this->getUV(normal);
+    return hitRecord;
 }
 
 Raytracer::AABB Raytracer::Cone::getAABB()

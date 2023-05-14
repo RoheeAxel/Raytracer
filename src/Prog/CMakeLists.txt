@@ -26,6 +26,7 @@ include_directories(Materials/Lambertian)
 include_directories(Materials/Normal)
 include_directories(Materials/Glass)
 include_directories(Materials/Emitive)
+include_directories(Materials/Reflective)
 
 include_directories(Parser)
 

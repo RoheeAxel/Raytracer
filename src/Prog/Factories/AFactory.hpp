@@ -8,11 +8,11 @@
 #ifndef AFACTORY_HPP_
 #define AFACTORY_HPP_
 
-#include <typeindex>
-#include <typeinfo>
+#include <memory>
 #include <unordered_map>
 #include <vector>
 #include "IFactory.hpp"
+#include "GarbageCollector.hpp"
 #include "LDLoader.hpp"
 
 namespace Raytracer {
@@ -21,8 +21,8 @@ namespace Raytracer {
         public:
             AFactory() = default;
             ~AFactory() {
-//                for (auto &loader : _loaders)
-//                    loader.closeLib();
+                for (auto &loader : _loaders)
+                    GarbageCollector::add(loader);
             }
 
             std::shared_ptr<T> get(const std::string &name, const std::string &options) override
@@ -37,11 +37,11 @@ namespace Raytracer {
         protected:
             std::shared_ptr<T> getFromPlugin(const std::string &name, const std::string &options)
             {
-                LDLoader<T> loader;
+                std::shared_ptr<LDLoader<T>> loader = std::make_shared<LDLoader<T>>();
                 std::string path = "./plugins/" + _dirName + "/" + name + EXTENSION;
 
-                loader.loadLib(path);
-                std::shared_ptr<T> t(loader.getSymbol("create", options));
+                loader->loadLib(path);
+                std::shared_ptr<T> t(loader->getSymbol("create", options));
                 _loaders.push_back(loader);
                 return t;
             }
@@ -54,7 +54,7 @@ namespace Raytracer {
             std::string _dirName;
 
         private:
-            std::vector<LDLoader<T>> _loaders;
+            std::vector<std::shared_ptr<LDLoader<T>>> _loaders;
     };
 
 } // Raytracer

@@ -35,4 +35,6 @@ namespace Raytracer {
     };
 }
 
+extern "C" Raytracer::lCone *create(const std::string &options);
+
 #endif /* !LCone_HPP_ */

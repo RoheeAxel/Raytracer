@@ -20,6 +20,7 @@ namespace Raytracer {
         for (auto &shape : _shapes) {
             hit = shape->intersection(ray);
             if (hit.hit && (hit.distance < last_distance || last_distance == -1)) {
+                final_color = Vec3(0);
                 has_hit = true;
                 for (auto &light : _lights) {
                     hit.light = light->illuminate(hit.point, *this);
@@ -35,7 +36,9 @@ namespace Raytracer {
                             }
                         }
                     }
-                    final_color = current_color;
+                    final_color.x = std::max(final_color.x, current_color.x);
+                    final_color.y = std::max(final_color.y, current_color.y);
+                    final_color.z = std::max(final_color.z, current_color.z);
                     last_distance = hit.distance;
                 }
             }

@@ -66,6 +66,7 @@ Raytracer::HitRecord Raytracer::Cone::intersection(Ray r) {
     Vec3 normal = (c_to_p - _direction * h).Normalize();
     hitRecord.set_face_normal(r, normal);
     hitRecord.normal = normal;
+    hitRecord.normal = q.rotate(hitRecord.normal, _position);
     hitRecord.uv = this->getUV(normal);
     return hitRecord;
 }

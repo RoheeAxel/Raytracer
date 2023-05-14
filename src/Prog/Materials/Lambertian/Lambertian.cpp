@@ -43,7 +43,7 @@ namespace Raytracer
         Vec3 color_at_point = _base_color;
         if (_tex != nullptr)
             color_at_point = _tex->getColorAt(record.uv.first, record.uv.second);
-        return (color_at_point  * intensity).Clamp(0, 255);
+        return (color_at_point  * intensity * unit_light).Clamp(0, 255);
     }
 
     Vec3 Lambertian::getNewRay(HitRecord record, [[maybe_unused]]Vec3 light) {

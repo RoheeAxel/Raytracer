@@ -41,6 +41,8 @@ include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Materials/Normal)
 include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Materials/Reflective)
 include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Materials/Glass)
 include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Materials/Emitive)
+include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Materials/Refractive)
+include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Materials/Transparent)
 
 include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Network)
 include_directories(${CMAKE_SOURCE_DIR}/src/Prog/Network/Client)

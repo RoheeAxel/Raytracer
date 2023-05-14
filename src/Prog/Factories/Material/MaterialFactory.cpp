@@ -24,6 +24,10 @@ namespace Raytracer {
             return std::make_shared<Normal>(options);
         else if (name == "reflective")
             return std::make_shared<Reflective>(options);
+        else if (name == "refractive")
+            return std::make_shared<Refractive>(options);
+        else if (name == "transparent")
+            return std::make_shared<Transparent>(options);
         return AFactory::getFromBuiltin(name, options);
     }
 } // Raytracer

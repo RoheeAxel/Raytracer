@@ -27,6 +27,8 @@ include_directories(Materials/Normal)
 include_directories(Materials/Glass)
 include_directories(Materials/Emitive)
 include_directories(Materials/Reflective)
+include_directories(Materials/Refractive)
+include_directories(Materials/Transparent)
 
 include_directories(Parser)
 

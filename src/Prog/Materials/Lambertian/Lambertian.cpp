@@ -23,6 +23,10 @@ namespace Raytracer
             std::string path = ParsingUtils::getString(options, "path");
             _tex = std::make_shared<Image>(path);
         } catch (Exception &e) {}
+        try {
+            std::string path = ParsingUtils::getString(options, "dammier");
+            _tex = std::make_shared<Dammier>();
+        } catch (Exception &e) {}
         Vec3 color = ParsingUtils::getVec3(options, "color");
         this->_base_color = color;
     }
@@ -39,7 +43,7 @@ namespace Raytracer
         Vec3 color_at_point = _base_color;
         if (_tex != nullptr)
             color_at_point = _tex->getColorAt(record.uv.first, record.uv.second);
-        return (color_at_point  * intensity * unit_light).Clamp(0, 255);
+        return (color_at_point  * intensity).Clamp(0, 255);
     }
 
     Vec3 Lambertian::getNewRay(HitRecord record, [[maybe_unused]]Vec3 light) {

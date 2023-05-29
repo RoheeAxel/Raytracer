@@ -19,7 +19,7 @@ namespace Raytracer
 
     Vec3 Transparent::getColorAt([[maybe_unused]] HitRecord record, [[maybe_unused]] Ray light, [[maybe_unused]] Vec3 lightColor)
     {
-        return {255, 255, 255};
+        return {180, 180, 220};
     }
 
     Vec3 Transparent::getNewRay([[maybe_unused]]HitRecord record, Vec3 light) {

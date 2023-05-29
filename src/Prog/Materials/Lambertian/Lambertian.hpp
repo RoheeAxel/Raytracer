@@ -32,6 +32,8 @@ namespace Raytracer
             Vec3 _base_color;
             std::shared_ptr<ITexture> _tex = nullptr;
             CustomRandom _random;
+            std::shared_ptr<Image> _normalMap = nullptr;
+            double _normalIntensity = 1;
 };
 }
 #endif /* !LAMBERTIAN_HPP_ */

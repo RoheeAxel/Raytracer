@@ -13,6 +13,7 @@
 #include "Lambertian.hpp"
 #include "Emitive.hpp"
 #include "Glass.hpp"
+#include "Normal.hpp"
 
 namespace Raytracer {
     OBJ::OBJ() {}
@@ -22,7 +23,7 @@ namespace Raytracer {
         _position = ParsingUtils::getVec3(options, "position");
         _rotation = ParsingUtils::getVec3(options, "rotation");
         _scale = ParsingUtils::getVec3(options, "scale");
-        _material = std::make_shared<Lambertian>(Vec3(255, 0, 255));
+        _material = std::make_shared<Normal>();
         load();
     }
 

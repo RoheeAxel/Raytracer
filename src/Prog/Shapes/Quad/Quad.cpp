@@ -63,7 +63,7 @@ namespace Raytracer {
         hitRecord.hit = true;
         hitRecord.distance = t;
         hitRecord.point = P;
-        hitRecord.normal = _normal;
+        hitRecord.normal = _normal * -1;
         hitRecord.material = this->getMaterial();
         return hitRecord;
     }
@@ -123,9 +123,10 @@ namespace Raytracer {
     }
 
     std::pair<double, double> Quad::getUV(Vec3 point) {
-        double u = (point - _vertice1).Dot(_vertice2 - _vertice1) / (_vertice2 - _vertice1).Dot(_vertice2 - _vertice1);
-        double v = (point - _vertice1).Dot(_vertice4 - _vertice1) / (_vertice4 - _vertice1).Dot(_vertice4 - _vertice1);
-        return {u, v};
+
+        double u = fabs(double(int(point.x * 100) % 100) / 100);
+        double v = fabs(double(int(point.z * 100) % 100) / 100);
+        return std::make_pair(v, u);
     }
 
     void Quad::setTranslation(Vec3 translation)
